@@ -144,7 +144,13 @@ export default function Edit() {
   useEffect(() => {
     fetch(
       "http://localhost:3000/api/firebase/getdocument?collection=graphs&docId=" +
-        id
+        id,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
     )
       .then((response) => response.json())
       .then((data) => {
@@ -190,12 +196,11 @@ export default function Edit() {
   useEffect(() => {
     if (dbId !== null && dbId !== undefined) {
       fetch("http://localhost:3000/api/notion/retrievecolumns?id=" + dbId, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    
-  })
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
         .then((res) => res.json())
         .then((cols) => {
           setCols(cols);
@@ -207,9 +212,6 @@ export default function Edit() {
               const propertyIdValue = property.id;
               const propertyNameValue = property.name;
               const propertyType = property.type;
-
-              // const propertyType
-
               extractedNameId.push({
                 id: propertyIdValue,
                 name: propertyNameValue,
@@ -324,7 +326,7 @@ export default function Edit() {
   console.log(fillColorStatus);
 
   //it stores extracted data from the api
-  let extractedProperties= [];
+  let extractedProperties = [];
   useEffect(() => {
     rows.forEach((page) => {
       // setCount(prevCount => prevCount + 1);
@@ -360,7 +362,7 @@ export default function Edit() {
           } else if (property.type == "multi_select") {
             propertyType = property.type;
             // in multi_select value is stored as array so when displaying check condition if it is an multiselct value
-            let multi_select= [];
+            let multi_select = [];
             property.multi_select.map((select) => {
               multi_select.push(select.name);
             });
@@ -708,7 +710,6 @@ export default function Edit() {
       //console.log(axisData)
       if (XAxisData) {
         const extractedXValues = XAxisData.map((obj) => {
-          
           if (
             obj.type == "people" ||
             obj.type == "created_by" ||
@@ -808,28 +809,25 @@ export default function Edit() {
       //console.log(axisData)
       if (YAxisData) {
         const extractedYValues = YAxisData.map((obj) => {
-          const aggregation= "sum"
-          if(aggregation == "count"){
-            if(Array.isArray(obj.value)){
-              console.log("aggregation ",obj.value)
-              console.log("length ",obj.value.length)
-              return obj.value.length
-            }else{
-              console.log("it is a string")
-              return 1
-
+          const aggregation = "count";
+          if (aggregation == "count") {
+            if (Array.isArray(obj.value)) {
+              console.log("aggregation ", obj.value);
+              console.log("length ", obj.value.length);
+              return obj.value.length;
+            } else {
+              console.log("it is a string");
+              return 1;
             }
-           
-          
-          }else if(aggregation == "sum"){
-            if(Array.isArray(obj.value)){
-              let sum=0
+          } else if (aggregation == "sum") {
+            if (Array.isArray(obj.value)) {
+              let sum = 0;
               obj.value.forEach((element) => {
-                sum+=parseInt(element)
+                sum += parseInt(element);
               });
-              return sum
-            }else {
-              return obj.value
+              return sum;
+            } else {
+              return obj.value;
             }
           }
           return obj.value;

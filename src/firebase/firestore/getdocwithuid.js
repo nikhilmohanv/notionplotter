@@ -17,7 +17,6 @@ export default async function getDoumentsWithUId(uid) {
   try {
     const q = query(collection(db, "graphs"), where("userid", "==", uid));
     result = await getDocs(q);
-
   } catch (error) {
     console.error("Error fetching data:", error);
     error = error;
