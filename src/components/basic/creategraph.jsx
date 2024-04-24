@@ -70,7 +70,12 @@ export default function CreateGraph({ loading }) {
   //fetching databases from the notion api with access_token, if access_token cookie is set then the dbs are fetched
   useEffect(() => {
     if (user && cookies.get("access_token")) {
-      fetch(`http://localhost:3000/api/notion/getdatabases?uid=${user.uid}`)
+      fetch("http://localhost:3000/api/notion/getdatabases", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
         .then((response) => response.json())
         .then((data) => {
           const dbs = data.results.map((db) => ({
@@ -84,12 +89,18 @@ export default function CreateGraph({ loading }) {
         });
     }
   }, [user]);
-
+  
   //fetching the fields in the selected database
   //fetch data from http://localhost:3000/api/notion/retrievecolumns?id=${id}
   useEffect(() => {
     if (databaseID !== null && databaseID !== undefined) {
-      fetch("http://localhost:3000/api/notion/retrievecolumns?id=" + databaseID)
+      fetch("http://localhost:3000/api/notion/retrievecolumns?id=" + databaseID, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        
+      })
         .then((res) => res.json())
         .then((cols) => {
           const extractedNameId = [];
@@ -264,7 +275,6 @@ export default function CreateGraph({ loading }) {
       }
       // setXAxisValues()
     }
-    
   }, [extractedProperties, yAxis]);
 
   // storing the database id to the state databaseID

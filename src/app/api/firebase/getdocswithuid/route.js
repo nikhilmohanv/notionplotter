@@ -5,8 +5,12 @@ import { NextResponse } from 'next/server';
 export const GET = async (req) => {
     try {
         // const collection = req.nextUrl.searchParams.get('collection') as string;
-        const uid = req.nextUrl.searchParams.get('uid');
+        // const uid = req.query.uid
+        const url = new URL(req.url, 'http://localhost'); // Create URL object
+        const params = new URLSearchParams(url.search); // Get query parameters
 
+        const uid = params.get('uid');
+       
 
         const { result, error } = await getDoumentsWithUId(uid);
 

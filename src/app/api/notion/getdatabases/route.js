@@ -1,10 +1,11 @@
 import getDbs from "@/libs/notion/getdbs/getDbs";
 import { NextResponse, NextRequest } from "next/server";
 
-export const GET = async (req) => {
+export const POST = async (req) => {
   try {
-    const uid = req.nextUrl.searchParams.get("uid");
-    const dbs = await getDbs(uid);
+    // const uid = req.nextUrl.searchParams.get("uid");
+    
+    const dbs = await getDbs();
     console.log(dbs);
     return NextResponse.json(dbs);
   } catch (err) {

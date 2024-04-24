@@ -1,28 +1,31 @@
 import { NextRequest } from "next/server";
-import getDoument from "@/firebase/firestore/getdata";
-import { NextResponse } from "next/server";
+import getDoument from '@/firebase/firestore/getdata';
+import { NextResponse } from 'next/server';
 
 export const GET = async (req) => {
-  try {
-    const collection = req.nextUrl.searchParams.get("collection");
-    const id = req.nextUrl.searchParams.get("docId");
+    try {
+        const url = new URL(req.url, 'http://localhost'); // Create URL object
+        const params = new URLSearchParams(url.search); // Get query parameters
 
-    const { result, error } = await getDoument(collection, id);
+        const collection = params.get('collection');
+        const docId = params.get('docId');
 
-    if (error) {
-      console.log("Error:", error);
-      return NextResponse.error();
-    }
-    if (result) {
-      if (!result.exists()) {
-        console.log("Document not found");
+        const { result, error } = await getDoument(collection, docId);
+
+        if (error) {
+            console.log('Error:', error);
+            return NextResponse.error();
+        }
+        if (result) {
+            if (!result.exists()) {
+                console.log('Document not found');
+                return NextResponse.error();
+            }
+            
+            return NextResponse.json(result.data());
+        }
+    } catch (err) {
+        console.log('Error:', err);
         return NextResponse.error();
-      }
-
-      return NextResponse.json(result.data());
     }
-  } catch (err) {
-    console.log("Error:", err);
-    return NextResponse.error();
-  }
-};
+}

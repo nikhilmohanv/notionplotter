@@ -4,6 +4,7 @@ import { NextResponse, NextRequest } from "next/server";
 export const POST = async (req) => {
   try {
     const { filters, andOr } = await req.json();
+    
 
     console.log(filters);
 

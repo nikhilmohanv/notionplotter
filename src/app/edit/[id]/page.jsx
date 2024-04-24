@@ -189,7 +189,13 @@ export default function Edit() {
   //fetch data from http://localhost:3000/api/notion/retrievecolumns?id=${id}
   useEffect(() => {
     if (dbId !== null && dbId !== undefined) {
-      fetch("http://localhost:3000/api/notion/retrievecolumns?id=" + dbId)
+      fetch("http://localhost:3000/api/notion/retrievecolumns?id=" + dbId, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    
+  })
         .then((res) => res.json())
         .then((cols) => {
           setCols(cols);

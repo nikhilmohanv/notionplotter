@@ -1,7 +1,7 @@
 const { Client } = require("@notionhq/client");
 import { cookies } from "next/headers";
 
-export default async function getDbs(uid) {
+export default async function getDbs() {
   const cookieStore = cookies();
   const tokenCookie = cookieStore.get("access_token");
   if (!tokenCookie) throw new Error("No Token Cookie Found");

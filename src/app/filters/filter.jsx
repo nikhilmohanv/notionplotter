@@ -67,10 +67,17 @@ export default function Filter({ getFilters, dbId,filterLoadingState,filters,col
   // for getting data of all, that is without any filters
   const [sampleFilter, setSampleFilter] = useState([]);
 
+  
   useEffect(() => {
     if (dbId !== null && dbId !== undefined) {
       console.log("20");
-      fetch("http://localhost:3000/api/notion/completequerydb?id=" + dbId)
+      fetch("http://localhost:3000/api/notion/completequerydb?id=" + dbId, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        
+      })
         .then((response) => response.json())
         .then((data) => {
           setRows(data);
