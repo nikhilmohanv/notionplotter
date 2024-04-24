@@ -71,7 +71,7 @@ export default function Filter({ getFilters, dbId,filterLoadingState,filters,col
   useEffect(() => {
     if (dbId !== null && dbId !== undefined) {
       console.log("20");
-      fetch("http://localhost:3000/api/notion/completequerydb?id=" + dbId, {
+      fetch("https://notion2charts.vercel.app/api/notion/completequerydb?id=" + dbId, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

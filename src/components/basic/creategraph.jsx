@@ -70,7 +70,7 @@ export default function CreateGraph({ loading }) {
   //fetching databases from the notion api with access_token, if access_token cookie is set then the dbs are fetched
   useEffect(() => {
     if (user && cookies.get("access_token")) {
-      fetch("http://localhost:3000/api/notion/getdatabases", {
+      fetch("https://notion2charts.vercel.app/api/notion/getdatabases", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -94,7 +94,7 @@ export default function CreateGraph({ loading }) {
   //fetch data from http://localhost:3000/api/notion/retrievecolumns?id=${id}
   useEffect(() => {
     if (databaseID !== null && databaseID !== undefined) {
-      fetch("http://localhost:3000/api/notion/retrievecolumns?id=" + databaseID, {
+      fetch("https://notion2charts.vercel.app/api/notion/retrievecolumns?id=" + databaseID, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -125,7 +125,7 @@ export default function CreateGraph({ loading }) {
   console.log(colNameAndId);
   useEffect(() => {
     if (databaseID !== null && databaseID !== undefined) {
-      fetch("http://localhost:3000/api/notion/querydb?id=" + databaseID)
+      fetch("https://notion2charts.vercel.app/api/notion/querydb?id=" + databaseID)
         .then((response) => response.json())
         .then((data) => {
           setRows(data);

@@ -143,7 +143,7 @@ export default function Edit() {
   //fetch data from api http://localhost:3000/api/firebase/getdocument
   useEffect(() => {
     fetch(
-      "http://localhost:3000/api/firebase/getdocument?collection=graphs&docId=" +
+      "https://notion2charts.vercel.app/api/firebase/getdocument?collection=graphs&docId=" +
         id,
       {
         method: "POST",
@@ -195,7 +195,7 @@ export default function Edit() {
   //fetch data from http://localhost:3000/api/notion/retrievecolumns?id=${id}
   useEffect(() => {
     if (dbId !== null && dbId !== undefined) {
-      fetch("http://localhost:3000/api/notion/retrievecolumns?id=" + dbId, {
+      fetch("https://notion2charts.vercel.app/api/notion/retrievecolumns?id=" + dbId, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -232,7 +232,7 @@ export default function Edit() {
       setFilterLoadingState(true);
 
       console.log("20");
-      fetch("http://localhost:3000/api/notion/querydb?id=" + dbId, {
+      fetch("https://notion2charts.vercel.app/api/notion/querydb?id=" + dbId, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
