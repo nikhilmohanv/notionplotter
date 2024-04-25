@@ -32,7 +32,7 @@ export default function Filter({ getFilters, dbId,filterLoadingState,filters,col
   // retrieve coloumn
   // useEffect(() => {
   //   if (dbId !== null && dbId !== undefined) {
-  //     fetch("http://localhost:3000/api/notion/retrievecolumns?id=" + dbId)
+  //     fetch("api/notion/retrievecolumns?id=" + dbId)
   //       .then((res) => res.json())
   //       .then((cols) => {
   //         setCols(cols);
@@ -71,7 +71,7 @@ export default function Filter({ getFilters, dbId,filterLoadingState,filters,col
   useEffect(() => {
     if (dbId !== null && dbId !== undefined) {
       console.log("20");
-      fetch("https://notion2charts.vercel.app/api/notion/completequerydb?id=" + dbId, {
+      fetch("/api/notion/completequerydb?id=" + dbId, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

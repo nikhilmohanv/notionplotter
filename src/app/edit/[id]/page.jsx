@@ -94,6 +94,9 @@ export default function Edit() {
   //to store all multi color values
   const [fillMultiColor, setFillMultiColor] = useState([""]);
 
+  // aggregation for sum and count
+  const [aggregation, setAggregation] = useState("count");
+
   // couting the rows in the data extractedProperties
   const [count, setCount] = useState(0);
 
@@ -140,10 +143,10 @@ export default function Edit() {
   const previewurl = "localhost:3000/preview/" + id;
   console.log(chartType);
 
-  //fetch data from api http://localhost:3000/api/firebase/getdocument
+  //fetch data from api api/firebase/getdocument
   useEffect(() => {
     fetch(
-      "https://notion2charts.vercel.app/api/firebase/getdocument?collection=graphs&docId=" +
+      "/api/firebase/getdocument?collection=graphs&docId=" +
         id,
       {
         method: "POST",
@@ -174,6 +177,7 @@ export default function Edit() {
         data.fillColorStatus && setFillColorStatus(data.fillColorStatus);
         data.filters && setFilters(data.filters);
         data.andOr && setAndOr(data.andOr);
+        data.aggregation && setAggregation(data.aggregation);
         setDbUid(data.userid);
 
         if (data.xaxis && data.yaxis) {
@@ -192,15 +196,19 @@ export default function Edit() {
       });
   }, []);
 
-  //fetch data from http://localhost:3000/api/notion/retrievecolumns?id=${id}
+  //fetch data from api/notion/retrievecolumns?id=${id}
   useEffect(() => {
     if (dbId !== null && dbId !== undefined) {
-      fetch("https://notion2charts.vercel.app/api/notion/retrievecolumns?id=" + dbId, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
+      fetch(
+        "/api/notion/retrievecolumns?id=" +
+          dbId,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
         .then((res) => res.json())
         .then((cols) => {
           setCols(cols);
@@ -224,7 +232,7 @@ export default function Edit() {
     }
   }, [dbId]);
 
-  //fetch data from api http://localhost:3000/api/notion/querydb?id={id} this have all the row information
+  //fetch data from api api/notion/querydb?id={id} this have all the row information
   useEffect(() => {
     console.log(filters);
 
@@ -232,7 +240,7 @@ export default function Edit() {
       setFilterLoadingState(true);
 
       console.log("20");
-      fetch("https://notion2charts.vercel.app/api/notion/querydb?id=" + dbId, {
+      fetch("/api/notion/querydb?id=" + dbId, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -283,6 +291,7 @@ export default function Edit() {
         name = label;
       }
     }
+
     //converting array values to comma seperated values
     const xAxisCommaVales = xAxisValues.join(", ");
     const yAxisCommaVales = yAxisValues.join(", ");
@@ -305,6 +314,7 @@ export default function Edit() {
       fillColorStatus: fillColorStatus,
       filters: filters,
       andOr: andOr,
+      aggregation: aggregation,
     };
 
     //updating current fb firestore
@@ -809,7 +819,6 @@ export default function Edit() {
       //console.log(axisData)
       if (YAxisData) {
         const extractedYValues = YAxisData.map((obj) => {
-          const aggregation = "count";
           if (aggregation == "count") {
             if (Array.isArray(obj.value)) {
               console.log("aggregation ", obj.value);
@@ -842,7 +851,7 @@ export default function Edit() {
       }
       // setXAxisValues()
     }
-  }, [yAxis, extractedProperties]);
+  }, [yAxis, extractedProperties,aggregation]);
 
   // changing the xaxis and yaxis ids
   const handleXSelect = (value) => {
@@ -851,8 +860,10 @@ export default function Edit() {
   const handleYSelect = (value) => {
     setYAxis(value);
   };
-  console.log("x axis values", xAxisValues);
-  console.log("y axis values", yAxisValues);
+ 
+  const handleAggregationChange =(value)=>{
+    setAggregation(value)
+  }
 
   return (
     <>
@@ -1257,6 +1268,22 @@ export default function Edit() {
             </Select>
           </div>
 
+          {/* aggregation function */}
+          <div className="mb-6">
+            <h3 className="text-sm font-medium mb-2">Aggregation</h3>
+            <Select onValueChange={handleAggregationChange}>
+              <SelectTrigger id="aggregation">
+                <SelectValue placeholder={aggregation} />
+              </SelectTrigger>
+              <SelectContent position="popper">
+                <SelectGroup>
+                  <SelectItem value="count">Count</SelectItem>
+                  <SelectItem value="sum">Sum</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
+
           <Filter
             getFilters={getFilters}
             dbId={dbId}
@@ -1265,7 +1292,7 @@ export default function Edit() {
             colNameAndId={colNameAndId}
             orAnd={andOr}
           />
-
+          <br />
           {/*  saving button */}
           <Button onClick={saveToDb}>
             {savingStatus ? "Saving.." : "Save"}
@@ -1286,6 +1313,7 @@ export default function Edit() {
               fillMultiColor={fillMultiColor}
               backgroundColor={backgroundColor}
               fillColorStatus={fillColorStatus}
+          
             />
           ) : chartType == "Area Chart" ? (
             <AreaChart
@@ -1300,6 +1328,7 @@ export default function Edit() {
               fillSingleColor={fillSingleColor}
               fillMultiColor={fillMultiColor}
               fillColorStatus={fillColorStatus}
+             
             />
           ) : chartType == "Doughnut Chart" ? (
             <DoughnutChart />
