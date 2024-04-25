@@ -145,16 +145,12 @@ export default function Edit() {
 
   //fetch data from api api/firebase/getdocument
   useEffect(() => {
-    fetch(
-      "/api/firebase/getdocument?collection=graphs&docId=" +
-        id,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    )
+    fetch("/api/firebase/getdocument?collection=graphs&docId=" + id, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
       .then((response) => response.json())
       .then((data) => {
         setData(data);
@@ -199,16 +195,12 @@ export default function Edit() {
   //fetch data from api/notion/retrievecolumns?id=${id}
   useEffect(() => {
     if (dbId !== null && dbId !== undefined) {
-      fetch(
-        "/api/notion/retrievecolumns?id=" +
-          dbId,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      )
+      fetch("/api/notion/retrievecolumns?id=" + dbId, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
         .then((res) => res.json())
         .then((cols) => {
           setCols(cols);
@@ -330,10 +322,7 @@ export default function Edit() {
       return console.log(error);
     }
   };
-  console.log(colNameAndId);
-  // console.log(rows);
-
-  console.log(fillColorStatus);
+ 
 
   //it stores extracted data from the api
   let extractedProperties = [];
@@ -844,14 +833,14 @@ export default function Edit() {
 
         //console.log(extractedValues);
         // Store the result in the state variable
-        console.log("extracted x", extractedYValues);
+        console.log("extracted y", extractedYValues);
 
         setYAxisValues(extractedYValues);
         // console.log(xAxisValues);
       }
       // setXAxisValues()
     }
-  }, [yAxis, extractedProperties,aggregation]);
+  }, [yAxis, aggregation, extractedProperties])
 
   // changing the xaxis and yaxis ids
   const handleXSelect = (value) => {
@@ -860,10 +849,11 @@ export default function Edit() {
   const handleYSelect = (value) => {
     setYAxis(value);
   };
- 
-  const handleAggregationChange =(value)=>{
-    setAggregation(value)
-  }
+
+  const handleAggregationChange = (value) => {
+    setAggregation(value);
+    console.log("aggregation changed",aggregation)
+  };
 
   return (
     <>
@@ -1271,7 +1261,7 @@ export default function Edit() {
           {/* aggregation function */}
           <div className="mb-6">
             <h3 className="text-sm font-medium mb-2">Aggregation</h3>
-            <Select onValueChange={handleAggregationChange}>
+            <Select onValueChange={handleAggregationChange} defaultValue={aggregation}>
               <SelectTrigger id="aggregation">
                 <SelectValue placeholder={aggregation} />
               </SelectTrigger>
@@ -1293,6 +1283,7 @@ export default function Edit() {
             orAnd={andOr}
           />
           <br />
+          <br />
           {/*  saving button */}
           <Button onClick={saveToDb}>
             {savingStatus ? "Saving.." : "Save"}
@@ -1313,7 +1304,6 @@ export default function Edit() {
               fillMultiColor={fillMultiColor}
               backgroundColor={backgroundColor}
               fillColorStatus={fillColorStatus}
-          
             />
           ) : chartType == "Area Chart" ? (
             <AreaChart
@@ -1328,7 +1318,6 @@ export default function Edit() {
               fillSingleColor={fillSingleColor}
               fillMultiColor={fillMultiColor}
               fillColorStatus={fillColorStatus}
-             
             />
           ) : chartType == "Doughnut Chart" ? (
             <DoughnutChart />
