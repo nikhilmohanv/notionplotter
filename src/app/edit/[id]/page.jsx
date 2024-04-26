@@ -322,7 +322,6 @@ export default function Edit() {
       return console.log(error);
     }
   };
- 
 
   //it stores extracted data from the api
   let extractedProperties = [];
@@ -840,7 +839,7 @@ export default function Edit() {
       }
       // setXAxisValues()
     }
-  }, [yAxis, aggregation, extractedProperties])
+  }, [yAxis, aggregation, extractedProperties]);
 
   // changing the xaxis and yaxis ids
   const handleXSelect = (value) => {
@@ -852,7 +851,7 @@ export default function Edit() {
 
   const handleAggregationChange = (value) => {
     setAggregation(value);
-    console.log("aggregation changed",aggregation)
+    console.log("aggregation changed", aggregation);
   };
 
   return (
@@ -1261,7 +1260,10 @@ export default function Edit() {
           {/* aggregation function */}
           <div className="mb-6">
             <h3 className="text-sm font-medium mb-2">Aggregation</h3>
-            <Select onValueChange={handleAggregationChange} defaultValue={aggregation}>
+            <Select
+              onValueChange={handleAggregationChange}
+              defaultValue={aggregation}
+            >
               <SelectTrigger id="aggregation">
                 <SelectValue placeholder={aggregation} />
               </SelectTrigger>
@@ -1580,7 +1582,6 @@ function PlusIcon(props) {
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      stroke="#000000"
     >
       <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
       <g
@@ -1591,25 +1592,51 @@ function PlusIcon(props) {
       <g id="SVGRepo_iconCarrier">
         {" "}
         <path
-          d="M9 12H15"
-          stroke="#323232"
+          d="M4 12H20M12 4V20"
+          stroke="#000000"
           stroke-width="2"
           stroke-linecap="round"
           stroke-linejoin="round"
-        ></path>{" "}
-        <path
-          d="M12 9L12 15"
-          stroke="#323232"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        ></path>{" "}
-        <path
-          d="M3 12C3 4.5885 4.5885 3 12 3C19.4115 3 21 4.5885 21 12C21 19.4115 19.4115 21 12 21C4.5885 21 3 19.4115 3 12Z"
-          stroke="#323232"
-          stroke-width="2"
         ></path>{" "}
       </g>
     </svg>
+    // <svg
+    //   {...props}
+    //   height="25px"
+    //   width="25px"
+    //   viewBox="0 0 24 24"
+    //   fill="none"
+    //   xmlns="http://www.w3.org/2000/svg"
+    //   stroke="#000000"
+    // >
+    //   <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+    //   <g
+    //     id="SVGRepo_tracerCarrier"
+    //     stroke-linecap="round"
+    //     stroke-linejoin="round"
+    //   ></g>
+    //   <g id="SVGRepo_iconCarrier">
+    //     {" "}
+    //     <path
+    //       d="M9 12H15"
+    //       stroke="#323232"
+    //       stroke-width="2"
+    //       stroke-linecap="round"
+    //       stroke-linejoin="round"
+    //     ></path>{" "}
+    //     <path
+    //       d="M12 9L12 15"
+    //       stroke="#323232"
+    //       stroke-width="2"
+    //       stroke-linecap="round"
+    //       stroke-linejoin="round"
+    //     ></path>{" "}
+    //     <path
+    //       d="M3 12C3 4.5885 4.5885 3 12 3C19.4115 3 21 4.5885 21 12C21 19.4115 19.4115 21 12 21C4.5885 21 3 19.4115 3 12Z"
+    //       stroke="#323232"
+    //       stroke-width="2"
+    //     ></path>{" "}
+    //   </g>
+    // </svg>
   );
 }
