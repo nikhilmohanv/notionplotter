@@ -1330,7 +1330,7 @@ export default function Edit() {
               fillColorStatus={fillColorStatus}
             />
           ) : chartType == "Doughnut Chart" ? (
-            <div className="grid place-items-center">
+            <div className="flex items-center justify-center">
               <DoughnutChart
                 xValues={xAxisValues}
                 yValues={yAxisValues}
@@ -1346,7 +1346,7 @@ export default function Edit() {
               />
             </div>
           ) : chartType == "Pie Chart" ? (
-            <div className="grid place-items-center ">
+            <div className="flex items-center justify-center">
               <PieChart
                 xValues={xAxisValues}
                 yValues={yAxisValues}
