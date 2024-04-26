@@ -1330,33 +1330,37 @@ export default function Edit() {
               fillColorStatus={fillColorStatus}
             />
           ) : chartType == "Doughnut Chart" ? (
-            <DoughnutChart
-              xValues={xAxisValues}
-              yValues={yAxisValues}
-              label={label}
-              labelStatus={labelStatus}
-              lineSingleColor={lineSingleColor}
-              lineMultiColor={lineMultiColor}
-              colorStatus={colorStatus}
-              fillSingleColor={fillSingleColor}
-              fillMultiColor={fillMultiColor}
-              backgroundColor={backgroundColor}
-              fillColorStatus={fillColorStatus}
-            />
+            <div className="grid place-items-center">
+              <DoughnutChart
+                xValues={xAxisValues}
+                yValues={yAxisValues}
+                label={label}
+                labelStatus={labelStatus}
+                lineSingleColor={lineSingleColor}
+                lineMultiColor={lineMultiColor}
+                colorStatus={colorStatus}
+                fillSingleColor={fillSingleColor}
+                fillMultiColor={fillMultiColor}
+                backgroundColor={backgroundColor}
+                fillColorStatus={fillColorStatus}
+              />
+            </div>
           ) : chartType == "Pie Chart" ? (
-            <PieChart
-              xValues={xAxisValues}
-              yValues={yAxisValues}
-              label={label}
-              labelStatus={labelStatus}
-              lineSingleColor={lineSingleColor}
-              lineMultiColor={lineMultiColor}
-              colorStatus={colorStatus}
-              fillSingleColor={fillSingleColor}
-              fillMultiColor={fillMultiColor}
-              backgroundColor={backgroundColor}
-              fillColorStatus={fillColorStatus}
-            />
+            <div className="grid place-items-center ">
+              <PieChart
+                xValues={xAxisValues}
+                yValues={yAxisValues}
+                label={label}
+                labelStatus={labelStatus}
+                lineSingleColor={lineSingleColor}
+                lineMultiColor={lineMultiColor}
+                colorStatus={colorStatus}
+                fillSingleColor={fillSingleColor}
+                fillMultiColor={fillMultiColor}
+                backgroundColor={backgroundColor}
+                fillColorStatus={fillColorStatus}
+              />
+            </div>
           ) : (
             <Skeleton className="w-full h-[600px] rounded" />
           )}

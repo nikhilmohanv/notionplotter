@@ -60,22 +60,22 @@ export default function PieChart({
     setFillColor(newFillColor);
   }, [fillColorStatus, fillSingleColor, fillMultiColor]);
 // const label=['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange']
-  const data = {
-    labels: xValues,
-    datasets: [
-      {
-        label: label,
-        data: yValues,
-        backgroundColor: fillColor,
-        borderColor: lineColor,
-        borderWidth: 1,
-      },
-    ],
-  };
+  
 
   return (
     <Pie
-      data={data}
+      data={{
+        labels: xValues,
+        datasets: [
+          {
+            label: label,
+            data: yValues,
+            backgroundColor: fillColor,
+            borderColor: lineColor,
+            borderWidth: 1,
+          },
+        ],
+      }}
       options={{
         responsive: true,
         maintainAspectRation: true,
@@ -90,7 +90,8 @@ export default function PieChart({
         },
         plugins: {
           legend: {
-            display: false,
+            display: true,
+            position:"bottom"
           },
         },
       }}

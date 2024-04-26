@@ -64,38 +64,41 @@ const DoughnutChart = ({
     setFillColor(newFillColor);
   }, [fillColorStatus, fillSingleColor, fillMultiColor]);
   return (
-    <Doughnut
-      data={{
-        labels: xValues,
-        datasets: [
-          {
-            label: label,
-            data: yValues,
-            backgroundColor: fillColor,
-            borderColor: lineColor,
-            borderWidth: 1,
-          },
-        ],
-      }}
-      options={{
-        responsive: true,
-        maintainAspectRation: true,
-        legend: {
-          // display false makes the dataset label hide
-          display: true,
-        },
-
-        title: {
-          display: true,
-          text: "Pie Chart",
-        },
-        plugins: {
+    <div>
+      <Doughnut
+        data={{
+          labels: xValues,
+          datasets: [
+            {
+              label: label,
+              data: yValues,
+              backgroundColor: fillColor,
+              borderColor: lineColor,
+              borderWidth: 1,
+            },
+          ],
+        }}
+        options={{
+          responsive: true,
+          maintainAspectRation: true,
           legend: {
-            display: false,
+            // display false makes the dataset label hide
+            display: true,
           },
-        },
-      }}
-    />
+
+          title: {
+            display: true,
+            text: "Pie Chart",
+          },
+          plugins: {
+            legend: {
+              display: true,
+              position:"bottom"
+            },
+          },
+        }}
+      />
+    </div>
   );
 };
 
