@@ -14,6 +14,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import Link from "next/link";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 // import { Toggle } from "@/components/ui/toggle";
@@ -860,6 +861,14 @@ export default function Edit() {
       <div key="1" className="flex flex-col h-screen md:flex-row">
         <aside className="w-full lg:w-[400px] bg-gray-100 p-6 md:w-[300px] lg:overflow-auto md:overflow-auto">
           {/* <h2 className="text-lg font-semibold mb-4">Chart Settings</h2> */}
+          <div className="grid grid-col-3">
+            <div>
+              <Link href={"/dashboard"}>
+                <LeftArrow />
+              </Link>
+            </div>
+          </div>
+          <br />
           <div className="mb-6">
             <h3 className="text-sm font-medium mb-2">Chart type</h3>
             <div className="grid grid-cols-4 gap-4">
@@ -1321,9 +1330,33 @@ export default function Edit() {
               fillColorStatus={fillColorStatus}
             />
           ) : chartType == "Doughnut Chart" ? (
-            <DoughnutChart />
+            <DoughnutChart
+              xValues={xAxisValues}
+              yValues={yAxisValues}
+              label={label}
+              labelStatus={labelStatus}
+              lineSingleColor={lineSingleColor}
+              lineMultiColor={lineMultiColor}
+              colorStatus={colorStatus}
+              fillSingleColor={fillSingleColor}
+              fillMultiColor={fillMultiColor}
+              backgroundColor={backgroundColor}
+              fillColorStatus={fillColorStatus}
+            />
           ) : chartType == "Pie Chart" ? (
-            <PieChart />
+            <PieChart
+              xValues={xAxisValues}
+              yValues={yAxisValues}
+              label={label}
+              labelStatus={labelStatus}
+              lineSingleColor={lineSingleColor}
+              lineMultiColor={lineMultiColor}
+              colorStatus={colorStatus}
+              fillSingleColor={fillSingleColor}
+              fillMultiColor={fillMultiColor}
+              backgroundColor={backgroundColor}
+              fillColorStatus={fillColorStatus}
+            />
           ) : (
             <Skeleton className="w-full h-[600px] rounded" />
           )}
@@ -1569,6 +1602,67 @@ function DoughNutWhite(props) {
         ></path>{" "}
       </g>
     </svg>
+  );
+}
+
+function LeftArrow(props) {
+  return (
+    <svg
+      {...props}
+      height="25px"
+      width="25px"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+      <g
+        id="SVGRepo_tracerCarrier"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      ></g>
+      <g id="SVGRepo_iconCarrier">
+        {" "}
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M11.7071 4.29289C12.0976 4.68342 12.0976 5.31658 11.7071 5.70711L6.41421 11H20C20.5523 11 21 11.4477 21 12C21 12.5523 20.5523 13 20 13H6.41421L11.7071 18.2929C12.0976 18.6834 12.0976 19.3166 11.7071 19.7071C11.3166 20.0976 10.6834 20.0976 10.2929 19.7071L3.29289 12.7071C3.10536 12.5196 3 12.2652 3 12C3 11.7348 3.10536 11.4804 3.29289 11.2929L10.2929 4.29289C10.6834 3.90237 11.3166 3.90237 11.7071 4.29289Z"
+          fill="#000000"
+        ></path>{" "}
+      </g>
+    </svg>
+    // <svg
+    //   {...props}
+    //   height="25px"
+    //   width="25px"
+    //   viewBox="-0.5 0 25 25"
+    //   fill="none"
+    //   xmlns="http://www.w3.org/2000/svg"
+    // >
+    //   <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+    //   <g
+    //     id="SVGRepo_tracerCarrier"
+    //     stroke-linecap="round"
+    //     stroke-linejoin="round"
+    //   ></g>
+    //   <g id="SVGRepo_iconCarrier">
+    //     {" "}
+    //     <path
+    //       d="M12 22.4199C17.5228 22.4199 22 17.9428 22 12.4199C22 6.89707 17.5228 2.41992 12 2.41992C6.47715 2.41992 2 6.89707 2 12.4199C2 17.9428 6.47715 22.4199 12 22.4199Z"
+    //       stroke="#000000"
+    //       stroke-width="1.5"
+    //       stroke-linecap="round"
+    //       stroke-linejoin="round"
+    //     ></path>{" "}
+    //     <path
+    //       d="M13.4102 16.4199L10.3502 13.55C10.1944 13.4059 10.0702 13.2311 9.98526 13.0366C9.9003 12.8422 9.85645 12.6321 9.85645 12.4199C9.85645 12.2077 9.9003 11.9979 9.98526 11.8035C10.0702 11.609 10.1944 11.4342 10.3502 11.29L13.4102 8.41992"
+    //       stroke="#000000"
+    //       stroke-width="1.5"
+    //       stroke-linecap="round"
+    //       stroke-linejoin="round"
+    //     ></path>{" "}
+    //   </g>
+    // </svg>
   );
 }
 

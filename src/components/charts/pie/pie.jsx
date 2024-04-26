@@ -1,27 +1,99 @@
-import Chart from "chart.js/auto";
-import { CategoryScale } from "chart.js";
-import { useState } from "react";
+import React from "react";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2";
+import { useState, useEffect } from "react";
 
-Chart.register(CategoryScale);
+ChartJS.register(ArcElement, Tooltip, Legend);
+export default function PieChart({
+  xValues,
+  yValues,
+  label,
+  labelStatus,
+  lineSingleColor,
+  lineMultiColor,
+  colorStatus,
+  backgroundColor,
+  fillSingleColor,
+  fillMultiColor,
+  fillColorStatus,
+}) {
+  const [darkMode, setDarkMode] = useState(false);
+  const [lineColor, setLineColor] = useState([]);
+  const [fillColor, setFillColor] = useState([]);
 
-export default function PieChart() {
-  const [chartData, setChartData] = useState({
-    labels: ["Label 1", "Label 2", "Label 3"],
+  useEffect(() => {
+    if (colorStatus == "lineSingle") {
+      setLineColor(lineSingleColor);
+    } else {
+      setLineColor(lineMultiColor);
+    }
+  }, [colorStatus, lineSingleColor, lineMultiColor]);
+
+  useEffect(() => {
+    if (backgroundColor != "#ffffff") {
+      setDarkMode(true);
+    } else {
+      setDarkMode(false);
+    }
+  }, [backgroundColor]);
+
+  const hex2rgb = (hex) => {
+    const r = parseInt(hex.slice(1, 3), 16);
+    const g = parseInt(hex.slice(3, 5), 16);
+    const b = parseInt(hex.slice(5, 7), 16);
+
+    // return {r, g, b}
+    const rgba = `rgba(${r}, ${g}, ${b})`;
+    console.log(rgba);
+    return rgba;
+  };
+
+  useEffect(() => {
+    const newFillColor = [];
+    if (fillColorStatus === "fillSingle") {
+      newFillColor.push(hex2rgb(fillSingleColor));
+    } else if (fillColorStatus === "fillMulti") {
+      fillMultiColor.forEach((color) => {
+        newFillColor.push(hex2rgb(color));
+      });
+    }
+    setFillColor(newFillColor);
+  }, [fillColorStatus, fillSingleColor, fillMultiColor]);
+// const label=['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange']
+  const data = {
+    labels: xValues,
     datasets: [
       {
-        label: "Users Gained ",
-        data: [30, 50, 20],
-        backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
-        // borderColor: "black",
-        borderWidth: 2,
+        label: label,
+        data: yValues,
+        backgroundColor: fillColor,
+        borderColor: lineColor,
+        borderWidth: 1,
       },
     ],
-  });
+  };
 
   return (
-    <div className="App">
-      <Pie data={chartData} />
-    </div>
+    <Pie
+      data={data}
+      options={{
+        responsive: true,
+        maintainAspectRation: true,
+        legend: {
+          // display false makes the dataset label hide
+          display: true,
+        },
+
+        title: {
+          display: true,
+          text: "Pie Chart",
+        },
+        plugins: {
+          legend: {
+            display: false,
+          },
+        },
+      }}
+    />
   );
 }

@@ -2,43 +2,101 @@
 // src/PieChart.tsx
 
 import React from "react";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
+import { useState, useEffect } from "react";
 
-//register the elements for the Doughnut Chart. More info here: https://www.chartjs.org/docs/latest/getting-started/integration.html
-import { Chart as ChartJS, ArcElement, Tooltip } from "chart.js";
-ChartJS.register(ArcElement, Tooltip);
+ChartJS.register(ArcElement, Tooltip, Legend);
 
 const DoughnutChart = ({
   xValues,
   yValues,
   label,
   labelStatus,
-  singleColor,
-  multiColor,
+  lineSingleColor,
+  lineMultiColor,
   colorStatus,
-  backgroundColor,
   fillSingleColor,
   fillMultiColor,
+  backgroundColor,
   fillColorStatus,
 }) => {
-  var fillColor;
+  const [darkMode, setDarkMode] = useState(false);
+  const [lineColor, setLineColor] = useState([]);
+  const [fillColor, setFillColor] = useState([]);
 
-  const data = {
-    labels: xValues,
-    datasets: [
-      {
-        data: yValues,
-        backgroundColor: multiColor,
-        hoverBackgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
-      },
-    ],
+  useEffect(() => {
+    if (colorStatus == "lineSingle") {
+      setLineColor(lineSingleColor);
+    } else {
+      setLineColor(lineMultiColor);
+    }
+  }, [colorStatus, lineSingleColor, lineMultiColor]);
+
+  useEffect(() => {
+    if (backgroundColor != "#ffffff") {
+      setDarkMode(true);
+    } else {
+      setDarkMode(false);
+    }
+  }, [backgroundColor]);
+
+  const hex2rgb = (hex) => {
+    const r = parseInt(hex.slice(1, 3), 16);
+    const g = parseInt(hex.slice(3, 5), 16);
+    const b = parseInt(hex.slice(5, 7), 16);
+
+    // return {r, g, b}
+    const rgba = `rgba(${r}, ${g}, ${b})`;
+    console.log(rgba);
+    return rgba;
   };
 
-  const options = {
-    // You can customize chart options here
-  };
+  useEffect(() => {
+    const newFillColor = [];
+    if (fillColorStatus === "fillSingle") {
+      newFillColor.push(hex2rgb(fillSingleColor));
+    } else if (fillColorStatus === "fillMulti") {
+      fillMultiColor.forEach((color) => {
+        newFillColor.push(hex2rgb(color));
+      });
+    }
+    setFillColor(newFillColor);
+  }, [fillColorStatus, fillSingleColor, fillMultiColor]);
+  return (
+    <Doughnut
+      data={{
+        labels: xValues,
+        datasets: [
+          {
+            label: label,
+            data: yValues,
+            backgroundColor: fillColor,
+            borderColor: lineColor,
+            borderWidth: 1,
+          },
+        ],
+      }}
+      options={{
+        responsive: true,
+        maintainAspectRation: true,
+        legend: {
+          // display false makes the dataset label hide
+          display: true,
+        },
 
-  return <Doughnut data={data} options={options} />;
+        title: {
+          display: true,
+          text: "Pie Chart",
+        },
+        plugins: {
+          legend: {
+            display: false,
+          },
+        },
+      }}
+    />
+  );
 };
 
 export default DoughnutChart;
