@@ -694,8 +694,6 @@ export default function Edit() {
         }
       }
     });
-
-    console.log(extractedProperties);
   }, [rows, filters, xAxis, yAxis]);
 
   useEffect(() => {
@@ -845,6 +843,7 @@ export default function Edit() {
   const handleXSelect = (value) => {
     setXAxis(value);
   };
+
   const handleYSelect = (value) => {
     setYAxis(value);
   };
@@ -1222,7 +1221,7 @@ export default function Edit() {
           {/* xaxis values */}
           <div className="mb-6">
             <h3 className="text-sm font-medium mb-2">X-Axis</h3>
-            <Select onValueChange={handleXSelect}>
+            <Select onValueChange={handleXSelect} defaultValue={xAxisName}>
               <SelectTrigger id="xaxis">
                 <SelectValue placeholder={xAxisName} />
               </SelectTrigger>
@@ -1241,7 +1240,7 @@ export default function Edit() {
           {/* yaxis values */}
           <div className="mb-6">
             <h3 className="text-sm font-medium mb-2">Y-Axis</h3>
-            <Select onValueChange={handleYSelect}>
+            <Select onValueChange={handleYSelect} defaultValue={yAxisName}>
               <SelectTrigger id="xaxis">
                 <SelectValue placeholder={yAxisName} />
               </SelectTrigger>

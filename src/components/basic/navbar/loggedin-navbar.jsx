@@ -27,7 +27,6 @@ import {
   Users,
 } from "lucide-react";
 
-
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 export default function LoggedInNavBar() {
   const { user, logout } = UserAuth();
@@ -49,8 +48,8 @@ export default function LoggedInNavBar() {
             href="/dashboard"
             className="flex items-center gap-2 text-lg font-semibold md:text-base"
           >
-           <LineChartIcon className="h-6 w-6" />
-          <span className="">Notion2Charts</span>
+            <LineChartIcon className="h-6 w-6" />
+            <span className="">Notion2Charts</span>
           </Link>
           {/* <Link
             href="#"
@@ -103,10 +102,11 @@ export default function LoggedInNavBar() {
                 <LineChartIcon className="h-6 w-6" />
                 <span className="sr-only">Notion2Charts</span>
               </Link>
-              {/* <Link href="#" className="hover:text-foreground">
+
+              <Link href="#" className="hover:text-foreground">
                 Dashboard
               </Link>
-              <Link
+              {/*    <Link
                 href="#"
                 className="text-muted-foreground hover:text-foreground"
               >
@@ -144,43 +144,40 @@ export default function LoggedInNavBar() {
               />
             </div>
           </form> */}
-          <div className="ml-auto flex-1 sm:flex-initial">
+          <div className="ml-auto flex-initial">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button className="rounded-full" size="icon" variant="ghost">
+                  <Image
+                    alt="Avatar"
+                    className="rounded-full"
+                    height="32"
+                    src={user ? user.photoURL : "/user.png"}
+                    style={{
+                      aspectRatio: "32/32",
+                      objectFit: "cover",
+                    }}
+                    width="32"
+                  />
+                  <span className="sr-only">Toggle user menu</span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>
+                  <Link href="/settings">Settings</Link>
+                </DropdownMenuItem>
 
-         
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button className="rounded-full" size="icon" variant="ghost">
-                <Image
-                  alt="Avatar"
-                  className="rounded-full"
-                  height="32"
-                  src={user ? user.photoURL : "/user.png"}
-                  style={{
-                    aspectRatio: "32/32",
-                    objectFit: "cover",
-                  }}
-                  width="32"
-                />
-                <span className="sr-only">Toggle user menu</span>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>
-                <Link href="/settings">Settings</Link>
-              </DropdownMenuItem>
-
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>
-                <Button onClick={handleSignOut}>Logout</Button>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-       </div>
-         </div>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>
+                  <Button onClick={handleSignOut}>Logout</Button>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        </div>
       </header>
-   
     </>
   );
 }
