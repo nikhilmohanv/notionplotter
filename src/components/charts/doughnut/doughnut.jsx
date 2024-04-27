@@ -64,7 +64,7 @@ const DoughnutChart = ({
     setFillColor(newFillColor);
   }, [fillColorStatus, fillSingleColor, fillMultiColor]);
   return (
-    <div style={{ backgroundColor: backgroundColor }}>
+    // <div style={{ backgroundColor: backgroundColor }}>
       <Doughnut
         data={{
           labels: xValues,
@@ -122,7 +122,7 @@ const DoughnutChart = ({
           },
         }}
       />
-    </div>
+    // </div>
   );
 };
 

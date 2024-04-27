@@ -62,7 +62,6 @@ export default function PieChart({
   }, [fillColorStatus, fillSingleColor, fillMultiColor]);
 
   return (
-    <div style={{ backgroundColor: backgroundColor}}>
       <Pie
         data={{
           labels: xValues,
@@ -121,6 +120,6 @@ export default function PieChart({
         }}
         // height="100%"
       />
-    </div>
+    // </div>
   );
 }

@@ -133,7 +133,7 @@ export default function Embed() {
 
   return (
     <>
-      <main className="">
+      <main className="w-screen h-screen" style={{backgroundColor: backgroundColor}}>
         {chartType == "Bar Chart" ? (
           <div
             style={{
@@ -187,6 +187,7 @@ export default function Embed() {
               alignItems: "center", // Center vertically
               overflow: "hidden",
               height: `${windowSize.innerHeight}px`,
+              
             }}
           >
             <DoughnutChart

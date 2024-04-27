@@ -1366,7 +1366,8 @@ export default function Edit() {
                 justifyContent: "center", // Center horizontally
                 alignItems: "center", // Center vertically
                 overflow: "hidden",
-                height: `100%`,
+                height: `75%`,
+                backgroundColor: backgroundColor,
               }}
             >
               <DoughnutChart
@@ -1391,7 +1392,7 @@ export default function Edit() {
                 alignItems: "center", // Center vertically
                 overflow: "hidden",
                 height: `75%`,
-                // width:"100%"
+                backgroundColor: backgroundColor,
               }}
             >
               <PieChart
