@@ -42,7 +42,6 @@ export default function CreateGraph({ loading }) {
   const [name, setName] = useState("");
 
   const router = useRouter();
-  console.log(user);
 
   //store staatea of combobox
   const [open, setOpen] = useState(false);
@@ -118,11 +117,9 @@ export default function CreateGraph({ loading }) {
             }
           }
           setColNameAndId(extractedNameId);
-          console.log(colNameAndId);
         });
     }
   }, [databaseID]);
-  console.log(colNameAndId);
   useEffect(() => {
     if (databaseID !== null && databaseID !== undefined) {
       fetch("/api/notion/querydb?id=" + databaseID)
@@ -134,7 +131,6 @@ export default function CreateGraph({ loading }) {
           console.log(error);
         });
     }
-    console.log(rows);
   }, [databaseID]);
 
   // let extractedProperties: { name: string; id: any; type: any; value: any }[] =
@@ -180,67 +176,14 @@ export default function CreateGraph({ loading }) {
     return propertiesArray.flat();
   }, [rows]);
 
-  // rows.forEach((page) => {
-  //   // Extract properties from the 'properties' object
-  //   const properties = page.properties;
-
-  //   // Loop through each property
-  //   for (const key in properties) {
-  //     if (properties.hasOwnProperty(key)) {
-  //       const property = properties[key];
-
-  //       // Extract property name and type
-  //       const propertyName = key;
-  //       const id = property.id;
-
-  //       let propertyType;
-  //       let value;
-
-  //       if (property.type == "number") {
-  //         value = property.number;
-  //         propertyType = property.type;
-  //       } else if (property.type == "formula") {
-  //         if (property.formula.type == "string") {
-  //           value = property.formula.string;
-  //           propertyType = property.formula.type;
-  //         } else if (property.formula.type == "number") {
-  //           propertyType = property.formula.type;
-  //           value = property.formula.number;
-  //         }
-  //       } else if (property.type == "relation") {
-  //         propertyType = property.type;
-  //         value = "";
-  //       } else if (property.type == "rollup") {
-  //         if (property.rollup.type == "number") {
-  //           value = property.rollup.number;
-  //           propertyType = "number";
-  //         } else if ((property.rollup.type = "array")) {
-  //           value = "";
-  //           propertyType = "array";
-  //         }
-  //       }
-
-  //       // Store the result in the array
-  //       extractedProperties.push({
-  //         name: propertyName,
-  //         id: id,
-  //         type: propertyType,
-  //         value: value,
-  //       });
-  //     }
-  //   }
-  // });
-  // console.log(extractedProperties);
 
   //extrating x axis values from extratedproperties variable
   useEffect(() => {
     if (xAxis != null && xAxis != undefined) {
       let XAxisData;
       if (extractedProperties.length > 0) {
-        console.log(xAxis);
         XAxisData = extractedProperties.filter((obj) => obj.id == xAxis);
       }
-      //console.log(axisData)
       if (XAxisData) {
         const extractedXValues = XAxisData.map((obj) => {
           return obj.value;
@@ -248,7 +191,6 @@ export default function CreateGraph({ loading }) {
 
         // Store the result in the state variable
         setXAxisValues(extractedXValues);
-        // console.log(xAxisValues);
       }
       // setXAxisValues()
     }
@@ -259,19 +201,15 @@ export default function CreateGraph({ loading }) {
     if (yAxis != null && yAxis != undefined) {
       let YAxisData;
       if (extractedProperties.length > 0) {
-        console.log(yAxis);
         YAxisData = extractedProperties.filter((obj) => obj.id == yAxis);
       }
-      //console.log(axisData)
       if (YAxisData) {
         const extractedYValues = YAxisData.map((obj) => {
           return obj.value;
         });
 
-        //console.log(extractedValues);
         // Store the result in the state variable
         setYAxisValues(extractedYValues);
-        // console.log(xAxisValues);
       }
       // setXAxisValues()
     }

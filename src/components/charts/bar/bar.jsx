@@ -64,7 +64,6 @@ const BarChart = ({
 
     // return {r, g, b}
     const rgba = `rgba(${r}, ${g}, ${b})`;
-    console.log(rgba);
     return rgba;
   };
 
@@ -79,11 +78,6 @@ const BarChart = ({
     }
     setFillColor(newFillColor);
   }, [fillColorStatus, fillSingleColor, fillMultiColor]);
-
-  console.log(fillColorStatus);
-  console.log(fillSingleColor);
-  console.log(fillMultiColor);
-
   var chartColors = {
     red: "rgb(255, 99, 132,0.5)",
     orange: "rgb(255, 159, 64,0.5)",

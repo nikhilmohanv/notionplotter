@@ -3,9 +3,6 @@ const { Client } = require("@notionhq/client");
 import { cookies } from "next/headers";
 
 export default async function querydb(id, filter, andOr) {
-  // let token="secret_cs1WjMjKaWwoOhRdpgumza2Afnbl8sK2Hk4rqd7fqYU"
-  console.log(filter);
-
   const cookieStore = cookies();
   const tokenCookie = cookieStore.get("access_token")?.value;
 
@@ -156,8 +153,6 @@ export default async function querydb(id, filter, andOr) {
     };
   });
   try {
-    console.log(filtered);
-
     const response = await notion.databases.query({
       database_id: id,
       sorts: [

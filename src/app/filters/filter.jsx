@@ -27,37 +27,6 @@ export default function Filter({ getFilters, dbId,filterLoadingState,filters,col
   const [filter, setFilter] = useState([]);
   const [filterChange, setFilterChange] = useState(false);
 
-  console.log(windowDimensions);
-
-  // retrieve coloumn
-  // useEffect(() => {
-  //   if (dbId !== null && dbId !== undefined) {
-  //     fetch("api/notion/retrievecolumns?id=" + dbId)
-  //       .then((res) => res.json())
-  //       .then((cols) => {
-  //         setCols(cols);
-  //         const extractedNameId = [];
-  //         for (const propertyName in cols.properties) {
-  //           if (cols.properties.hasOwnProperty(propertyName)) {
-  //             // Access the property object
-  //             const property = cols.properties[propertyName];
-  //             const propertyIdValue = property.id;
-  //             const propertyNameValue = property.name;
-  //             const propertyType = property.type;
-
-  //             // const propertyType
-
-  //             extractedNameId.push({
-  //               id: propertyIdValue,
-  //               name: propertyNameValue,
-  //               type: propertyType,
-  //             });
-  //           }
-  //         }
-  //         setColNameAndId(extractedNameId);
-  //       });
-  //   }
-  // }, [dbId]);
 
   // setting filter state in this page to the filters form the props
   useEffect(()=>{
@@ -70,7 +39,6 @@ export default function Filter({ getFilters, dbId,filterLoadingState,filters,col
   
   useEffect(() => {
     if (dbId !== null && dbId !== undefined) {
-      console.log("20");
       fetch("/api/notion/completequerydb?id=" + dbId, {
         method: "POST",
         headers: {
@@ -451,7 +419,6 @@ export default function Filter({ getFilters, dbId,filterLoadingState,filters,col
     }
   });
 
-  console.log(colNameAndId);
 
   const removeFilter = (index) => {
     let data = [...filter];
@@ -459,15 +426,10 @@ export default function Filter({ getFilters, dbId,filterLoadingState,filters,col
     setFilter(data);
   };
   const handleFilterInsertion = (event, index) => {
-    // console.log(name)
-    // console.log(value)
-    console.log(event.target.name);
-    console.log(index);
+   
     let data = [...filter];
-    console.log(event.target.name);
 
     if (event.target.name == "property") {
-      console.log(" inside property");
 
       let currentLabel = data[index].property.label;
       data[index].property.label = event.target.value;
@@ -517,7 +479,6 @@ export default function Filter({ getFilters, dbId,filterLoadingState,filters,col
       }
     } else if (event.target.name == "operation") {
       //10-0
-      console.log(" inside operation");
       let currentLabel = data[index].operator;
       data[index].operator = event.target.value;
       let updatedLabel = data[index].operator;
@@ -554,7 +515,6 @@ export default function Filter({ getFilters, dbId,filterLoadingState,filters,col
         data[index].operator = event.target.value;
       }
     } else if (event.target.name == "value") {
-      console.log(" inside value");
 
       data[index].value = event.target.value; //string, date, multi_select,number,people
     } else if ("rollupOperation") {
@@ -564,12 +524,9 @@ export default function Filter({ getFilters, dbId,filterLoadingState,filters,col
     setFilter(data);
   };
 
-  console.log(filter);
   const addFields = () => {
-    console.log(filter.length);
     let newfield;
     if (filter.length == 0) {
-      console.log("inside true");
       newfield = {
         value: "",
         operator: "",
@@ -586,15 +543,11 @@ export default function Filter({ getFilters, dbId,filterLoadingState,filters,col
       setFilter([...filter, newfield]);
     }
 
-    // filterToJson(filter,"and")
-    console.log("filter in json");
   };
 
   function handleAndOr(event) {
-    console.log(event.target.value);
     setAndOr(event.target.value);
   }
-  console.log(andOr);
 
   // to store ids of
   let ids = [];
@@ -603,7 +556,6 @@ export default function Filter({ getFilters, dbId,filterLoadingState,filters,col
     setFilterChange(!filterChange);
     getFilters(filter,andOr);
   }
-  console.log(filterChange);
 
   return (
     <>
@@ -1067,14 +1019,12 @@ export default function Filter({ getFilters, dbId,filterLoadingState,filters,col
                               ? rows.value !== "No name" &&
                                 // Declare the ids array here
                                 (() => {
-                                  console.log(rows.value);
                                   return (
                                     <>
                                       {rows.value.map((people) => {
                                         return (
                                           <>
                                             {/* // Check if the id is already in the ids array */}
-                                            {console.log(people)}
 
                                             {/* // Add the id to the ids array */}
                                             {ids.push(people.id)}
@@ -1178,7 +1128,6 @@ export default function Filter({ getFilters, dbId,filterLoadingState,filters,col
                               ? rows.value !== "No name" &&
                                 // Declare the ids array here
                                 (() => {
-                                  console.log(rows.value);
                                   return (
                                     <>
                                       {rows.value.map(
@@ -1271,13 +1220,9 @@ function filterToJson(filter) {
       },
     };
 
-    console.log(json);
   }
 }
 
-// Example usage
-// const result = filterToJson();
-// console.log(result);
 function MoreVerticalIcon(props) {
   return (
     <svg

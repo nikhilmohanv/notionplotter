@@ -6,7 +6,6 @@ export const POST = async (req) => {
     // const uid = req.nextUrl.searchParams.get("uid");
     
     const dbs = await getDbs();
-    console.log(dbs);
     return NextResponse.json(dbs);
   } catch (err) {
     console.log("Error:", err);

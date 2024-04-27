@@ -13,7 +13,6 @@ const db = getFirestore(app);
 export default async function getDoumentsWithUId(uid) {
   let result = null;
   let error = null;
-  console.log(uid);
   try {
     const q = query(collection(db, "graphs"), where("userid", "==", uid));
     result = await getDocs(q);

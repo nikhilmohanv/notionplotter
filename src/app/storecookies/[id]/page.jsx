@@ -9,7 +9,6 @@ export default function StoreCookies() {
   const pathname = usePathname();
   useEffect(() => {
     const value = pathname.slice(14);
-    console.log(value);
     // Set the value of the 'my-cookie' cookie
     cookies.set("access_token", value);
     redirect("/");

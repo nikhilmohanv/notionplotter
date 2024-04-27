@@ -46,7 +46,6 @@ export default function PieChart({
 
     // return {r, g, b}
     const rgba = `rgba(${r}, ${g}, ${b})`;
-    console.log(rgba);
     return rgba;
   };
 

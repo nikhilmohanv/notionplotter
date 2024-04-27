@@ -15,7 +15,6 @@ export default async function getTokenWithUId(uid) {
   try {
     const q = query(collection(db, "access_tokens"), where("uid", "==", uid));
     result = await getDocs(q);
-    console.log(result.docs());
   } catch (error) {
     console.error("Error fetching data:", error);
     error = error;

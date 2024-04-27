@@ -6,7 +6,6 @@ import { cookies } from 'next/headers'
 
 
 export default async function completequerydb(id) {
-  // let token="secret_cs1WjMjKaWwoOhRdpgumza2Afnbl8sK2Hk4rqd7fqYU"  
 
   const cookieStore = cookies()
   const tokenCookie = cookieStore.get('access_token')?.value

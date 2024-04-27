@@ -15,19 +15,16 @@ export const POST = async (req) => {
         const { result, error } = await getDoument(collection, docId);
 
         if (error) {
-            console.log('Error:', error);
             return NextResponse.error();
         }
         if (result) {
             if (!result.exists()) {
-                console.log('Document not found');
                 return NextResponse.error();
             }
             
             return NextResponse.json(result.data());
         }
     } catch (err) {
-        console.log('Error:', err);
         return NextResponse.error();
     }
 }

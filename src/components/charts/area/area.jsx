@@ -52,7 +52,6 @@ const AreaChart = ({
     }
   }, [colorStatus, lineSingleColor, lineMultiColor]);
 
-  console.log(backgroundColor.trim().toLowerCase());
 
   useEffect(() => {
     if (backgroundColor.trim().toLowerCase() == "#ffffff") {
@@ -63,14 +62,12 @@ const AreaChart = ({
   }, [backgroundColor]);
 
   const hex2rgb = (hex) => {
-    console.log(hex);
     const r = parseInt(hex.slice(1, 3), 16);
     const g = parseInt(hex.slice(3, 5), 16);
     const b = parseInt(hex.slice(5, 7), 16);
 
     // return {r, g, b}
     const rgba = `rgba(${r}, ${g}, ${b}, 0.2)`;
-    console.log(rgba);
     return rgba;
   };
 
@@ -85,10 +82,6 @@ const AreaChart = ({
     }
     setFillColor(newFillColor);
   }, [fillColorStatus, fillSingleColor, fillMultiColor]);
-
-  console.log(fillColorStatus);
-  console.log(fillSingleColor);
-  console.log(fillMultiColor);
 
   return (
     <div id="chart" style={{ backgroundColor: backgroundColor }}>

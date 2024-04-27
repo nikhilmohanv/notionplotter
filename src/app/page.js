@@ -44,45 +44,27 @@ export default function Home() {
       if (updatedUser) {
         // Get access token with user UID from Firestore
         const { result, error } = await getTokenWithUId(updatedUser.uid);
-        console.log(updatedUser.uid);
-
+   
         if (result) {
-          console.log("inside result");
-          console.log(result);
+         
           // Loop through each document in the result
           result.forEach(async (doc) => {
             async function storeAccessToken() {
               // Accessing the data of each document
-              console.log(doc.data().access_token);
-
-              // Encrypt the token before storing it in a cookie
-              // const token = await encrypt(doc.data().access_token);
-              console.log(doc.data().access_token);
               if (doc.data().access_token) {
                 //updating loading context
                 setLoading(true)
-
-                console.log("inside token");
-                console.log(loading)
-
                 // Set access_token and uid cookies
                 setCookie("access_token", doc.data().access_token);
-
-                console.log("success");
               }
-
-              // setCookie("accesstoken", result);
             }
             // Call storeAccessToken function
             await storeAccessToken();
            
-            console.log(loading)
           });
           setCookie("uid", updatedUser.uid);
           redirect("/dashboard");
-          // console.log(result.docs());
         } else {
-          console.log("error");
           //set the notion connect status to false, if it false then show the connect to notion button
         }
       }
@@ -90,18 +72,6 @@ export default function Home() {
       console.log(error);
     }
   }
-
-  // Handle user sign-out
-  //   const handleSignOut = async () => {
-  //     try {
-  //       await logout();
-  //       deleteCookie("access_token", { path: "/", domain: ".localhost" });
-  //       deleteCookie("uid", { path: "/", domain: ".localhost" });
-  //       redirect("/");
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
 
   return (
     <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48">

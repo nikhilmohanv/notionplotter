@@ -32,6 +32,19 @@ import DoughnutChart from "@/components/charts/doughnut/doughnut";
 import PieChart from "@/components/charts/pie/pie";
 import { Skeleton } from "@/components/ui/skeleton";
 import Filter from "@/app/filters/filter";
+import { Copy } from "lucide-react";
+
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
 
 export default function Edit() {
   const cookies = useCookies();
@@ -141,8 +154,7 @@ export default function Edit() {
   //store chart type
   const [chartType, setChartType] = useState("");
 
-  const previewurl = "localhost:3000/preview/" + id;
-  console.log(chartType);
+  const previewurl = "https://notion2charts.vercel.app/embed/" + id;
 
   //fetch data from api api/firebase/getdocument
   useEffect(() => {
@@ -227,12 +239,10 @@ export default function Edit() {
 
   //fetch data from api api/notion/querydb?id={id} this have all the row information
   useEffect(() => {
-    console.log(filters);
 
     if (dbId !== null && dbId !== undefined) {
       setFilterLoadingState(true);
 
-      console.log("20");
       fetch("/api/notion/querydb?id=" + dbId, {
         method: "POST",
         headers: {
@@ -251,7 +261,6 @@ export default function Edit() {
     }
   }, [dbId, filters]);
 
-  console.log(rows);
   //setting lablel status to true or false
   // const handleLabelStatus = () => {
   //   setLabelStatus(!labelStatus);
@@ -314,7 +323,6 @@ export default function Edit() {
     const { result, error } = await addDataWithId("graphs", id, data);
     setSavingStatus(false);
     if (result) {
-      console.log(result);
 
       //return router.push(`/edit/${result.id}`);
     }
@@ -701,10 +709,8 @@ export default function Edit() {
     if (xAxis != null && xAxis != undefined) {
       let XAxisData;
       if (extractedProperties.length > 0) {
-        console.log(xAxis);
         XAxisData = extractedProperties.filter((obj) => obj.id == xAxis);
       }
-      //console.log(axisData)
       if (XAxisData) {
         const extractedXValues = XAxisData.map((obj) => {
           if (
@@ -770,7 +776,6 @@ export default function Edit() {
             obj.type === "phone_number" ||
             obj.rollupType === "phone_number"
           ) {
-            console.log("before extraction", obj.value);
             if (Array.isArray(obj.value)) {
               return obj.value[0];
             }
@@ -786,11 +791,9 @@ export default function Edit() {
 
           return obj.value;
         });
-        console.log("extracted x", extractedXValues);
 
         // Store the result in the state variable
         setXAxisValues(extractedXValues);
-        // console.log(xAxisValues);
       }
       // setXAxisValues()
     }
@@ -800,19 +803,14 @@ export default function Edit() {
     if (yAxis != null && yAxis != undefined) {
       let YAxisData;
       if (extractedProperties.length > 0) {
-        console.log(yAxis);
         YAxisData = extractedProperties.filter((obj) => obj.id == yAxis);
       }
-      //console.log(axisData)
       if (YAxisData) {
         const extractedYValues = YAxisData.map((obj) => {
           if (aggregation == "count") {
             if (Array.isArray(obj.value)) {
-              console.log("aggregation ", obj.value);
-              console.log("length ", obj.value.length);
               return obj.value.length;
             } else {
-              console.log("it is a string");
               return 1;
             }
           } else if (aggregation == "sum") {
@@ -828,13 +826,9 @@ export default function Edit() {
           }
           return obj.value;
         });
-
-        //console.log(extractedValues);
         // Store the result in the state variable
-        console.log("extracted y", extractedYValues);
 
         setYAxisValues(extractedYValues);
-        // console.log(xAxisValues);
       }
       // setXAxisValues()
     }
@@ -851,7 +845,6 @@ export default function Edit() {
 
   const handleAggregationChange = (value) => {
     setAggregation(value);
-    console.log("aggregation changed", aggregation);
   };
 
   return (
@@ -1300,7 +1293,51 @@ export default function Edit() {
           </Button>
         </aside>
 
-        <main className="flex-grow p-6">
+        <main className="flex-grow p-4">
+            <header className="flex justify-between items-center ">
+              <div className="ml-auto flex-initial space-x-2">
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button variant="outline">Share</Button>
+                  </DialogTrigger>
+                  <DialogContent className="sm:max-w-md">
+                    <DialogHeader>
+                      <DialogTitle>Share link</DialogTitle>
+                      <DialogDescription>
+                        Anyone who has this link will be able to view this.
+                      </DialogDescription>
+                    </DialogHeader>
+                    <div className="flex items-center space-x-2">
+                      <div className="grid flex-1 gap-2">
+                        <Label htmlFor="link" className="sr-only">
+                          Link
+                        </Label>
+                        <Input
+                          id="embedLink"
+                          defaultValue={previewurl}
+                          readOnly
+                        />
+                      </div>
+                      <Button
+                        onClick={copyToClipboard}
+                        size="sm"
+                        className="px-3"
+                      >
+                        <span className="sr-only">Copy</span>
+                        <Copy className="h-4 w-4" />
+                      </Button>
+                    </div>
+                    <DialogFooter className="sm:justify-start">
+                      <DialogClose asChild>
+                        <Button type="button" variant="secondary">
+                          Close
+                        </Button>
+                      </DialogClose>
+                    </DialogFooter>
+                  </DialogContent>
+                </Dialog>
+              </div>
+            </header>
           {chartType == "Bar Chart" ? (
             <BarChart
               xValues={xAxisValues}
@@ -1331,14 +1368,14 @@ export default function Edit() {
             />
           ) : chartType == "Doughnut Chart" ? (
             <div
-            style={{
-              display: "flex",
-              justifyContent: "center", // Center horizontally
-              alignItems: "center", // Center vertically
-              overflow: "hidden",
-              height: `100%`,
-            }}
-          >
+              style={{
+                display: "flex",
+                justifyContent: "center", // Center horizontally
+                alignItems: "center", // Center vertically
+                overflow: "hidden",
+                height: `100%`,
+              }}
+            >
               <DoughnutChart
                 xValues={xAxisValues}
                 yValues={yAxisValues}
@@ -1354,7 +1391,16 @@ export default function Edit() {
               />
             </div>
           ) : chartType == "Pie Chart" ? (
-            <div className="flex  h-[833px] w-[833px] items-center">
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center", // Center horizontally
+                alignItems: "center", // Center vertically
+                overflow: "hidden",
+                height: `100%`,
+                
+              }}
+            >
               <PieChart
                 xValues={xAxisValues}
                 yValues={yAxisValues}
@@ -1744,4 +1790,15 @@ function PlusIcon(props) {
     //   </g>
     // </svg>
   );
+}
+function copyToClipboard() {
+  // Get the text field
+  var copyText = document.getElementById("embedLink");
+
+  // Select the text field
+  copyText.select();
+  copyText.setSelectionRange(0, 99999); // For mobile devices
+
+  // Copy the text inside the text field
+  navigator.clipboard.writeText(copyText.value);
 }

@@ -24,9 +24,7 @@ export default function Embed() {
       window.removeEventListener("resize", handleWindowResize);
     };
   }, []);
-
-  console.log(windowSize.innerHeight);
-  console.log(windowSize.innerWidth);
+  
   const pathname = usePathname();
   const id = pathname.slice(7);
   const [data, setData] = useState([]);

@@ -53,9 +53,6 @@ export default async function NotoionCallback({ searchParams }) {
     response.bot_id,
     data
   );
-  // if(token){
 
-  // 	cookies().set({name: 'access_token',value: token})
-  // }
   redirect(`/storecookies/${response.access_token}`);
 }
