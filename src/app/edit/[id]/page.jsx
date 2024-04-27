@@ -1330,7 +1330,15 @@ export default function Edit() {
               fillColorStatus={fillColorStatus}
             />
           ) : chartType == "Doughnut Chart" ? (
-            <div className="flex items-center justify-center">
+            <div
+            style={{
+              display: "flex",
+              justifyContent: "center", // Center horizontally
+              alignItems: "center", // Center vertically
+              overflow: "hidden",
+              height: `100%`,
+            }}
+          >
               <DoughnutChart
                 xValues={xAxisValues}
                 yValues={yAxisValues}

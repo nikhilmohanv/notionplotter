@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect,useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import AreaChart from "@/components/charts/area/area";
 import LoggedInNavBar from "@/components/basic/navbar/loggedin-navbar";
 import BarChart from "@/components/charts/bar/bar";
@@ -7,6 +7,7 @@ import DoughnutChart from "@/components/charts/doughnut/doughnut";
 import PieChart from "@/components/charts/pie/pie";
 import { usePathname } from "next/navigation";
 import { Skeleton } from "@/components/ui/skeleton";
+import "./embed.css";
 
 export default function Embed() {
   const [chartType, setChartType] = useState();
@@ -17,18 +18,17 @@ export default function Embed() {
       setWindowSize(getWindowSize());
     }
 
-    window.addEventListener('resize', handleWindowResize);
+    window.addEventListener("resize", handleWindowResize);
 
     return () => {
-      window.removeEventListener('resize', handleWindowResize);
+      window.removeEventListener("resize", handleWindowResize);
     };
   }, []);
 
-
-console.log(windowSize.innerHeight)
-console.log(windowSize.innerWidth)
+  console.log(windowSize.innerHeight);
+  console.log(windowSize.innerWidth);
   const pathname = usePathname();
-  const id = pathname.slice(6);
+  const id = pathname.slice(7);
   const [data, setData] = useState([]);
   //store label of the graph
   const [label, setLabel] = useState();
@@ -71,7 +71,6 @@ console.log(windowSize.innerWidth)
   const [name, setName] = useState();
   const [xAxisName, setXAxisName] = useState();
   const [yAxisName, setYAxisName] = useState();
-  const [savingStatus, setSavingStatus] = useState(false);
 
   //selecting which coloring is used for line, single or multiple color
   const [colorStatus, setColorStatus] = useState("lineSingle");
@@ -85,22 +84,10 @@ console.log(windowSize.innerWidth)
   //to store all multi color values
   const [fillMultiColor, setFillMultiColor] = useState([""]);
 
-  // aggregation for sum and count
-  const [aggregation, setAggregation] = useState("count");
-
-  // couting the rows in the data extractedProperties
-  const [count, setCount] = useState(0);
-
   //this adds a new color input to the multicolor input array
   const handleAddColor = () => {
     setLineMultiColor([...lineMultiColor, "#000000"]);
   };
-
-  const [andOr, setAndOr] = useState("and");
-  // for storing filters
-  const [filters, setFilters] = useState([]);
-
-  const [filterLoadingState, setFilterLoadingState] = useState(false);
 
   useEffect(() => {
     fetch("/api/firebase/getdocument?collection=graphs&docId=" + id, {
@@ -119,7 +106,6 @@ console.log(windowSize.innerWidth)
         data.xAxisName && setXAxisName(data.xAxisName);
         data.yAxisName && setYAxisName(data.yAxisName);
         data.type && setChartType(data.type);
-
         data.xaxisId && setXAxis(data.xaxisId);
         data.label && setLabel(data.label);
         data.fillSingleColor && setFillSingleColor(data.fillSingleColor);
@@ -129,11 +115,8 @@ console.log(windowSize.innerWidth)
         data.lineMultiColor && setLineMultiColor(data.lineMultiColor);
         data.colorStatus && setColorStatus(data.colorStatus);
         data.fillColorStatus && setFillColorStatus(data.fillColorStatus);
-        data.filters && setFilters(data.filters);
-        data.andOr && setAndOr(data.andOr);
-        data.aggregation && setAggregation(data.aggregation);
-        setDbUid(data.userid);
 
+        setDbUid(data.userid);
         if (data.xaxis && data.yaxis) {
           const xaxis = data.xaxis.split(", ");
           const yaxis = data.yaxis.split(", ");
@@ -152,39 +135,62 @@ console.log(windowSize.innerWidth)
 
   return (
     <>
-      <main className="flex-grow p-6">
+      <main className="">
         {chartType == "Bar Chart" ? (
-          <BarChart
-            xValues={xAxisValues}
-            yValues={yAxisValues}
-            label={label}
-            labelStatus={labelStatus}
-            lineSingleColor={lineSingleColor}
-            lineMultiColor={lineMultiColor}
-            colorStatus={colorStatus}
-            fillSingleColor={fillSingleColor}
-            fillMultiColor={fillMultiColor}
-            backgroundColor={backgroundColor}
-            fillColorStatus={fillColorStatus}
-          />
+          <div
+            style={{
+              position: "relative",
+              height: `${innerHeight}px`,
+              width: `${innerWidth}px`,
+            }}
+          >
+            <BarChart
+              xValues={xAxisValues}
+              yValues={yAxisValues}
+              label={label}
+              labelStatus={labelStatus}
+              lineSingleColor={lineSingleColor}
+              lineMultiColor={lineMultiColor}
+              colorStatus={colorStatus}
+              fillSingleColor={fillSingleColor}
+              fillMultiColor={fillMultiColor}
+              backgroundColor={backgroundColor}
+              fillColorStatus={fillColorStatus}
+            />
+          </div>
         ) : chartType == "Area Chart" ? (
-          <AreaChart
-            xValues={xAxisValues}
-            yValues={yAxisValues}
-            label={label}
-            labelStatus={labelStatus}
-            lineSingleColor={lineSingleColor}
-            lineMultiColor={lineMultiColor}
-            colorStatus={colorStatus}
-            backgroundColor={backgroundColor}
-            fillSingleColor={fillSingleColor}
-            fillMultiColor={fillMultiColor}
-            fillColorStatus={fillColorStatus}
-            height={windowSize.innerHeight}
+          <div
+            style={{
+              overflow: "hidden",
+              height: `${windowSize.innerHeight}px`,
+            }}
+          >
+            <AreaChart
+              xValues={xAxisValues}
+              yValues={yAxisValues}
+              label={label}
+              labelStatus={labelStatus}
+              lineSingleColor={lineSingleColor}
+              lineMultiColor={lineMultiColor}
+              colorStatus={colorStatus}
+              backgroundColor={backgroundColor}
+              fillSingleColor={fillSingleColor}
+              fillMultiColor={fillMultiColor}
+              fillColorStatus={fillColorStatus}
+              height={windowSize.innerHeight}
               width={windowSize.innerWidth}
-          />
+            />
+          </div>
         ) : chartType == "Doughnut Chart" ? (
-          <div className="flex items-center justify-center">
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center", // Center horizontally
+              alignItems: "center", // Center vertically
+              overflow: "hidden",
+              height: `${windowSize.innerHeight}px`,
+            }}
+          >
             <DoughnutChart
               xValues={xAxisValues}
               yValues={yAxisValues}
@@ -200,7 +206,15 @@ console.log(windowSize.innerWidth)
             />
           </div>
         ) : chartType == "Pie Chart" ? (
-          <div className="flex  items-center">
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center", // Center horizontally
+              alignItems: "center", // Center vertically
+              overflow: "hidden",
+              height: `${windowSize.innerHeight}px`,
+            }}
+          >
             <PieChart
               xValues={xAxisValues}
               yValues={yAxisValues}
@@ -226,6 +240,6 @@ console.log(windowSize.innerWidth)
 }
 
 function getWindowSize() {
-  const {innerWidth, innerHeight} = window;
-  return {innerWidth, innerHeight};
+  const { innerWidth, innerHeight } = window;
+  return { innerWidth, innerHeight };
 }

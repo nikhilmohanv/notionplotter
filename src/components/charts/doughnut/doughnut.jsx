@@ -81,22 +81,48 @@ const DoughnutChart = ({
         options={{
           responsive: true,
           maintainAspectRation: true,
-          legend: {
-            // display false makes the dataset label hide
-            display: true,
-          },
-
-          title: {
-            display: true,
-            text: "Pie Chart",
-          },
           plugins: {
             legend: {
-              display: true,
-              position:"bottom"
+              position: "top",
+              display: false,
+            },
+
+            title: {
+              display: labelStatus ? false : true,
+              text: !labelStatus && label,
+              align: "center",
+              color: darkMode ? "white" : "black",
+
+              font: {
+                size: 20,
+                weight: 8,
+              },
             },
           },
+         
+         
+          elements: {
+            line: {
+              borderWidth: 2,
+            },
+            point: {
+              radius: 1,
+              backgroundColor: "transparent",
+              borderWidth: 0,
+              hoverBackgroundColor: "#212027",
+              hoverRadius: 4,
+              hoverBorderWidth: 2,
+            },
+          },
+          interaction: {
+            intersect: false,
+            mode: "index",
+          },
+          animation: {
+            duration: 1500,
+          },
         }}
+        
       />
     </div>
   );

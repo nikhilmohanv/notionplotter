@@ -103,7 +103,7 @@ const AreaChart = ({
 
               borderColor: lineColor, //it is the color of line in the cahrt
               pointBorderColor: "rgba(255,255,255,0)",
-              pointHoverBorderColor: lineColor,
+              pointHoverBorderColor: "rgba(255,255,255,0)",
               pointBorderWidth: 3,
               fill: {
                 target: "origin",
@@ -199,8 +199,8 @@ const AreaChart = ({
             duration: 1500,
           },
         }}
-        height={height}
-      width={width}
+      // width="500px"
+      // height="500px"
       />
     </div>
   );
