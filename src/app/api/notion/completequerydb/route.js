@@ -8,7 +8,6 @@ export const POST = async (req) => {
     const url = new URL(req.url, "http://localhost"); // Create URL object
     const params = new URLSearchParams(url.search); // Get query parameters
 
-
     const id = params.get("id");
 
     const dbs = await completequerydb(id);

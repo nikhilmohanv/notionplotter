@@ -239,7 +239,6 @@ export default function Edit() {
 
   //fetch data from api api/notion/querydb?id={id} this have all the row information
   useEffect(() => {
-
     if (dbId !== null && dbId !== undefined) {
       setFilterLoadingState(true);
 
@@ -260,11 +259,6 @@ export default function Edit() {
         });
     }
   }, [dbId, filters]);
-
-  //setting lablel status to true or false
-  // const handleLabelStatus = () => {
-  //   setLabelStatus(!labelStatus);
-  // };
 
   //store datas to the firestore
   const saveToDb = async (e) => {
@@ -323,7 +317,6 @@ export default function Edit() {
     const { result, error } = await addDataWithId("graphs", id, data);
     setSavingStatus(false);
     if (result) {
-
       //return router.push(`/edit/${result.id}`);
     }
 
@@ -1294,50 +1287,50 @@ export default function Edit() {
         </aside>
 
         <main className="flex-grow p-4">
-            <header className="flex justify-between items-center ">
-              <div className="ml-auto flex-initial space-x-2">
-                <Dialog>
-                  <DialogTrigger asChild>
-                    <Button variant="outline">Share</Button>
-                  </DialogTrigger>
-                  <DialogContent className="sm:max-w-md">
-                    <DialogHeader>
-                      <DialogTitle>Share link</DialogTitle>
-                      <DialogDescription>
-                        Anyone who has this link will be able to view this.
-                      </DialogDescription>
-                    </DialogHeader>
-                    <div className="flex items-center space-x-2">
-                      <div className="grid flex-1 gap-2">
-                        <Label htmlFor="link" className="sr-only">
-                          Link
-                        </Label>
-                        <Input
-                          id="embedLink"
-                          defaultValue={previewurl}
-                          readOnly
-                        />
-                      </div>
-                      <Button
-                        onClick={copyToClipboard}
-                        size="sm"
-                        className="px-3"
-                      >
-                        <span className="sr-only">Copy</span>
-                        <Copy className="h-4 w-4" />
-                      </Button>
+          <header className="flex justify-between items-center ">
+            <div className="ml-auto flex-initial space-x-2">
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button variant="outline">Get Embed Link</Button>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-md">
+                  <DialogHeader>
+                    <DialogTitle>Embed link</DialogTitle>
+                    <DialogDescription>
+                      Anyone who has this link will be able to view the graph.
+                    </DialogDescription>
+                  </DialogHeader>
+                  <div className="flex items-center space-x-2">
+                    <div className="grid flex-1 gap-2">
+                      <Label htmlFor="link" className="sr-only">
+                        Link
+                      </Label>
+                      <Input
+                        id="embedLink"
+                        defaultValue={previewurl}
+                        readOnly
+                      />
                     </div>
-                    <DialogFooter className="sm:justify-start">
-                      <DialogClose asChild>
-                        <Button type="button" variant="secondary">
-                          Close
-                        </Button>
-                      </DialogClose>
-                    </DialogFooter>
-                  </DialogContent>
-                </Dialog>
-              </div>
-            </header>
+                    <Button
+                      onClick={copyToClipboard}
+                      size="sm"
+                      className="px-3"
+                    >
+                      <span className="sr-only">Copy</span>
+                      <Copy className="h-4 w-4" />
+                    </Button>
+                  </div>
+                  <DialogFooter className="sm:justify-start">
+                    <DialogClose asChild>
+                      <Button type="button" variant="secondary">
+                        Close
+                      </Button>
+                    </DialogClose>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
+            </div>
+          </header>
           {chartType == "Bar Chart" ? (
             <BarChart
               xValues={xAxisValues}
@@ -1397,8 +1390,8 @@ export default function Edit() {
                 justifyContent: "center", // Center horizontally
                 alignItems: "center", // Center vertically
                 overflow: "hidden",
-                height: `100%`,
-                
+                height: `75%`,
+                // width:"100%"
               }}
             >
               <PieChart
@@ -1689,38 +1682,6 @@ function LeftArrow(props) {
         ></path>{" "}
       </g>
     </svg>
-    // <svg
-    //   {...props}
-    //   height="25px"
-    //   width="25px"
-    //   viewBox="-0.5 0 25 25"
-    //   fill="none"
-    //   xmlns="http://www.w3.org/2000/svg"
-    // >
-    //   <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-    //   <g
-    //     id="SVGRepo_tracerCarrier"
-    //     stroke-linecap="round"
-    //     stroke-linejoin="round"
-    //   ></g>
-    //   <g id="SVGRepo_iconCarrier">
-    //     {" "}
-    //     <path
-    //       d="M12 22.4199C17.5228 22.4199 22 17.9428 22 12.4199C22 6.89707 17.5228 2.41992 12 2.41992C6.47715 2.41992 2 6.89707 2 12.4199C2 17.9428 6.47715 22.4199 12 22.4199Z"
-    //       stroke="#000000"
-    //       stroke-width="1.5"
-    //       stroke-linecap="round"
-    //       stroke-linejoin="round"
-    //     ></path>{" "}
-    //     <path
-    //       d="M13.4102 16.4199L10.3502 13.55C10.1944 13.4059 10.0702 13.2311 9.98526 13.0366C9.9003 12.8422 9.85645 12.6321 9.85645 12.4199C9.85645 12.2077 9.9003 11.9979 9.98526 11.8035C10.0702 11.609 10.1944 11.4342 10.3502 11.29L13.4102 8.41992"
-    //       stroke="#000000"
-    //       stroke-width="1.5"
-    //       stroke-linecap="round"
-    //       stroke-linejoin="round"
-    //     ></path>{" "}
-    //   </g>
-    // </svg>
   );
 }
 
@@ -1751,44 +1712,6 @@ function PlusIcon(props) {
         ></path>{" "}
       </g>
     </svg>
-    // <svg
-    //   {...props}
-    //   height="25px"
-    //   width="25px"
-    //   viewBox="0 0 24 24"
-    //   fill="none"
-    //   xmlns="http://www.w3.org/2000/svg"
-    //   stroke="#000000"
-    // >
-    //   <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-    //   <g
-    //     id="SVGRepo_tracerCarrier"
-    //     stroke-linecap="round"
-    //     stroke-linejoin="round"
-    //   ></g>
-    //   <g id="SVGRepo_iconCarrier">
-    //     {" "}
-    //     <path
-    //       d="M9 12H15"
-    //       stroke="#323232"
-    //       stroke-width="2"
-    //       stroke-linecap="round"
-    //       stroke-linejoin="round"
-    //     ></path>{" "}
-    //     <path
-    //       d="M12 9L12 15"
-    //       stroke="#323232"
-    //       stroke-width="2"
-    //       stroke-linecap="round"
-    //       stroke-linejoin="round"
-    //     ></path>{" "}
-    //     <path
-    //       d="M3 12C3 4.5885 4.5885 3 12 3C19.4115 3 21 4.5885 21 12C21 19.4115 19.4115 21 12 21C4.5885 21 3 19.4115 3 12Z"
-    //       stroke="#323232"
-    //       stroke-width="2"
-    //     ></path>{" "}
-    //   </g>
-    // </svg>
   );
 }
 function copyToClipboard() {

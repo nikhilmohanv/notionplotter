@@ -21,6 +21,7 @@ const DoughnutChart = ({
   backgroundColor,
   fillColorStatus,
 }) => {
+
   const [darkMode, setDarkMode] = useState(false);
   const [lineColor, setLineColor] = useState([]);
   const [fillColor, setFillColor] = useState([]);
@@ -63,7 +64,7 @@ const DoughnutChart = ({
     setFillColor(newFillColor);
   }, [fillColorStatus, fillSingleColor, fillMultiColor]);
   return (
-    <div>
+    <div style={{ backgroundColor: backgroundColor }}>
       <Doughnut
         data={{
           labels: xValues,
@@ -98,8 +99,7 @@ const DoughnutChart = ({
               },
             },
           },
-         
-         
+
           elements: {
             line: {
               borderWidth: 2,
@@ -121,7 +121,6 @@ const DoughnutChart = ({
             duration: 1500,
           },
         }}
-        
       />
     </div>
   );

@@ -88,7 +88,7 @@ export default function CreateGraph({ loading }) {
         });
     }
   }, [user]);
-  
+
   //fetching the fields in the selected database
   //fetch data from api/notion/retrievecolumns?id=${id}
   useEffect(() => {
@@ -98,7 +98,6 @@ export default function CreateGraph({ loading }) {
         headers: {
           "Content-Type": "application/json",
         },
-        
       })
         .then((res) => res.json())
         .then((cols) => {
@@ -175,7 +174,6 @@ export default function CreateGraph({ loading }) {
     // Flatten the array of arrays into a single array
     return propertiesArray.flat();
   }, [rows]);
-
 
   //extrating x axis values from extratedproperties variable
   useEffect(() => {

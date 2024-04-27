@@ -7,7 +7,6 @@ export default async function querydb(id, filter, andOr) {
   const tokenCookie = cookieStore.get("access_token")?.value;
 
   if (!tokenCookie) throw new Error("No Token Cookie Found");
-  
 
   const notion = new Client({ auth: tokenCookie });
   const filtered = filter.map((fil) => {

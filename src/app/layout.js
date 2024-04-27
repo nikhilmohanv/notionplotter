@@ -7,7 +7,7 @@ import {
 } from "./context/firebaseauth/authcontext";
 import { CookiesProvider } from "next-client-cookies/server";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { Analytics } from '@vercel/analytics/react';
+import { Analytics } from "@vercel/analytics/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,7 +24,7 @@ export default function RootLayout({ children }) {
           <AuthContextProvider>
             <LoadingProvider>
               {children}
-              <Analytics/>
+              <Analytics />
               <SpeedInsights />
             </LoadingProvider>
           </AuthContextProvider>

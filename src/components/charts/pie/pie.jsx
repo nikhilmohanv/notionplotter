@@ -32,10 +32,10 @@ export default function PieChart({
   }, [colorStatus, lineSingleColor, lineMultiColor]);
 
   useEffect(() => {
-    if (backgroundColor != "#ffffff") {
-      setDarkMode(true);
-    } else {
+    if (backgroundColor.trim().toLowerCase() == "#ffffff") {
       setDarkMode(false);
+    } else {
+      setDarkMode(true);
     }
   }, [backgroundColor]);
 
@@ -60,66 +60,67 @@ export default function PieChart({
     }
     setFillColor(newFillColor);
   }, [fillColorStatus, fillSingleColor, fillMultiColor]);
-  // const label=['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange']
 
   return (
-    <Pie
-      data={{
-        labels: xValues,
-        datasets: [
-          {
-            label: label,
-            data: yValues,
-            backgroundColor: fillColor,
-            borderColor: lineColor,
-            borderWidth: 1,
-          },
-        ],
-      }}
-      options={{
-        responsive: true,
-        maintainAspectRation: true,
-        plugins: {
-          legend: {
-            position: "top",
-            display: false,
-          },
+    <div style={{ backgroundColor: backgroundColor}}>
+      <Pie
+        data={{
+          labels: xValues,
+          datasets: [
+            {
+              label: label,
+              data: yValues,
+              backgroundColor: fillColor,
+              borderColor: lineColor,
+              borderWidth: 1,
+            },
+          ],
+        }}
+        options={{
+          responsive: true,
+          maintainAspectRation: true,
+          plugins: {
+            legend: {
+              position: "top",
+              display: false,
+            },
 
-          title: {
-            display: labelStatus ? false : true,
-            text: !labelStatus && label,
-            align: "center",
-            color: darkMode ? "white" : "black",
+            title: {
+              display: labelStatus ? false : true,
+              text: !labelStatus && label,
+              align: "center",
+              color: darkMode ? "white" : "black",
 
-            font: {
-              size: 20,
-              weight: 8,
+              font: {
+                size: 20,
+                weight: 8,
+              },
             },
           },
-        },
 
-        elements: {
-          line: {
-            borderWidth: 2,
+          elements: {
+            line: {
+              borderWidth: 2,
+            },
+            point: {
+              radius: 1,
+              backgroundColor: "transparent",
+              borderWidth: 0,
+              hoverBackgroundColor: "#212027",
+              hoverRadius: 4,
+              hoverBorderWidth: 2,
+            },
           },
-          point: {
-            radius: 1,
-            backgroundColor: "transparent",
-            borderWidth: 0,
-            hoverBackgroundColor: "#212027",
-            hoverRadius: 4,
-            hoverBorderWidth: 2,
+          interaction: {
+            intersect: false,
+            mode: "index",
           },
-        },
-        interaction: {
-          intersect: false,
-          mode: "index",
-        },
-        animation: {
-          duration: 1500,
-        },
-      }}
-     
-    />
+          animation: {
+            duration: 1500,
+          },
+        }}
+        // height="100%"
+      />
+    </div>
   );
 }

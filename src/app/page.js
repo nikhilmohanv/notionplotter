@@ -15,9 +15,7 @@ import { redirect } from "next/navigation";
 
 export default function Home() {
   const { user, GoogleSignIn, logout } = UserAuth();
-  const {loading,setLoading}=useContext(Loading)
-
-  
+  const { loading, setLoading } = useContext(Loading);
 
   useEffect(() => {
     if (user) {
@@ -44,23 +42,21 @@ export default function Home() {
       if (updatedUser) {
         // Get access token with user UID from Firestore
         const { result, error } = await getTokenWithUId(updatedUser.uid);
-   
+
         if (result) {
-         
           // Loop through each document in the result
           result.forEach(async (doc) => {
             async function storeAccessToken() {
               // Accessing the data of each document
               if (doc.data().access_token) {
                 //updating loading context
-                setLoading(true)
+                setLoading(true);
                 // Set access_token and uid cookies
                 setCookie("access_token", doc.data().access_token);
               }
             }
             // Call storeAccessToken function
             await storeAccessToken();
-           
           });
           setCookie("uid", updatedUser.uid);
           redirect("/dashboard");

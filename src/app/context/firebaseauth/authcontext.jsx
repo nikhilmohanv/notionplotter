@@ -1,7 +1,4 @@
 "use client";
-
-// import secureLocalStorage from "react-secure-storage";
-
 import { createContext, useState, useContext, useEffect } from "react";
 import {
   signInWithPopup,

@@ -15,10 +15,16 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { get } from "http";
 import { relative } from "path";
-export default function Filter({ getFilters, dbId,filterLoadingState,filters,colNameAndId,orAnd }) {
+export default function Filter({
+  getFilters,
+  dbId,
+  filterLoadingState,
+  filters,
+  colNameAndId,
+  orAnd,
+}) {
   // to store keys keys means equal and not_equal in checkbox and in date after, before equals
 
- 
   const [rows, setRows] = useState([]);
   const [andOr, setAndOr] = useState(orAnd);
   const [windowDimensions, setWindowDimensions] = useState(
@@ -27,16 +33,14 @@ export default function Filter({ getFilters, dbId,filterLoadingState,filters,col
   const [filter, setFilter] = useState([]);
   const [filterChange, setFilterChange] = useState(false);
 
-
   // setting filter state in this page to the filters form the props
-  useEffect(()=>{
-    setFilter(filters)
-  },[filters])
+  useEffect(() => {
+    setFilter(filters);
+  }, [filters]);
 
   // for getting data of all, that is without any filters
   const [sampleFilter, setSampleFilter] = useState([]);
 
-  
   useEffect(() => {
     if (dbId !== null && dbId !== undefined) {
       fetch("/api/notion/completequerydb?id=" + dbId, {
@@ -44,7 +48,6 @@ export default function Filter({ getFilters, dbId,filterLoadingState,filters,col
         headers: {
           "Content-Type": "application/json",
         },
-        
       })
         .then((response) => response.json())
         .then((data) => {
@@ -56,7 +59,7 @@ export default function Filter({ getFilters, dbId,filterLoadingState,filters,col
     }
   }, [dbId]);
 
-  let extractedProperties= [];
+  let extractedProperties = [];
 
   rows.forEach((page) => {
     // setCount(prevCount => prevCount + 1);
@@ -75,7 +78,7 @@ export default function Filter({ getFilters, dbId,filterLoadingState,filters,col
         let value;
         let formulaType;
         // to store values of rollup arrays
-        let rollupArrayValues= [];
+        let rollupArrayValues = [];
         let rollupType;
         if (property.type == "number") {
           value = property.number;
@@ -157,8 +160,7 @@ export default function Filter({ getFilters, dbId,filterLoadingState,filters,col
           if (property.unique_id.prefix == null) {
             value = property.unique_id.number;
           } else {
-            value =
-              property.unique_id.prefix + "-" + property.unique_id.number;
+            value = property.unique_id.prefix + "-" + property.unique_id.number;
           }
         } else if (property.type == "last_edited_time") {
           propertyType = property.type;
@@ -349,11 +351,7 @@ export default function Filter({ getFilters, dbId,filterLoadingState,filters,col
                     } else {
                       arr.people.forEach((peps) => {
                         // Check if peps is an object and has the 'id' property
-                        if (
-                          peps &&
-                          typeof peps === "object" &&
-                          "id" in peps
-                        ) {
+                        if (peps && typeof peps === "object" && "id" in peps) {
                           rollupArrayValues.push({
                             name: peps.name,
                             id: peps.id,
@@ -419,18 +417,15 @@ export default function Filter({ getFilters, dbId,filterLoadingState,filters,col
     }
   });
 
-
   const removeFilter = (index) => {
     let data = [...filter];
     data.splice(index, 1);
     setFilter(data);
   };
   const handleFilterInsertion = (event, index) => {
-   
     let data = [...filter];
 
     if (event.target.name == "property") {
-
       let currentLabel = data[index].property.label;
       data[index].property.label = event.target.value;
       let updatedLabel = data[index].property.label;
@@ -515,7 +510,6 @@ export default function Filter({ getFilters, dbId,filterLoadingState,filters,col
         data[index].operator = event.target.value;
       }
     } else if (event.target.name == "value") {
-
       data[index].value = event.target.value; //string, date, multi_select,number,people
     } else if ("rollupOperation") {
       data[index].rollupOperation = event.target.value;
@@ -542,7 +536,6 @@ export default function Filter({ getFilters, dbId,filterLoadingState,filters,col
       };
       setFilter([...filter, newfield]);
     }
-
   };
 
   function handleAndOr(event) {
@@ -554,7 +547,7 @@ export default function Filter({ getFilters, dbId,filterLoadingState,filters,col
 
   function changeFilter() {
     setFilterChange(!filterChange);
-    getFilters(filter,andOr);
+    getFilters(filter, andOr);
   }
 
   return (
@@ -645,7 +638,10 @@ export default function Filter({ getFilters, dbId,filterLoadingState,filters,col
                       onChange={(event) => handleFilterInsertion(event, index)}
                       // value={input.operator ?input.operator:"select a value"}
                       className="px-4 py-2 border border-gray-600 rounded flex items-center w-[70px] sm:w-36 justify-between"
-                    ><option disabled selected>Select a option</option>
+                    >
+                      <option disabled selected>
+                        Select a option
+                      </option>
                       <option value="true">Is checked</option>
                       <option value="false">Is not checked</option>
                     </select>
@@ -1130,20 +1126,18 @@ export default function Filter({ getFilters, dbId,filterLoadingState,filters,col
                                 (() => {
                                   return (
                                     <>
-                                      {rows.value.map(
-                                        (relate, index) => {
-                                          // Check if the id is already in the ids array
+                                      {rows.value.map((relate, index) => {
+                                        // Check if the id is already in the ids array
 
-                                          // Add the id to the ids array
+                                        // Add the id to the ids array
 
-                                          // Render the option element
-                                          return (
-                                            <option key={index} value={relate}>
-                                              {relate}
-                                            </option>
-                                          );
-                                        }
-                                      )}
+                                        // Render the option element
+                                        return (
+                                          <option key={index} value={relate}>
+                                            {relate}
+                                          </option>
+                                        );
+                                      })}
                                     </>
                                   );
                                 })()
@@ -1169,17 +1163,13 @@ export default function Filter({ getFilters, dbId,filterLoadingState,filters,col
             </div>
           </div>
           <DialogFooter>
-            {filterLoadingState?
-            (
-              <Button>
-              Fetching data..
-            </Button>
-            ):(
+            {filterLoadingState ? (
+              <Button>Fetching data..</Button>
+            ) : (
               <Button type="submit" onClick={() => changeFilter()}>
-              Save filters
-            </Button>
-            )
-          }
+                Save filters
+              </Button>
+            )}
             {/* <Button type="submit" onClick={() => changeFilter()}>
               Save filters
             </Button> */}
@@ -1191,7 +1181,6 @@ export default function Filter({ getFilters, dbId,filterLoadingState,filters,col
 }
 
 function filterToJson(filter) {
- 
   const andOr = "and";
   if (filter.values.length > 0) {
     const filtered = filter.map((fil) => {
@@ -1219,7 +1208,6 @@ function filterToJson(filter) {
         [andOr]: filtered,
       },
     };
-
   }
 }
 

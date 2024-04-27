@@ -52,7 +52,6 @@ const AreaChart = ({
     }
   }, [colorStatus, lineSingleColor, lineMultiColor]);
 
-
   useEffect(() => {
     if (backgroundColor.trim().toLowerCase() == "#ffffff") {
       setDarkMode(false);
@@ -163,14 +162,6 @@ const AreaChart = ({
               },
             },
           },
-          // scales: {
-          //   xAxes: {
-          //     grid: {
-          //       color: darkMode ? "#fff" : "#43424D",
-          //     },
-          //   },
-          // },
-
           elements: {
             line: {
               borderWidth: 2,
@@ -192,8 +183,6 @@ const AreaChart = ({
             duration: 1500,
           },
         }}
-      // width="500px"
-      // height="500px"
       />
     </div>
   );
