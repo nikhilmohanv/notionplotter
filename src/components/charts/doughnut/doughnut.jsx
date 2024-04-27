@@ -83,8 +83,8 @@ const DoughnutChart = ({
           maintainAspectRation: true,
           plugins: {
             legend: {
-              position: "top",
-              display: false,
+              position: "bottom",
+              display: true,
             },
 
             title: {
