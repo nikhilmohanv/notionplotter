@@ -1346,7 +1346,7 @@ export default function Edit() {
               />
             </div>
           ) : chartType == "Pie Chart" ? (
-            <div className="flex items-center justify-center">
+            <div className="flex  h-[833px] w-[833px] items-center">
               <PieChart
                 xValues={xAxisValues}
                 yValues={yAxisValues}

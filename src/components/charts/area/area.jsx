@@ -37,6 +37,8 @@ const AreaChart = ({
   fillSingleColor,
   fillMultiColor,
   fillColorStatus,
+  height,
+  width,
 }) => {
   const [darkMode, setDarkMode] = useState(false);
   const [lineColor, setLineColor] = useState([]);
@@ -197,6 +199,8 @@ const AreaChart = ({
             duration: 1500,
           },
         }}
+        height={height}
+      width={width}
       />
     </div>
   );

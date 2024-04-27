@@ -16,6 +16,8 @@ export default function PieChart({
   fillSingleColor,
   fillMultiColor,
   fillColorStatus,
+  height,
+  width,
 }) {
   const [darkMode, setDarkMode] = useState(false);
   const [lineColor, setLineColor] = useState([]);
@@ -95,6 +97,8 @@ export default function PieChart({
           },
         },
       }}
+      height={height}
+      width={width}
     />
   );
 }
