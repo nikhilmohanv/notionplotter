@@ -1,21 +1,16 @@
 "use client";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Loading, UserAuth } from "@/app/context/firebaseauth/authcontext";
 import Link from "next/link";
-import { resolve } from "path";
 import { useContext, useEffect, useState } from "react";
-import { setCookie, deleteCookie } from "cookies-next";
+import { setCookie } from "cookies-next";
 import getTokenWithUId from "../firebase/firestore/getaccesstoken";
-// import { setCookie } from "cookies-next";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "@/firebase/config";
-// import { encrypt } from "@/libs/utils/encrypt/crypto";
 import { redirect } from "next/navigation";
-
-// import Link from "next/link"
-// import { Button } from "@/components/ui/button"
+import Image from "next/image";
 import { Card } from "@/components/ui/card";
+import LineChartIcon from "@/components/icons/linechart";
 
 export default function Home() {
   const { user, GoogleSignIn, logout } = UserAuth();
@@ -76,34 +71,28 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-[100dvh]">
       <header className="px-4 lg:px-6 h-14 flex items-center">
-        <Link className="flex items-center justify-center" href="#">
-          <ImageIcon className="h-6 w-6" />
-          <span className="sr-only">Imagify</span>
+        <Link className="flex items-center justify-center" href="">
+          <LineChartIcon className="h-6 w-6" />
+          <span className="sr-only">Notion2Charts</span>
         </Link>
         <nav className="ml-auto flex gap-4 sm:gap-6">
           <Link
             className="text-sm font-medium hover:underline underline-offset-4"
-            href="#"
+            href="#features"
           >
             Features
           </Link>
+          {/* <Link
+            className="text-sm font-medium hover:underline underline-offset-4"
+            href="#reviews"
+          >
+            Reviews
+          </Link> */}
           <Link
             className="text-sm font-medium hover:underline underline-offset-4"
-            href="#"
+            href="#pricing"
           >
             Pricing
-          </Link>
-          <Link
-            className="text-sm font-medium hover:underline underline-offset-4"
-            href="#"
-          >
-            About
-          </Link>
-          <Link
-            className="text-sm font-medium hover:underline underline-offset-4"
-            href="#"
-          >
-            Contact
           </Link>
         </nav>
       </header>
@@ -112,13 +101,14 @@ export default function Home() {
           <div className="container flex flex-col items-center justify-center px-4 md:px-6">
             <div className="space-y-2 text-center">
               <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl/none">
-                Image Generation as a Service
+                Create Charts From Notion Databases
               </h1>
               <p className="mx-auto max-w-[600px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
-                Effortlessly create stunning visuals with our API. Embed in your
-                app or use our simple interface.
+                Effortlessly create stunning charts with our app. Embed it in
+                your app or notion workspace.
               </p>
             </div>
+            <br />
             <div className="mx-auto w-full max-w-sm space-y-2">
               <div className="flex justify-center space-x-2">
                 <Button
@@ -126,20 +116,21 @@ export default function Home() {
                   className="max-w-lg flex-1"
                   onClick={handleSignIn}
                 >
-                  Login
+                  Signup
                 </Button>
               </div>
-              <p className="text-xs text-gray-500 dark:text-gray-400">
+              {/* <p className="text-xs text-gray-500 dark:text-gray-400">
                 Sign up to get notified when we launch.
                 <Link className="underline underline-offset-2" href="#">
                   Terms & Conditions
                 </Link>
-              </p>
+              </p> */}
             </div>
           </div>
         </section>
 
-        <section className="w-full py-12 md:py-24 lg:py-32">
+        {/* features */}
+        <section id="features" className="w-full py-12 md:py-24 lg:py-32">
           <div className="container space-y-12 px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
@@ -221,7 +212,12 @@ export default function Home() {
             </div>
           </div>
         </section>
-        <section className="w-full h-screen py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-800">
+
+        {/* reviews */}
+        {/* <section
+          id="reviews"
+          className="w-full h-screen py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-800"
+        >
           <div className="container grid items-center justify-center gap-4 px-4 text-center md:px-6">
             <div className="space-y-3">
               <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
@@ -236,7 +232,7 @@ export default function Home() {
               <div className="grid w-full grid-cols-3 items-stretch justify-center divide-x md:grid-cols-3">
                 <div className="mx-auto flex w-full items-center justify-center p-4 sm:p-8">
                   <div className="space-y-2 text-center">
-                    <img
+                    <Image
                       alt="Avatar"
                       className="mx-auto rounded-full"
                       height="48"
@@ -307,8 +303,10 @@ export default function Home() {
               </div>
             </div>
           </div>
-        </section>
-        <section className="w-full py-12 md:py-24 lg:py-32">
+        </section> */}
+
+        {/* Pricing */}
+        <section id="pricing" className="w-full py-12 md:py-24 lg:py-32">
           <div className="container grid items-center justify-center gap-4 px-4 text-center md:px-6">
             <div className="space-y-3">
               <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
@@ -318,7 +316,7 @@ export default function Home() {
                 Choose the plan that fits your needs and budget.
               </p>
             </div>
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:gap-8">
+            <div className="flex justify-center">
               <Card className="space-y-4 rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-950">
                 <div className="space-y-2">
                   <h3 className="text-2xl font-bold">Starter</h3>
@@ -352,20 +350,6 @@ export default function Home() {
                 </ul>
                 <Button className="w-full">Start Free Trial</Button>
               </Card>
-              <Card className="space-y-4 rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-950">
-                <div className="space-y-2">
-                  <h3 className="text-2xl font-bold">Pro</h3>
-                  <p className="text-gray-500 dark:text-gray-400">
-                    Ideal for growing teams and small businesses.
-                  </p>
-                </div>
-                <div className="space-y-2">
-                  <div className="text-4xl font-bold">$19</div>
-                  <div className="text-sm text-gray-500 dark:text-gray-400">
-                    per month
-                  </div>
-                </div>
-              </Card>
             </div>
           </div>
         </section>
@@ -389,27 +373,6 @@ function CheckIcon(props) {
       strokeLinejoin="round"
     >
       <polyline points="20 6 9 17 4 12" />
-    </svg>
-  );
-}
-
-function ImageIcon(props) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <rect width="18" height="18" x="3" y="3" rx="2" ry="2" />
-      <circle cx="9" cy="9" r="2" />
-      <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" />
     </svg>
   );
 }
