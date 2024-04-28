@@ -550,11 +550,16 @@ export default function Filter({
     getFilters(filter, andOr);
   }
 
+  function deleteFullFilters(){
+    let data = [...filter];
+    data.splice(1);
+    setFilter(data);
+  }
   return (
     <>
       <Dialog>
         <DialogTrigger asChild>
-          <Button variant="outline">Edit Filters</Button>
+          <Button variant="outline" className="w-full">Edit Filters</Button>
         </DialogTrigger>
         <DialogContent
           className={`sm:w-[${windowDimensions}px] md:max-w-[800px] bg-white`}
@@ -1156,10 +1161,10 @@ export default function Filter({
               + Add filter rule
             </Button>
             <div className="flex justify-between items-center mt-4">
-              <Button className="text-red-500" variant="ghost">
+              <Button className="text-red-500" variant="ghost" onClick={deleteFullFilters}>
                 Delete filter
               </Button>
-              <TrashIcon className="text-gray-400" />
+             
             </div>
           </div>
           <DialogFooter>

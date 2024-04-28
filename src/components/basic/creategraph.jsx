@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 import addData from "@/firebase/firestore/adddata";
+import { Loader2 } from "lucide-react";
 
 import {
   Select,
@@ -119,6 +120,7 @@ export default function CreateGraph({ loading }) {
         });
     }
   }, [databaseID]);
+
   useEffect(() => {
     if (databaseID !== null && databaseID !== undefined) {
       fetch("/api/notion/querydb?id=" + databaseID)
@@ -132,8 +134,6 @@ export default function CreateGraph({ loading }) {
     }
   }, [databaseID]);
 
-  // let extractedProperties: { name: string; id: any; type: any; value: any }[] =
-  //   [];
   const extractedProperties = useMemo(() => {
     const propertiesArray = rows.map((page) => {
       const properties = page.properties;
@@ -221,6 +221,7 @@ export default function CreateGraph({ loading }) {
   const handleXSelect = (value) => {
     setXAxis(value);
   };
+
   const handleYSelect = (value) => {
     setYAxis(value);
   };
@@ -328,7 +329,11 @@ export default function CreateGraph({ loading }) {
               </DialogClose>
               <Dialog>
                 <DialogTrigger asChild>
-                  <Button type="submit">Next</Button>
+                  {databaseID && name ? (
+                    <Button type="submit">Next</Button>
+                  ) : (
+                    <Button disabled>Next</Button>
+                  )}
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[600px]">
                   <DialogHeader>
@@ -442,7 +447,12 @@ export default function CreateGraph({ loading }) {
                     </DialogClose>
                     <Dialog>
                       <DialogTrigger asChild>
-                        <Button type="submit">Next</Button>
+                        {chartType ? (
+                          <Button type="submit">Next</Button>
+                        ) : (
+                          <Button disabled>Next</Button>
+                        )}
+                        {/* <Button type="submit">Next</Button> */}
                       </DialogTrigger>
 
                       <DialogContent className="sm:max-w-[600px]">
@@ -499,9 +509,13 @@ export default function CreateGraph({ loading }) {
                             </Button>
                           </DialogClose>
                           <DialogTrigger asChild>
-                            <Button type="submit" onClick={createGraph}>
-                              Create
-                            </Button>
+                            {yAxis && xAxis ? (
+                              <Button type="submit" onClick={createGraph}>
+                                Create
+                              </Button>
+                            ) : (
+                              <Button disabled>Create</Button>
+                            )}
                           </DialogTrigger>
                         </DialogFooter>
                       </DialogContent>

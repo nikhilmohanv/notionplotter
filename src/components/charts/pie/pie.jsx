@@ -68,10 +68,12 @@ export default function PieChart({
           datasets: [
             {
               label: label,
+            
               data: yValues,
               backgroundColor: fillColor,
               borderColor: lineColor,
               borderWidth: 1,
+              // borderRadius: 10,
             },
           ],
         }}
@@ -118,8 +120,7 @@ export default function PieChart({
             duration: 1500,
           },
         }}
-        // height="100%"
+       
       />
-    // </div>
   );
 }

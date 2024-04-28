@@ -94,11 +94,11 @@ const AreaChart = ({
               data: yValues,
 
               borderColor: lineColor, //it is the color of line in the cahrt
-              pointBorderColor: "rgba(0,0,0,1)",
+              pointBorderColor: lineColor,
               pointRadius: 3,
               pointStyle: "circle",
 
-              pointHoverBorderColor: "rgba(0,0,0,1)",
+              pointHoverBorderColor: lineColor,
               pointBorderWidth: 2,
               fill: {
                 target: "origin",

@@ -44,6 +44,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { Loader2 } from "lucide-react";
+
 import { Label } from "@/components/ui/label";
 
 export default function Edit() {
@@ -847,6 +849,7 @@ export default function Edit() {
       <div key="1" className="flex flex-col h-screen md:flex-row">
         <aside className="w-full lg:w-[400px] bg-gray-100 p-6 md:w-[300px] lg:overflow-auto md:overflow-auto">
           {/* <h2 className="text-lg font-semibold mb-4">Chart Settings</h2> */}
+
           <div className="grid grid-col-3">
             <div>
               <Link href={"/dashboard"}>
@@ -1269,21 +1272,30 @@ export default function Edit() {
               </SelectContent>
             </Select>
           </div>
-
-          <Filter
-            getFilters={getFilters}
-            dbId={dbId}
-            filterLoadingState={filterLoadingState}
-            filters={filters}
-            colNameAndId={colNameAndId}
-            orAnd={andOr}
-          />
+          <div>
+            <Filter
+              getFilters={getFilters}
+              dbId={dbId}
+              filterLoadingState={filterLoadingState}
+              filters={filters}
+              colNameAndId={colNameAndId}
+              orAnd={andOr}
+            />
+          </div>
           <br />
           <br />
-          {/*  saving button */}
-          <Button onClick={saveToDb}>
-            {savingStatus ? "Saving.." : "Save"}
-          </Button>
+          <div className="sticky bottom-9 left-0 w-full bg-gray-100 p-4 border-t">
+            {savingStatus ? (
+              <Button disabled className="w-full"> 
+                <Loader2 className="mr-2 h-4 w-4  animate-spin" />
+                Please wait
+              </Button>
+            ) : (
+              <Button onClick={saveToDb} className="w-full">
+                Save{" "}
+              </Button>
+            )}
+          </div>
         </aside>
 
         <main className="flex-grow p-4">
