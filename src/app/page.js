@@ -252,9 +252,9 @@ export default function Home() {
                       CEO, Acme Inc
                     </div>
                     <p className="text-sm text-gray-500 dark:text-gray-400">
-                      "Imagify has been a game-changer for our marketing team.
+                      Imagify has been a game-changer for our marketing team.
                       The AI-powered image generation capabilities are
-                      incredible."
+                      incredible.
                     </p>
                   </div>
                 </div>
@@ -276,8 +276,8 @@ export default function Home() {
                       CMO, Globex Corp
                     </div>
                     <p className="text-sm text-gray-500 dark:text-gray-400">
-                      "Imagify has streamlined our image creation process and
-                      helped us create visuals that truly stand out."
+                      Imagify has streamlined our image creation process and
+                      helped us create visuals that truly stand out.
                     </p>
                   </div>
                 </div>
@@ -299,8 +299,8 @@ export default function Home() {
                       Creative Director, Acme Design
                     </div>
                     <p className="text-sm text-gray-500 dark:text-gray-400">
-                      "Imagify has been a game-changer for our design team. The
-                      customization options are incredibly powerful."
+                      Imagify has been a game-changer for our design team. The
+                      customization options are incredibly powerful.
                     </p>
                   </div>
                 </div>
