@@ -66,7 +66,7 @@ const AreaChart = ({
     const b = parseInt(hex.slice(5, 7), 16);
 
     // return {r, g, b}
-    const rgba = `rgba(${r}, ${g}, ${b}, 0.2)`;
+    const rgba = `rgba(${r}, ${g}, ${b}, 0.1)`;
     return rgba;
   };
 
@@ -90,13 +90,16 @@ const AreaChart = ({
           datasets: [
             {
               tension: 0.5,
-              // label: "Dataset 1",
+              label: "Dataset 1",
               data: yValues,
 
               borderColor: lineColor, //it is the color of line in the cahrt
-              pointBorderColor: "rgba(255,255,255,0)",
-              pointHoverBorderColor: "rgba(255,255,255,0)",
-              pointBorderWidth: 3,
+              pointBorderColor: "rgba(0,0,0,1)",
+              pointRadius: 3,
+              pointStyle: "circle",
+
+              pointHoverBorderColor: "rgba(0,0,0,1)",
+              pointBorderWidth: 2,
               fill: {
                 target: "origin",
                 above: fillColor, //it is the area fill under the line
@@ -111,6 +114,10 @@ const AreaChart = ({
             legend: {
               position: "top",
               display: false,
+              labels: {
+              
+                usePointStyle: true,
+              },
             },
 
             title: {
