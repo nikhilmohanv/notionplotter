@@ -29,13 +29,17 @@ import { useEffect } from "react";
 import { UserAuth } from "@/app/context/firebaseauth/authcontext";
 import { useCookies } from "next-client-cookies";
 import { deleteCookie } from "cookies-next";
-import { deleteDoc, doc, getDoc } from "firebase/firestore";
+// import { collection, query, where, orderBy,  } from "firebase/firestore";
 import {
   collection,
   getDocs,
   where,
   query,
   getFirestore,
+  orderBy,
+  onSnapshot,
+  deleteDoc, doc, getDoc,
+  
 } from "firebase/firestore";
 import app from "@/firebase/config";
 import CreateGraph from "@/components/basic/creategraph";
@@ -56,7 +60,7 @@ export default function Component() {
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(true);
 
-  const notionAuthUrl = `https://api.notion.com/v1/oauth/authorize?owner=user&client_id=34d5c9a9-5b7d-4b77-be4b-6a5521f6560c&response_type=code&id=48450543`;
+  const notionAuthUrl = `https://api.notion.com/v1/oauth/authorize?owner=user&client_id=34d5c9a9-5b7d-4b77-be4b-6a5521f6560c&response_type=code`;
 
   const [chartType, setChartType] = useState();
   const [selectedDb, setSelectedDb] = useState();
@@ -75,46 +79,39 @@ export default function Component() {
     }
   }, [cookies.get("access_token")]);
 
-  
   //getting all created graphs from firestore
   useEffect(() => {
+
     async function getDocuments() {
       if (user != null && user != undefined) {
-        const q = query(
-          collection(db, "graphs"),
-          where("userid", "==", user.uid)
-        );
-        try {
-          const result = await getDocs(q);
+    const q = query(
+        collection(db, "graphs"),
+        where("userid", "==", user.uid),
+       orderBy("createdDate","desc")
+    );
 
-          let documents = result.docs.map((doc) => {
-            return {
-              id: doc.id,
-              data: doc.data(),
-            };
-          });
-          
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+        const documents = snapshot.docs.map((doc) => ({
+            id: doc.id,
+            data: doc.data(),
+        }));
+        
+        documents.sort();
+        setDocs(documents);
+        setLoading(false); // Assuming loading should be set to false once data is received
+    }, (error) => {
+        console.error("Error fetching documents:", error);
+        setLoading(true); // Set loading to true if an error occurs
+    });
 
-          documents.sort();
-
-          setDocs(documents);
-          //if no documents are present then show loading
-          if (docs.length == 0) {
-            setLoading(true);
-          } else {
-            setLoading(false);
-          }
-        } catch (error) {
-          console.error("Error fetching documents:", error);
-        }
-      }
+    // Unsubscribe from the snapshot listener when component unmounts
+    return () => unsubscribe();
+}
     }
     getDocuments();
   }, [user]);
 
-
   const handleDelete = (id) => {
-    
     try {
       const ref = doc(db, "graphs", id);
       deleteDoc(ref)
@@ -135,7 +132,6 @@ export default function Component() {
       className="grid min-h-screen w-full container mx-auto px-1 sm:px-1 lg:px-20"
     >
       <div className="flex flex-col">
-       
         <div className="mt-5">
           <LoggedInNavBar />
         </div>

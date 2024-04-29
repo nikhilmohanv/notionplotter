@@ -1,4 +1,15 @@
 import crypto from "crypto";
+import app from "@/firebase/config";
+import {
+  getFirestore,
+  doc,
+  setDoc,
+  addDoc,
+  collection,
+} from "firebase/firestore";
+import addDataWithId from "@/firebase/firestore/adddatawithid";
+
+const db = getFirestore(app);
 
 export async function POST(req) {
   try {
@@ -26,6 +37,19 @@ export async function POST(req) {
     if (eventType === "subscription_created") {
       const userId = body.meta.custom_data.user_id;
       const isSuccessful = body.data.attributes.status === "paid";
+
+      const data = {
+        userId: userId,
+        created_at: body.data.attributes.created_at,
+        updated_at: body.data.attributes.updated_at,
+        status: body.data.attributes.status,
+        renews_at: body.data.attributes.renews_at,
+      };
+
+      // inserting into firestore
+      // const value = collection(db, "subscription");
+      const resp= addDataWithId("subscription",userId,data)
+      // const result = await addDoc(value, data);
     }
 
     return Response.json({ message: "Webhook received" });

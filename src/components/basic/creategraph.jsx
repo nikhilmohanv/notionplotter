@@ -29,6 +29,7 @@ import { useState, useEffect, useMemo } from "react";
 import { UserAuth } from "@/app/context/firebaseauth/authcontext";
 import { useCookies } from "next-client-cookies";
 import { useRouter } from "next/navigation";
+import { Timestamp } from "firebase/firestore";
 
 export default function CreateGraph({ loading }) {
   const { user, logout } = UserAuth();
@@ -237,6 +238,8 @@ export default function CreateGraph({ loading }) {
       timeZone: "America/Los_Angeles",
     });
 
+    const timestamp=Timestamp.fromDate(new Date());
+
     colNameAndId.forEach((col) => {
       if (col.id === xAxis) {
         xAxisName = col.name;
@@ -261,7 +264,7 @@ export default function CreateGraph({ loading }) {
       yaxis: yAxisCommaValues,
       xAxisName: xAxisName,
       yAxisName: yAxisName,
-      createDate: date,
+      createdDate: timestamp,
     };
     const { result, error } = await addData("graphs", data);
     if (result) {

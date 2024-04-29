@@ -94,9 +94,7 @@ export default function Embed() {
         "Content-Type": "application/json",
       },
     })
-      .then((response) => response.json())
-      .then((data) => {
-        setData(data);
+      
 
         setDbId(data.databaseID);
         setName(data.name);
