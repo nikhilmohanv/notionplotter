@@ -14,7 +14,7 @@ import { deleteCookie } from "cookies-next";
 import { redirect } from "next/navigation";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
-import { LineChartIcon } from "@/components/icons/linechart";
+import LineChartIcon from "@/components/icons/linechart";
 
 export default function LoggedInNavBar() {
   const { user, logout } = UserAuth();

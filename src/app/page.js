@@ -11,6 +11,8 @@ import { redirect } from "next/navigation";
 import Image from "next/image";
 import { Card } from "@/components/ui/card";
 import LineChartIcon from "@/components/icons/linechart";
+import axios from "axios";
+
 
 export default function Home() {
   const { user, GoogleSignIn, logout } = UserAuth();
@@ -58,7 +60,16 @@ export default function Home() {
             await storeAccessToken();
           });
           setCookie("uid", updatedUser.uid);
-          redirect("/dashboard");
+          
+          const response = await axios.post("/api/productPurchase", {
+            productId: "357049",
+          });
+    
+          console.log(response.data);
+    
+          window.open(response.data.checkoutUrl, "_blank");
+          
+          // redirect("/dashboard");
         } else {
           //set the notion connect status to false, if it false then show the connect to notion button
         }
@@ -67,7 +78,20 @@ export default function Home() {
       console.log(error);
     }
   }
+  const getCheckoutUrl = async () => {
+    try {
+      const response = await axios.post("/api/productPurchase", {
+        productId: "357049",
+      });
 
+      console.log(response.data);
+
+      window.open(response.data.checkoutUrl, "_blank");
+    } catch (error) {
+      console.error(err);
+      alert("Failed to buy product #1");
+    }
+  };
   return (
     <div className="flex flex-col min-h-[100dvh]">
       <header className="px-4 lg:px-6 h-14 flex items-center">
@@ -348,7 +372,7 @@ export default function Home() {
                     storage
                   </li>
                 </ul>
-                <Button className="w-full">Start Free Trial</Button>
+                <Button onClick={getCheckoutUrl} className="w-full">Start Free Trial</Button>
               </Card>
             </div>
           </div>
