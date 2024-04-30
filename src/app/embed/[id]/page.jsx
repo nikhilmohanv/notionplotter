@@ -127,8 +127,8 @@ export default function Embed() {
           setLabelStatus(false);
         }
       });
-  }, []);
 
+      console.log(dbId)
   return (
     <>
       <main className="w-screen h-screen" style={{backgroundColor: backgroundColor}}>
