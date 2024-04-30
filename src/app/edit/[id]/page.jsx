@@ -351,7 +351,7 @@ export default function Edit() {
           let formulaType;
 
           // to store values of rollup arrays
-          let rollupArrayValues = [];
+          let rollupArrayValues;
 
           let rollupType;
 
@@ -530,7 +530,7 @@ export default function Edit() {
           } else if (property.type == "rollup") {
             propertyType = "rollup";
             if (property.rollup.type == "number") {
-              value = property.rollup.number;
+              rollupArrayValues = property.rollup.number;
 
               rollupType = "number";
             } else if (property.rollup.type == "array") {
@@ -700,11 +700,11 @@ export default function Edit() {
     });
   }, [rows, filters, xAxis, yAxis]);
 
-  console.log(extractedProperties)
+  console.log(extractedProperties);
 
   useEffect(() => {
     if (xAxis != null && xAxis != undefined) {
-      console.log(extractedProperties)
+      console.log(extractedProperties);
 
       let XAxisData;
       if (extractedProperties.length > 0) {
@@ -759,15 +759,15 @@ export default function Edit() {
             obj.type === "rich_text" ||
             obj.formulaType === "string" ||
             obj.type === "url" ||
-            obj.type === "title" ||
             obj.type === "email" ||
             obj.rollupType === "rich_text" ||
             obj.rollupType === "string" ||
             obj.rollupType === "url" ||
-            obj.rollupType === "title" ||
             obj.rollupType === "email"
           ) {
+            if (Array.isArray(obj.value)) {
             return obj.value[0];
+            }
           } else if (
             obj.type === "number" ||
             obj.formulaType === "number" ||
@@ -845,6 +845,10 @@ export default function Edit() {
   const handleAggregationChange = (value) => {
     setAggregation(value);
   };
+
+  console.log(xAxisValues);
+
+  console.log(yAxisValues);
 
   return (
     <>
@@ -1290,7 +1294,7 @@ export default function Edit() {
           <br />
           <div className="sticky bottom-9 left-0 w-full bg-gray-100 p-4 border-t">
             {savingStatus ? (
-              <Button disabled className="w-full"> 
+              <Button disabled className="w-full">
                 <Loader2 className="mr-2 h-4 w-4  animate-spin" />
                 Please wait
               </Button>
