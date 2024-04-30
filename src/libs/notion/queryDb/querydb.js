@@ -154,12 +154,12 @@ export default async function querydb(id, filter, andOr) {
   try {
     const response = await notion.databases.query({
       database_id: id,
-      sorts: [
-        {
-          property: "ID",
-          direction: "ascending",
-        },
-      ],
+      // sorts: [
+      //   {
+      //     property: "ID",
+      //     direction: "ascending",
+      //   },
+      // ],
       filter: {
         [andOr]: filtered,
       },

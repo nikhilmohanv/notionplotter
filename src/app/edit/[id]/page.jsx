@@ -700,6 +700,8 @@ export default function Edit() {
     });
   }, [rows, filters, xAxis, yAxis]);
 
+  console.log(extractedProperties)
+
   useEffect(() => {
     if (xAxis != null && xAxis != undefined) {
       let XAxisData;

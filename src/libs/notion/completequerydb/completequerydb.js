@@ -14,12 +14,12 @@ export default async function completequerydb(id) {
     const andOr = "and";
     const response = await notion.databases.query({
       database_id: id,
-      sorts: [
-        {
-          property: "ID",
-          direction: "ascending",
-        },
-      ],
+      // sorts: [
+      //   {
+      //     property: "ID",
+      //     direction: "ascending",
+      //   },
+      // ],
     });
     return response;
   } catch (err) {
