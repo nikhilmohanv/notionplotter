@@ -8,6 +8,7 @@ import {
   collection,
 } from "firebase/firestore";
 import addDataWithId from "@/firebase/firestore/adddatawithid";
+import addData from "@/firebase/firestore/adddata";
 
 const db = getFirestore(app);
 
@@ -34,7 +35,7 @@ export async function POST(req) {
     console.log(body);
 
     // Logic according to event
-    if (eventType === "subscription_created") {
+    if (eventType === "subscription_created" || eventType === "subscription_updated") {
       const userId = body.meta.custom_data.user_id;
       const isSuccessful = body.data.attributes.status === "paid";
 
@@ -44,11 +45,20 @@ export async function POST(req) {
         updated_at: body.data.attributes.updated_at,
         status: body.data.attributes.status,
         renews_at: body.data.attributes.renews_at,
+        card_brand:body.data.attributes.card_brand,
+        card_last_four:body.data.attributes.card_last_four,
+        status_formatted: body.data.attributes.status_formatted,
+
       };
 
       // inserting into firestore
       // const value = collection(db, "subscription");
+
+      // stores the latest subscription
       const resp= addDataWithId("subscription",userId,data)
+
+      // stroring subscription history
+      const result = addData("subscription_history",data)
       // const result = await addDoc(value, data);
     }
 

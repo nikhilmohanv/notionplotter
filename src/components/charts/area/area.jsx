@@ -84,7 +84,7 @@ const AreaChart = ({
   }, [fillColorStatus, fillSingleColor, fillMultiColor]);
 
   return (
-    <div id="chart" style={{ backgroundColor: backgroundColor }}>
+    <div id="chart" >
       <Line
         data={{
           labels: xValues,
