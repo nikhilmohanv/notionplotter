@@ -40,6 +40,7 @@ const AreaChart = ({
   height,
   width,
 }) => {
+  console.log("area cahrt here")
   const [darkMode, setDarkMode] = useState(false);
   const [lineColor, setLineColor] = useState([]);
   const [fillColor, setFillColor] = useState([]);

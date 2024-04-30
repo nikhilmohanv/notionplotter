@@ -30,25 +30,17 @@ export default function Embed() {
   const [data, setData] = useState([]);
   //store label of the graph
   const [label, setLabel] = useState();
-  //to store all columns of the database
-  const [cols, setCols] = useState([]);
-  //store notion database id
-  const [dbId, setDbId] = useState();
-  //stroing the columns and id alone, cols state contains the whole json response
-  // const colNameAndId = [];
-  const [colNameAndId, setColNameAndId] = useState([]);
+
   //store selected x-axis value
   const [xAxis, setXAxis] = useState();
   //store selected y-axis value
   const [yAxis, setYAxis] = useState();
   //store row data
-  const [rows, setRows] = useState([]);
 
   // store background color from user
   const [backgroundColor, setBackgroundColor] = useState("#FFFFFF");
 
   //stroe the userid in provided in the database
-  const [dbUid, setDbUid] = useState();
 
   //store line color
   const [lineSingleColor, setLineSingleColor] = useState("#FF6384");
@@ -65,11 +57,6 @@ export default function Embed() {
   //store label status true or false, if true then hide the label from users
   const [labelStatus, setLabelStatus] = useState(false);
 
-  //for storing chart name
-  const [name, setName] = useState();
-  const [xAxisName, setXAxisName] = useState();
-  const [yAxisName, setYAxisName] = useState();
-
   //selecting which coloring is used for line, single or multiple color
   const [colorStatus, setColorStatus] = useState("lineSingle");
 
@@ -82,11 +69,6 @@ export default function Embed() {
   //to store all multi color values
   const [fillMultiColor, setFillMultiColor] = useState([""]);
 
-  //this adds a new color input to the multicolor input array
-  const handleAddColor = () => {
-    setLineMultiColor([...lineMultiColor, "#000000"]);
-  };
-
   useEffect(() => {
     fetch("/api/firebase/getdocument?collection=graphs&docId=" + id, {
       method: "POST",
@@ -94,14 +76,12 @@ export default function Embed() {
         "Content-Type": "application/json",
       },
     })
-      
-
-        setDbId(data.databaseID);
-        setName(data.name);
+      .then((response) => response.json())
+      .then((data) => {
         data.yaxisId && setYAxis(data.yaxisId);
-        data.xAxisName && setXAxisName(data.xAxisName);
-        data.yAxisName && setYAxisName(data.yAxisName);
+
         data.type && setChartType(data.type);
+        console.log(data.type);
         data.xaxisId && setXAxis(data.xaxisId);
         data.label && setLabel(data.label);
         data.fillSingleColor && setFillSingleColor(data.fillSingleColor);
@@ -112,7 +92,6 @@ export default function Embed() {
         data.colorStatus && setColorStatus(data.colorStatus);
         data.fillColorStatus && setFillColorStatus(data.fillColorStatus);
 
-        setDbUid(data.userid);
         if (data.xaxis && data.yaxis) {
           const xaxis = data.xaxis.split(", ");
           const yaxis = data.yaxis.split(", ");
@@ -127,12 +106,14 @@ export default function Embed() {
           setLabelStatus(false);
         }
       });
+  },[])
 
-      console.log(dbId)
-  return (
-    <>
-      <main className="w-screen h-screen" style={{backgroundColor: backgroundColor}}>
-        {chartType == "Bar Chart" ? (
+  const [chartComponent, setChartComponent] = useState(null);
+
+  useEffect(() => {
+    switch (chartType) {
+      case "Bar Chart":
+        setChartComponent(
           <div
             style={{
               position: "relative",
@@ -154,7 +135,10 @@ export default function Embed() {
               fillColorStatus={fillColorStatus}
             />
           </div>
-        ) : chartType == "Area Chart" ? (
+        );
+        break;
+      case "Area Chart":
+        setChartComponent(
           <div
             style={{
               overflow: "hidden",
@@ -177,15 +161,17 @@ export default function Embed() {
               width={windowSize.innerWidth}
             />
           </div>
-        ) : chartType == "Doughnut Chart" ? (
+        );
+        break;
+      case "Doughnut Chart":
+        setChartComponent(
           <div
             style={{
               display: "flex",
-              justifyContent: "center", // Center horizontally
-              alignItems: "center", // Center vertically
+              justifyContent: "center",
+              alignItems: "center",
               overflow: "hidden",
               height: `${windowSize.innerHeight}px`,
-              
             }}
           >
             <DoughnutChart
@@ -202,12 +188,15 @@ export default function Embed() {
               fillColorStatus={fillColorStatus}
             />
           </div>
-        ) : chartType == "Pie Chart" ? (
+        );
+        break;
+      case "Pie Chart":
+        setChartComponent(
           <div
             style={{
               display: "flex",
-              justifyContent: "center", // Center horizontally
-              alignItems: "center", // Center vertically
+              justifyContent: "center",
+              alignItems: "center",
               overflow: "hidden",
               height: `${windowSize.innerHeight}px`,
             }}
@@ -228,9 +217,31 @@ export default function Embed() {
               width={windowSize.innerWidth}
             />
           </div>
-        ) : (
-          <Skeleton className="w-full h-[600px] rounded" />
-        )}
+        );
+        break;
+      default:
+        setChartComponent(<Skeleton className="w-full h-full rounded" />);
+    }
+  }, [chartType]);
+  
+  return (
+    <>
+      <main className="w-screen h-screen" style={{ backgroundColor: backgroundColor }}>
+        {chartComponent}
+      </main>
+    </>
+  );
+  
+
+  console.log(chartComponent);
+
+  return (
+    <>
+      <main
+        className="w-screen h-screen"
+        style={{ backgroundColor: backgroundColor }}
+      >
+        {chartComponent}
       </main>
     </>
   );
