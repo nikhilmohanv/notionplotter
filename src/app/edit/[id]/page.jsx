@@ -205,7 +205,7 @@ export default function Edit() {
           setLabelStatus(false);
         }
       });
-  }, []);
+  }, [id]);
 
   //fetch data from api/notion/retrievecolumns?id=${id}
   useEffect(() => {
@@ -704,6 +704,8 @@ export default function Edit() {
 
   useEffect(() => {
     if (xAxis != null && xAxis != undefined) {
+      console.log(extractedProperties)
+
       let XAxisData;
       if (extractedProperties.length > 0) {
         XAxisData = extractedProperties.filter((obj) => obj.id == xAxis);

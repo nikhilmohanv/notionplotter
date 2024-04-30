@@ -87,7 +87,7 @@ export default function Component() {
     const q = query(
         collection(db, "graphs"),
         where("userid", "==", user.uid),
-       orderBy("createdDate","desc")
+       orderBy("createdDate","asc")
     );
 
     const unsubscribe = onSnapshot(q, (snapshot) => {
