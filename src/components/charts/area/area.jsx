@@ -39,6 +39,8 @@ const AreaChart = ({
   fillColorStatus,
   height,
   width,
+  yAxisName,
+xAxisName
 }) => {
   console.log("area cahrt here")
   const [darkMode, setDarkMode] = useState(false);
@@ -91,7 +93,7 @@ const AreaChart = ({
           datasets: [
             {
               tension: 0.5,
-              label: "Dataset 1",
+              label: yAxisName ,
               data: yValues,
 
               borderColor: lineColor, //it is the color of line in the cahrt
@@ -100,6 +102,8 @@ const AreaChart = ({
               pointStyle: "circle",
 
               pointHoverBorderColor: lineColor,
+              // pointBackgroundColor: lineColor,
+              pointHoverBackgroundColor:lineColor,
               pointBorderWidth: 2,
               fill: {
                 target: "origin",

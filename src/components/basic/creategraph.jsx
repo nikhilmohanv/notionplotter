@@ -281,7 +281,7 @@ export default function CreateGraph({ loading }) {
       {databases.length > 0 ? (
         <Dialog>
           <DialogTrigger asChild>
-            <Button size="sm" className={"mt-4"}>
+            <Button size="sm">
               Add new chart
             </Button>
           </DialogTrigger>
@@ -530,9 +530,10 @@ export default function CreateGraph({ loading }) {
           </DialogContent>
         </Dialog>
       ) : (
-        <Button size="sm" className={"mt-4"}>
-          Fetching..
-        </Button>
+        <Button disabled size="sm">
+        <Loader2 className="mr-2 h-4 w-4  animate-spin" />
+        Please wait
+      </Button>
       )}
     </>
   );

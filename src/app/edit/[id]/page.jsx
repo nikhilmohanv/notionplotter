@@ -90,7 +90,7 @@ export default function Edit() {
   const [yAxisValues, setYAxisValues] = useState([]);
 
   //store label status true or false, if true then hide the label from users
-  const [labelStatus, setLabelStatus] = useState(false);
+  const [labelStatus, setLabelStatus] = useState(true);
 
   //for storing chart name
   const [name, setName] = useState();
@@ -766,7 +766,7 @@ export default function Edit() {
             obj.rollupType === "email"
           ) {
             if (Array.isArray(obj.value)) {
-            return obj.value[0];
+              return obj.value[0];
             }
           } else if (
             obj.type === "number" ||
@@ -868,6 +868,7 @@ export default function Edit() {
           <br />
           <div className="mb-6">
             <h3 className="text-sm font-medium mb-2">Chart type</h3>
+
             <div className="grid grid-cols-4 gap-4">
               {/* bar chart */}
               <TooltipProvider>
@@ -1081,14 +1082,17 @@ export default function Edit() {
                   )}
                 </label>
               </div>
-
-              <Input
-                placeholder="Enter label"
-                value={label}
-                onChange={(e) => setLabel(e.target.value)}
-                // {labelStatus&& disabled}
-                disabled={labelStatus ? true : false}
-              />
+              {dbId ? (
+                <Input
+                  placeholder="Enter label"
+                  value={label}
+                  onChange={(e) => setLabel(e.target.value)}
+                  // {labelStatus&& disabled}
+                  disabled={labelStatus ? true : false}
+                />
+              ) : (
+                <Skeleton className="bg-white h-9 w-full" />
+              )}
             </div>
             {/* </div> */}
           </div>
@@ -1096,189 +1100,203 @@ export default function Edit() {
           {/* graph line color */}
           <div className="mb-6">
             <h3 className="text-sm font-medium mb-2">Line Color</h3>
-            {dbUid != undefined && (
-              <Tabs defaultValue={colorStatus} className="w-full">
-                <TabsList className="grid w-full grid-cols-2">
-                  <TabsTrigger
-                    value="lineSingle"
-                    onClick={() => {
-                      setColorStatus("lineSingle");
-                    }}
-                  >
-                    Single Color
-                  </TabsTrigger>
-                  <TabsTrigger
-                    value="lineMulti"
-                    onClick={() => {
-                      setColorStatus("lineMulti");
-                    }}
-                  >
-                    Multi Color
-                  </TabsTrigger>
-                </TabsList>
-                <TabsContent value="lineSingle">
-                  <div className="w-full bg-neutral-50 rounded">
-                    <input
-                      type="color"
-                      value={lineSingleColor}
-                      onChange={(e) => setLineSingleColor(e.target.value)}
-                      className="w-12 h-12 p-0 m-2"
-                    />
-                  </div>
-                </TabsContent>
-                <TabsContent value="lineMulti">
-                  <div className="w-full bg-neutral-50 rounded">
-                    {lineMultiColor.map((item, index) => (
-                      <>
-                        <input
-                          name="color"
-                          type="color"
-                          key={index}
-                          value={item}
-                          onChange={(event) => addNewColor(event, index)}
-                          className="w-12 h-12 p-0 m-2"
-                        />
-                        {index === lineMultiColor.length - 1 && (
-                          <button onClick={() => handleAddColor()}>
-                            <PlusIcon className="w-12 h-12 p-0 " />
-                          </button>
-                        )}
-                      </>
-                    ))}
-                  </div>
-                </TabsContent>
-              </Tabs>
-            )}
+
+            <Tabs defaultValue={colorStatus} className="w-full">
+              <TabsList className="grid w-full grid-cols-2">
+                <TabsTrigger
+                  value="lineSingle"
+                  onClick={() => {
+                    setColorStatus("lineSingle");
+                  }}
+                >
+                  Single Color
+                </TabsTrigger>
+                <TabsTrigger
+                  value="lineMulti"
+                  onClick={() => {
+                    setColorStatus("lineMulti");
+                  }}
+                >
+                  Multi Color
+                </TabsTrigger>
+              </TabsList>
+              <TabsContent value="lineSingle">
+                <div className="w-full bg-neutral-50 rounded">
+                  <input
+                    type="color"
+                    value={lineSingleColor}
+                    onChange={(e) => setLineSingleColor(e.target.value)}
+                    className="w-12 h-12 p-0 m-2"
+                  />
+                </div>
+              </TabsContent>
+              <TabsContent value="lineMulti">
+                <div className="w-full bg-neutral-50 rounded">
+                  {lineMultiColor.map((item, index) => (
+                    <>
+                      <input
+                        name="color"
+                        type="color"
+                        key={index}
+                        value={item}
+                        onChange={(event) => addNewColor(event, index)}
+                        className="w-12 h-12 p-0 m-2"
+                      />
+                      {index === lineMultiColor.length - 1 && (
+                        <button onClick={() => handleAddColor()}>
+                          <PlusIcon className="w-12 h-12 p-0 " />
+                        </button>
+                      )}
+                    </>
+                  ))}
+                </div>
+              </TabsContent>
+            </Tabs>
           </div>
 
           {/* area filling color selection */}
-          {dbUid != undefined && (
-            <div className="mb-6">
-              <h3 className="text-sm font-medium mb-2">Fill Color</h3>
-              <Tabs defaultValue={fillColorStatus} className="w-full">
-                <TabsList className="grid w-full grid-cols-2">
-                  <TabsTrigger
-                    value="fillSingle"
-                    onClick={() => {
-                      setFillColorStatus("fillSingle");
-                    }}
-                  >
-                    Single Color
-                  </TabsTrigger>
-                  <TabsTrigger
-                    value="fillMulti"
-                    onClick={() => {
-                      setFillColorStatus("fillMulti");
-                    }}
-                  >
-                    Multi Color
-                  </TabsTrigger>
-                </TabsList>
-                <TabsContent value="fillSingle">
-                  <div className="w-full bg-neutral-50 rounded">
-                    <input
-                      type="color"
-                      value={fillSingleColor}
-                      onChange={(e) => setFillSingleColor(e.target.value)}
-                      className="w-12 h-12 p-0 m-2"
-                    />
-                  </div>
-                </TabsContent>
-                <TabsContent value="fillMulti">
-                  <div className="w-full bg-neutral-50 rounded">
-                    {fillMultiColor.map((item, index) => (
-                      <>
-                        <input
-                          name="color"
-                          type="color"
-                          value={item}
-                          onChange={(event) => addNewFillColor(event, index)}
-                          className="w-12 h-12 p-0 m-2"
-                        />
-                        {index === fillMultiColor.length - 1 && (
-                          <button onClick={() => handleAddFillColor()}>
-                            <PlusIcon className="w-12 h-12 p-0 " />
-                          </button>
-                        )}
-                      </>
-                    ))}
-                  </div>
-                </TabsContent>
-              </Tabs>
-            </div>
-          )}
+
+          <div className="mb-6">
+            <h3 className="text-sm font-medium mb-2">Fill Color</h3>
+            <Tabs defaultValue={fillColorStatus} className="w-full">
+              <TabsList className="grid w-full grid-cols-2">
+                <TabsTrigger
+                  value="fillSingle"
+                  onClick={() => {
+                    setFillColorStatus("fillSingle");
+                  }}
+                >
+                  Single Color
+                </TabsTrigger>
+                <TabsTrigger
+                  value="fillMulti"
+                  onClick={() => {
+                    setFillColorStatus("fillMulti");
+                  }}
+                >
+                  Multi Color
+                </TabsTrigger>
+              </TabsList>
+              <TabsContent value="fillSingle">
+                <div className="w-full bg-neutral-50 rounded">
+                  <input
+                    type="color"
+                    value={fillSingleColor}
+                    onChange={(e) => setFillSingleColor(e.target.value)}
+                    className="w-12 h-12 p-0 m-2"
+                  />
+                </div>
+              </TabsContent>
+              <TabsContent value="fillMulti">
+                <div className="w-full bg-neutral-50 rounded">
+                  {fillMultiColor.map((item, index) => (
+                    <>
+                      <input
+                        name="color"
+                        type="color"
+                        value={item}
+                        onChange={(event) => addNewFillColor(event, index)}
+                        className="w-12 h-12 p-0 m-2"
+                      />
+                      {index === fillMultiColor.length - 1 && (
+                        <button onClick={() => handleAddFillColor()}>
+                          <PlusIcon className="w-12 h-12 p-0 " />
+                        </button>
+                      )}
+                    </>
+                  ))}
+                </div>
+              </TabsContent>
+            </Tabs>
+          </div>
 
           {/* background color selector */}
           <div className="mb-6">
             <h3 className="text-sm font-medium mb-2">Background Color</h3>
-            <div className="w-full bg-neutral-50 rounded">
-              <label htmlFor="bgcolor">
-                <input
-                  type="color"
-                  name="bgcolor"
-                  value={backgroundColor}
-                  onChange={(e) => setBackgroundColor(e.target.value)}
-                  className="w-12 h-12 p-0 m-2"
-                />
-              </label>
-            </div>
+            {dbId ? (
+              <div className="w-full bg-neutral-50 rounded">
+                <label htmlFor="bgcolor">
+                  <input
+                    type="color"
+                    name="bgcolor"
+                    value={backgroundColor}
+                    onChange={(e) => setBackgroundColor(e.target.value)}
+                    className="w-12 h-12 p-0 m-2"
+                  />
+                </label>
+              </div>
+            ) : (
+              <Skeleton className="bg-white h-9 w-full" />
+            )}
           </div>
 
           {/* xaxis values */}
           <div className="mb-6">
             <h3 className="text-sm font-medium mb-2">X-Axis</h3>
-            <Select onValueChange={handleXSelect} defaultValue={xAxisName}>
-              <SelectTrigger id="xaxis">
-                <SelectValue placeholder={xAxisName} />
-              </SelectTrigger>
-              <SelectContent position="popper">
-                <SelectGroup>
-                  {colNameAndId.map((col) => (
-                    <SelectItem key={col.id} value={col.id}>
-                      {col.name}
-                    </SelectItem>
-                  ))}
-                </SelectGroup>
-              </SelectContent>
-            </Select>
+            {colNameAndId ? (
+              <Select onValueChange={handleXSelect} defaultValue={xAxisName}>
+                <SelectTrigger id="xaxis">
+                  <SelectValue placeholder={xAxisName} />
+                </SelectTrigger>
+                <SelectContent position="popper">
+                  <SelectGroup>
+                    {colNameAndId.map((col) => (
+                      <SelectItem key={col.id} value={col.id}>
+                        {col.name}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            ) : (
+              <Skeleton className="bg-white h-9 w-full" />
+            )}
           </div>
 
           {/* yaxis values */}
           <div className="mb-6">
             <h3 className="text-sm font-medium mb-2">Y-Axis</h3>
-            <Select onValueChange={handleYSelect} defaultValue={yAxisName}>
-              <SelectTrigger id="xaxis">
-                <SelectValue placeholder={yAxisName} />
-              </SelectTrigger>
-              <SelectContent position="popper">
-                <SelectGroup>
-                  {colNameAndId.map((col) => (
-                    <SelectItem key={col.id} value={col.id}>
-                      {col.name}
-                    </SelectItem>
-                  ))}
-                </SelectGroup>
-              </SelectContent>
-            </Select>
+            {colNameAndId ? (
+              <Select onValueChange={handleYSelect} defaultValue={yAxisName}>
+                <SelectTrigger id="xaxis">
+                  <SelectValue placeholder={yAxisName} />
+                </SelectTrigger>
+                <SelectContent position="popper">
+                  <SelectGroup>
+                    {colNameAndId.map((col) => (
+                      <SelectItem key={col.id} value={col.id}>
+                        {col.name}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            ) : (
+              <Skeleton className="bg-white h-9 w-full" />
+            )}
           </div>
 
           {/* aggregation function */}
           <div className="mb-6">
             <h3 className="text-sm font-medium mb-2">Aggregation</h3>
-            <Select
-              onValueChange={handleAggregationChange}
-              defaultValue={aggregation}
-            >
-              <SelectTrigger id="aggregation">
-                <SelectValue placeholder={aggregation} />
-              </SelectTrigger>
-              <SelectContent position="popper">
-                <SelectGroup>
-                  <SelectItem value="count">Count</SelectItem>
-                  <SelectItem value="sum">Sum</SelectItem>
-                </SelectGroup>
-              </SelectContent>
-            </Select>
+            {dbId ? (
+              <Select
+                onValueChange={handleAggregationChange}
+                defaultValue={aggregation}
+              >
+                <SelectTrigger id="aggregation">
+                  <SelectValue placeholder={aggregation} />
+                </SelectTrigger>
+                <SelectContent position="popper">
+                  <SelectGroup>
+                    <SelectItem value="count">Count</SelectItem>
+                    <SelectItem value="sum">Sum</SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            ) : (
+              <Skeleton className="bg-white h-9 w-full" />
+            )}
           </div>
           <div>
             <Filter
@@ -1309,11 +1327,11 @@ export default function Edit() {
         <main className="flex-grow p-4">
           <header className="flex justify-between items-center ">
             <div className="ml-auto flex-initial space-x-2">
-              <Dialog>
+              <Dialog className="bg-transparent">
                 <DialogTrigger asChild>
                   <Button variant="outline">Get Embed Link</Button>
                 </DialogTrigger>
-                <DialogContent className="sm:max-w-md">
+                <DialogContent className="sm:max-w-md ">
                   <DialogHeader>
                     <DialogTitle>Embed link</DialogTitle>
                     <DialogDescription>
@@ -1378,6 +1396,8 @@ export default function Edit() {
               fillSingleColor={fillSingleColor}
               fillMultiColor={fillMultiColor}
               fillColorStatus={fillColorStatus}
+              yAxisName={yAxisName}
+              xAxisName={xAxisName}
             />
           ) : chartType == "Doughnut Chart" ? (
             <div
