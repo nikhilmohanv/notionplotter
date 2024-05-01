@@ -23,7 +23,8 @@ import DotIcon from "@/components/icons/doticon";
 import SearchIcon from "@/components/icons/searchicon";
 import Image from "next/image";
 import { JSX, SVGProps, useContext, useState } from "react";
-import { redirect, useRouter } from "next/navigation";
+import { redirect, useRouter, useSearchParams } from "next/navigation";
+
 import { useEffect } from "react";
 // import ChartCard from "@/components/basic/chartcards/chartcard";
 import { UserAuth } from "@/app/context/firebaseauth/authcontext";
@@ -38,17 +39,18 @@ import {
   getFirestore,
   orderBy,
   onSnapshot,
-  deleteDoc, doc, getDoc,
-  
+  deleteDoc,
+  doc,
+  getDoc,
 } from "firebase/firestore";
 import app from "@/firebase/config";
 import CreateGraph from "@/components/basic/creategraph";
-import LoadingGif from "@/components/icons/loadinggif";
 import LoggedInNavBar from "@/components/basic/navbar/loggedin-navbar";
 
 export default function Component() {
   const { user, logout } = UserAuth();
   useEffect(() => {
+    console.log("user ",user)
     if (!user) {
       //redirect to /login page when not logged in.
       redirect("/");
@@ -71,42 +73,60 @@ export default function Component() {
 
   const router = useRouter();
 
-  useEffect(() => {
-    if (cookies.get("access_token") == undefined) {
+  //getting the notion status that is, is it new account or not
+  const searchParams = useSearchParams();
+
+  useEffect(()=>{
+    if (searchParams.has("n")) {
+      console.log("infine 1");
+      const n = searchParams.get("n");
       setAddToNotion(true);
     } else {
       setAddToNotion(false);
     }
-  }, [cookies.get("access_token")]);
+  
+  },[])
+ 
+  //getting the notion token
+  // useEffect(() => {
+  //   if (cookies.get("access_token") == undefined) {
+  //     setAddToNotion(true);
+  //   } else {
+  //     setAddToNotion(false);
+  //   }
+  // }, [cookies.get("access_token")]);
 
   //getting all created graphs from firestore
   useEffect(() => {
-
     async function getDocuments() {
       if (user != null && user != undefined) {
-    const q = query(
-        collection(db, "graphs"),
-        where("userid", "==", user.uid),
-       orderBy("createdDate","asc")
-    );
+        const q = query(
+          collection(db, "graphs"),
+          where("userid", "==", user.uid),
+          orderBy("createdDate", "asc")
+        );
 
-    const unsubscribe = onSnapshot(q, (snapshot) => {
-        const documents = snapshot.docs.map((doc) => ({
-            id: doc.id,
-            data: doc.data(),
-        }));
-        
-        documents.sort();
-        setDocs(documents);
-        setLoading(false); // Assuming loading should be set to false once data is received
-    }, (error) => {
-        console.error("Error fetching documents:", error);
-        setLoading(true); // Set loading to true if an error occurs
-    });
+        const unsubscribe = onSnapshot(
+          q,
+          (snapshot) => {
+            const documents = snapshot.docs.map((doc) => ({
+              id: doc.id,
+              data: doc.data(),
+            }));
 
-    // Unsubscribe from the snapshot listener when component unmounts
-    return () => unsubscribe();
-}
+            documents.sort();
+            setDocs(documents);
+            setLoading(false); // Assuming loading should be set to false once data is received
+          },
+          (error) => {
+            console.error("Error fetching documents:", error);
+            setLoading(true); // Set loading to true if an error occurs
+          }
+        );
+
+        // Unsubscribe from the snapshot listener when component unmounts
+        return () => unsubscribe();
+      }
     }
     getDocuments();
   }, [user]);

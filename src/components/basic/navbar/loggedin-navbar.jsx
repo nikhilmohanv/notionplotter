@@ -154,7 +154,10 @@ export default function LoggedInNavBar() {
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>
-                  <Link href="/settings">Settings</Link>
+                  <Link href="/billing">Billing</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <Link href="/pricing">pricing</Link>
                 </DropdownMenuItem>
 
                 <DropdownMenuSeparator />

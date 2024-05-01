@@ -13,26 +13,36 @@ import { Card } from "@/components/ui/card";
 import LineChartIcon from "@/components/icons/linechart";
 import axios from "axios";
 
-
 export default function Home() {
   const { user, GoogleSignIn, logout } = UserAuth();
-  const { loading, setLoading } = useContext(Loading);
+  const [loading, setLoading] = useState(false);
+  const [authLoading, setAuthLoading] = useState(false); // New loading state for authentication
+  const [isAuthNeeded, setIsAuthNeeded] = useState(false); //checking if auth needed, that it'll become true when the signup button clicked otherwise authneeded will be false. It used for checking if the user is already logged in or not.
+
+  // Handle user sign-in with Google and store access token
 
   useEffect(() => {
+    console.log(user);
     if (user) {
-      redirect("/dashboard");
+      if (authLoading) {
+        if (loading) {
+          redirect("/dashboard");
+        } else {
+          redirect("/dashboard?n=t");
+        }
+      }
+
+      if (!isAuthNeeded) {
+        redirect("/dashboard");
+      }
     }
-  }, [user]);
+  }, [user, loading, authLoading]); // Include authLoading in dependencies
 
   // Handle user sign-in with Google and store access token
   async function handleSignIn() {
+    setIsAuthNeeded(true);
     try {
-      // Call GoogleSignIn function from UserAuth context
       await GoogleSignIn();
-
-      // Since GoogleSignIn is asynchronous, wait for the user state to be updated
-      // This assumes that the user state is being updated in the AuthContextProvider
-      // through the onAuthStateChanged callback.
       const updatedUser = await new Promise((resolve) => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
           resolve(user);
@@ -41,57 +51,31 @@ export default function Home() {
       });
 
       if (updatedUser) {
-        // Get access token with user UID from Firestore
         const { result, error } = await getTokenWithUId(updatedUser.uid);
-
         if (result) {
-          // Loop through each document in the result
+          setCookie("uid", updatedUser.uid);
           result.forEach(async (doc) => {
             async function storeAccessToken() {
-              // Accessing the data of each document
               if (doc.data().access_token) {
-                //updating loading context
                 setLoading(true);
-                // Set access_token and uid cookies
                 setCookie("access_token", doc.data().access_token);
+                console.log("old account with access token");
+                // redirect("/dashboard");
+              } else {
+                console.log("old account with no access token");
+                // redirect("/dashboard?n=t");
               }
             }
-            // Call storeAccessToken function
             await storeAccessToken();
           });
-          setCookie("uid", updatedUser.uid);
-          
-          // const response = await axios.post("/api/productPurchase", {
-          //   productId: "357049",
-          // });
-    
-          // console.log(response.data);
-    
-          // window.open(response.data.checkoutUrl, "_blank");
-          
-          redirect("/dashboard");
-        } else {
-          //set the notion connect status to false, if it false then show the connect to notion button
         }
+        setAuthLoading(true); // Set authLoading to false once authentication is completed
       }
     } catch (error) {
       console.log(error);
     }
   }
-  // const getCheckoutUrl = async () => {
-  //   try {
-  //     const response = await axios.post("/api/productPurchase", {
-  //       productId: "357049",
-  //     });
 
-  //     console.log(response.data);
-
-  //     window.open(response.data.checkoutUrl, "_blank");
-  //   } catch (error) {
-  //     console.error(err);
-  //     alert("Failed to buy product #1");
-  //   }
-  // };
   return (
     <div className="flex flex-col min-h-[100dvh]">
       <header className="px-4 lg:px-6 h-14 flex items-center">
