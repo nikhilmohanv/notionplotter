@@ -73,7 +73,7 @@ export default function Component() {
 
   const router = useRouter();
 
-  //getting the notion status that is, is it new account or not
+  //getting the notion status that is, is it new account or not if n is t then new account else already notion secret token associated with it
   const searchParams = useSearchParams();
 
   useEffect(()=>{
@@ -88,13 +88,13 @@ export default function Component() {
   },[])
  
   //getting the notion token
-  // useEffect(() => {
-  //   if (cookies.get("access_token") == undefined) {
-  //     setAddToNotion(true);
-  //   } else {
-  //     setAddToNotion(false);
-  //   }
-  // }, [cookies.get("access_token")]);
+  useEffect(() => {
+    if (cookies.get("access_token") == undefined) {
+      setAddToNotion(true);
+    } else {
+      setAddToNotion(false);
+    }
+  }, [cookies.get("access_token")]);
 
   //getting all created graphs from firestore
   useEffect(() => {
