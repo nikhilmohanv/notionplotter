@@ -61,15 +61,15 @@ export default function Home() {
           });
           setCookie("uid", updatedUser.uid);
           
-          const response = await axios.post("/api/productPurchase", {
-            productId: "357049",
-          });
+          // const response = await axios.post("/api/productPurchase", {
+          //   productId: "357049",
+          // });
     
-          console.log(response.data);
+          // console.log(response.data);
     
-          window.open(response.data.checkoutUrl, "_blank");
+          // window.open(response.data.checkoutUrl, "_blank");
           
-          // redirect("/dashboard");
+          redirect("/dashboard");
         } else {
           //set the notion connect status to false, if it false then show the connect to notion button
         }
@@ -78,20 +78,20 @@ export default function Home() {
       console.log(error);
     }
   }
-  const getCheckoutUrl = async () => {
-    try {
-      const response = await axios.post("/api/productPurchase", {
-        productId: "357049",
-      });
+  // const getCheckoutUrl = async () => {
+  //   try {
+  //     const response = await axios.post("/api/productPurchase", {
+  //       productId: "357049",
+  //     });
 
-      console.log(response.data);
+  //     console.log(response.data);
 
-      window.open(response.data.checkoutUrl, "_blank");
-    } catch (error) {
-      console.error(err);
-      alert("Failed to buy product #1");
-    }
-  };
+  //     window.open(response.data.checkoutUrl, "_blank");
+  //   } catch (error) {
+  //     console.error(err);
+  //     alert("Failed to buy product #1");
+  //   }
+  // };
   return (
     <div className="flex flex-col min-h-[100dvh]">
       <header className="px-4 lg:px-6 h-14 flex items-center">
@@ -372,7 +372,7 @@ export default function Home() {
                     storage
                   </li>
                 </ul>
-                <Button onClick={getCheckoutUrl} className="w-full">Start Free Trial</Button>
+                <Button className="w-full">Start Free Trial</Button>
               </Card>
             </div>
           </div>
