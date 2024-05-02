@@ -40,9 +40,8 @@ const AreaChart = ({
   height,
   width,
   yAxisName,
-xAxisName
+  xAxisName,
 }) => {
-  console.log("area cahrt here")
   const [darkMode, setDarkMode] = useState(false);
   const [lineColor, setLineColor] = useState([]);
   const [fillColor, setFillColor] = useState([]);
@@ -62,7 +61,8 @@ xAxisName
       setDarkMode(true);
     }
   }, [backgroundColor]);
-
+  console.log(backgroundColor);
+  console.log(darkMode);
   const hex2rgb = (hex) => {
     const r = parseInt(hex.slice(1, 3), 16);
     const g = parseInt(hex.slice(3, 5), 16);
@@ -72,7 +72,9 @@ xAxisName
     const rgba = `rgba(${r}, ${g}, ${b}, 0.1)`;
     return rgba;
   };
-
+  console.log(fillColorStatus);
+  console.log(colorStatus)
+  
   useEffect(() => {
     const newFillColor = [];
     if (fillColorStatus === "fillSingle") {
@@ -86,14 +88,14 @@ xAxisName
   }, [fillColorStatus, fillSingleColor, fillMultiColor]);
 
   return (
-    <div id="chart" >
+    <div id="chart">
       <Line
         data={{
           labels: xValues,
           datasets: [
             {
               tension: 0.5,
-              label: yAxisName ,
+              label: yAxisName,
               data: yValues,
 
               borderColor: lineColor, //it is the color of line in the cahrt
@@ -103,7 +105,7 @@ xAxisName
 
               pointHoverBorderColor: lineColor,
               // pointBackgroundColor: lineColor,
-              pointHoverBackgroundColor:lineColor,
+              pointHoverBackgroundColor: lineColor,
               pointBorderWidth: 2,
               fill: {
                 target: "origin",
@@ -120,7 +122,6 @@ xAxisName
               position: "top",
               display: false,
               labels: {
-              
                 usePointStyle: true,
               },
             },
@@ -180,7 +181,7 @@ xAxisName
             },
             point: {
               radius: 1,
-              backgroundColor: "transparent",
+              backgroundColor: "transparent", // #29D
               borderWidth: 0,
               hoverBackgroundColor: "#212027",
               hoverRadius: 4,

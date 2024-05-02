@@ -100,7 +100,7 @@ const BarChart = ({
               borderColor: lineColor,
               borderWidth: 1,
               data: yValues,
-              borderRadius: 20,
+              borderRadius: 10,
             },
           ],
         }}

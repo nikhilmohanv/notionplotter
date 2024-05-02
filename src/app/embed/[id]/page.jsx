@@ -8,6 +8,7 @@ import PieChart from "@/components/charts/pie/pie";
 import { usePathname } from "next/navigation";
 import { Skeleton } from "@/components/ui/skeleton";
 import "./embed.css";
+import RefreshButton from "@/components/icons/refresh";
 
 export default function Embed() {
   const [chartType, setChartType] = useState();
@@ -106,7 +107,7 @@ export default function Embed() {
           setLabelStatus(false);
         }
       });
-  },[])
+  }, []);
 
   const [chartComponent, setChartComponent] = useState(null);
 
@@ -223,31 +224,25 @@ export default function Embed() {
         setChartComponent(<Skeleton className="w-full h-full rounded" />);
     }
   }, [chartType]);
-  
-  return (
-    <>
-      <main className="w-screen h-screen" style={{ backgroundColor: backgroundColor }}>
-        {chartComponent}
-      </main>
-    </>
-  );
-  
-
-  console.log(chartComponent);
 
   return (
     <>
-      <main
-        className="w-screen h-screen"
-        style={{ backgroundColor: backgroundColor }}
-      >
-        {chartComponent}
-      </main>
+      <div className="embed-container">
+        {/* Refresh button */}
+        <button
+          className="refresh-button"
+          onClick={() => window.location.reload()}
+        >
+          <RefreshButton className="h-8 w-"/>
+        </button>
+        <main className="w-screen h-screen">{chartComponent}</main>
+      </div>
     </>
-  );
+  )
 }
 
 function getWindowSize() {
   const { innerWidth, innerHeight } = window;
   return { innerWidth, innerHeight };
 }
+

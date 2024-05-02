@@ -1369,7 +1369,17 @@ export default function Edit() {
               </Dialog>
             </div>
           </header>
+
           {chartType == "Bar Chart" ? (
+            <div
+            style={{
+              // display: "flex",
+              // justifyContent: "center", // Center horizontally
+              // alignItems: "center", // Center vertically
+              // overflow: "hidden",
+              // height: `75%`,
+              backgroundColor: backgroundColor,
+            }}>
             <BarChart
               xValues={xAxisValues}
               yValues={yAxisValues}
@@ -1383,7 +1393,18 @@ export default function Edit() {
               backgroundColor={backgroundColor}
               fillColorStatus={fillColorStatus}
             />
+            </div>
           ) : chartType == "Area Chart" ? (
+            <div
+            style={{
+              // display: "flex",
+              // justifyContent: "center", // Center horizontally
+              // alignItems: "center", // Center vertically
+              // overflow: "hidden",
+              // height: `75%`,
+              backgroundColor: backgroundColor,
+            }}
+          >
             <AreaChart
               xValues={xAxisValues}
               yValues={yAxisValues}
@@ -1399,6 +1420,7 @@ export default function Edit() {
               yAxisName={yAxisName}
               xAxisName={xAxisName}
             />
+            </div>
           ) : chartType == "Doughnut Chart" ? (
             <div
               style={{

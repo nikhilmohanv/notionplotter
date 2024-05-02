@@ -1,3 +1,17 @@
 main {
   overflow: hidden;
 }
+.embed-container {
+  position: relative;
+}
+
+.refresh-button {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  display: none; /* Initially hide the button */
+}
+
+.embed-container:hover .refresh-button {
+  display: block; /* Show the button on hover */
+}
