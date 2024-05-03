@@ -1,8 +1,6 @@
 "use client";
-
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-
 import {
   DropdownMenuTrigger,
   DropdownMenuLabel,
@@ -20,20 +18,14 @@ import {
   CardHeader,
 } from "@/components/ui/card";
 import DotIcon from "@/components/icons/doticon";
-import SearchIcon from "@/components/icons/searchicon";
-import Image from "next/image";
-import { JSX, SVGProps, useContext, useState } from "react";
 import { redirect, useRouter, useSearchParams } from "next/navigation";
-
-import { useEffect } from "react";
+import { useEffect,useState } from "react";
 // import ChartCard from "@/components/basic/chartcards/chartcard";
 import { UserAuth } from "@/app/context/firebaseauth/authcontext";
 import { useCookies } from "next-client-cookies";
-import { deleteCookie } from "cookies-next";
 // import { collection, query, where, orderBy,  } from "firebase/firestore";
 import {
   collection,
-  getDocs,
   where,
   query,
   getFirestore,
@@ -41,13 +33,14 @@ import {
   onSnapshot,
   deleteDoc,
   doc,
-  getDoc,
 } from "firebase/firestore";
 import app from "@/firebase/config";
 import CreateGraph from "@/components/basic/creategraph";
 import LoggedInNavBar from "@/components/basic/navbar/loggedin-navbar";
 
 export default function Component() {
+
+
   const { user, logout } = UserAuth();
   useEffect(() => {
     console.log("user ",user)
@@ -64,8 +57,7 @@ export default function Component() {
 
   const notionAuthUrl = `https://api.notion.com/v1/oauth/authorize?owner=user&client_id=34d5c9a9-5b7d-4b77-be4b-6a5521f6560c&response_type=code`;
 
-  const [chartType, setChartType] = useState();
-  const [selectedDb, setSelectedDb] = useState();
+ 
   const [docs, setDocs] = useState([]);
 
   //if true then show the add to notion button
@@ -78,7 +70,7 @@ export default function Component() {
 
   useEffect(()=>{
     if (searchParams.has("n")) {
-      console.log("infine 1");
+     
       const n = searchParams.get("n");
       setAddToNotion(true);
     } else {

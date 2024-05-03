@@ -11,9 +11,12 @@ import {
   Table,
 } from "@/components/ui/table";
 
-export default function Component() {
+
+export default async function Billing() {
+
   return (
     <div className="container mx-auto py-12 px-4 md:px-6">
+     
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div className="bg-white dark:bg-gray-950 rounded-lg shadow-md p-6">
           <h2 className="text-2xl font-bold mb-4">Billing Details</h2>

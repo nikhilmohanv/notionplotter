@@ -28,39 +28,60 @@ export async function POST(req) {
     );
     const signature = Buffer.from(req.headers.get("X-Signature") || "", "utf8");
 
+    // validate signature
     if (!crypto.timingSafeEqual(digest, signature)) {
       throw new Error("Invalid signature.");
     }
 
+    const userId = body.meta.custom_data.user_id;
+
+    // Check if custom defined data i.e. the `userId` is there or not
+    if (!userId) {
+      return NextResponse.json(
+        { message: "No userId provided" },
+        { status: 403 }
+      );
+    }
+
     console.log(body);
 
-    // Logic according to event
-    if (eventType === "subscription_created" || eventType === "subscription_updated") {
-      const userId = body.meta.custom_data.user_id;
-      const isSuccessful = body.data.attributes.status === "paid";
+    switch (body.meta.event_name) {
+      case "subscription_created": {
+        const data = {
+          subscriptionId: body.id,
+          customerId: body.data.attributes.customer_id,
+          variantId: body.data.attributes.variant_id,
+          userId: userId,
+          created_at: body.data.attributes.created_at,
+          updated_at: body.data.attributes.updated_at,
+          status: body.data.attributes.status,
+          renews_at: body.data.attributes.renews_at,
+          card_brand: body.data.attributes.card_brand,
+          card_last_four: body.data.attributes.card_last_four,
+          status_formatted: body.data.attributes.status_formatted,
+        };
 
-      const data = {
-        userId: userId,
-        created_at: body.data.attributes.created_at,
-        updated_at: body.data.attributes.updated_at,
-        status: body.data.attributes.status,
-        renews_at: body.data.attributes.renews_at,
-        card_brand:body.data.attributes.card_brand,
-        card_last_four:body.data.attributes.card_last_four,
-        status_formatted: body.data.attributes.status_formatted,
+        const resp = addDataWithId("subscription", userId, data);
 
-      };
+        // stroring subscription history
+        const result = addData("subscription_history", data);
+      }
 
-      // inserting into firestore
-      // const value = collection(db, "subscription");
+      case "subscription_updated": {
+        const updata = {
+          variantId: body.data.attributes.variant_id,
+          currentPeriodEnd: body.data.attributes.renews_at,
+        };
 
-      // stores the latest subscription
-      const resp= addDataWithId("subscription",userId,data)
+        const resp = addDataWithId("subscription", userId, updata);
+      }
 
-      // stroring subscription history
-      const result = addData("subscription_history",data)
-      // const result = await addDoc(value, data);
+      default: {
+        return;
+      }
     }
+
+    // Logic according to event
 
     return Response.json({ message: "Webhook received" });
   } catch (err) {

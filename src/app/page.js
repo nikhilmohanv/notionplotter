@@ -2,25 +2,22 @@
 import { Button } from "@/components/ui/button";
 import { Loading, UserAuth } from "@/app/context/firebaseauth/authcontext";
 import Link from "next/link";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { setCookie } from "cookies-next";
 import getTokenWithUId from "../firebase/firestore/getaccesstoken";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "@/firebase/config";
 import { redirect } from "next/navigation";
-import Image from "next/image";
 import { Card } from "@/components/ui/card";
 import LineChartIcon from "@/components/icons/linechart";
-import axios from "axios";
 
 export default function Home() {
-  const { user, GoogleSignIn, logout } = UserAuth();
+  const { user, GoogleSignIn } = UserAuth();
   const [loading, setLoading] = useState(false);
   const [authLoading, setAuthLoading] = useState(false); // New loading state for authentication
   const [isAuthNeeded, setIsAuthNeeded] = useState(false); //checking if auth needed, that it'll become true when the signup button clicked otherwise authneeded will be false. It used for checking if the user is already logged in or not.
 
-  // Handle user sign-in with Google and store access token
-
+  // Handle user sign-in with Google and store access tokenz
   useEffect(() => {
     console.log(user);
     if (user) {
