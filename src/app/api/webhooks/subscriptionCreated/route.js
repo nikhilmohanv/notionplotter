@@ -76,14 +76,12 @@ export async function POST(req) {
         const resp = addDataWithId("subscription", userId, updata);
       }
 
-      default: {
-        return;
-      }
+    
     }
 
     // Logic according to event
 
-    return Response.json({ message: "Webhook received" });
+    return Response.json({ message: "Webhook received" },{status:200});
   } catch (err) {
     console.error(err);
     return Response.json({ message: "Server error" }, { status: 500 });
