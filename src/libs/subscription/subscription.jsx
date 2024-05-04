@@ -44,11 +44,11 @@ export default async function getUserSubscriptionPlan() {
       );
       const data = {
         onTrial: false,
-        isPro: false,
       };
       const { result, error } = await addDataWithId("subscription", uid, data);
       return {
         onTrial: false,
+        isPro: false,
       };
     } else {
       isPro = true;

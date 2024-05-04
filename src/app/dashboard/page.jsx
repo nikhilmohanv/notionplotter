@@ -158,7 +158,7 @@ export default function Dashboard() {
         </div>
         <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6">
           {
-            onTrial || !isPro && (
+            !isPro && (
               <div className="flex flex-col items-center justify-center gap-4 rounded-lg border border-dashed shadow-sm">
                 Upgrade to premium
               </div>
