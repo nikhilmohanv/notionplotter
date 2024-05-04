@@ -48,7 +48,8 @@ export async function POST(req) {
     switch (body.meta.event_name) {
       case "subscription_created": {
         const data = {
-          subscriptionId: body.id,
+          subscriptionId:
+            body.data.attributes.first_subscription_item.subscription_id,
           customerId: body.data.attributes.customer_id,
           variantId: body.data.attributes.variant_id,
           userId: userId,
@@ -59,6 +60,7 @@ export async function POST(req) {
           card_brand: body.data.attributes.card_brand,
           card_last_four: body.data.attributes.card_last_four,
           status_formatted: body.data.attributes.status_formatted,
+          onTrial: false,
         };
 
         const resp = addDataWithId("subscription", userId, data);
@@ -75,13 +77,11 @@ export async function POST(req) {
 
         const resp = addDataWithId("subscription", userId, updata);
       }
-
-    
     }
 
     // Logic according to event
 
-    return Response.json({ message: "Webhook received" },{status:200});
+    return Response.json({ message: "Webhook received" }, { status: 200 });
   } catch (err) {
     console.error(err);
     return Response.json({ message: "Server error" }, { status: 500 });

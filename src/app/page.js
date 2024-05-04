@@ -10,6 +10,9 @@ import { auth } from "@/firebase/config";
 import { redirect } from "next/navigation";
 import { Card } from "@/components/ui/card";
 import LineChartIcon from "@/components/icons/linechart";
+import addData from "@/firebase/firestore/adddata";
+import addDataWithId from "@/firebase/firestore/adddatawithid";
+import { Timestamp } from "firebase/firestore";
 
 export default function Home() {
   const { user, GoogleSignIn } = UserAuth();
@@ -48,6 +51,25 @@ export default function Home() {
       });
 
       if (updatedUser) {
+        if (
+          updatedUser.metadata.creationTime ==
+          updatedUser.metadata.lastSignInTime
+        ) {
+          const trialEndDate = new Date()
+            trialEndDate.setDate(trialEndDate.getDate() + 7) //7 days trial
+          const data = {
+            uid: updatedUser.uid,
+            onTrial: true,
+            trialStartDate: new Date(),
+            trialEndDate:`${trialEndDate}`
+          };
+          const { result, error } = await addDataWithId(
+            "subscription",
+            updatedUser.uid,
+            data
+          );
+          console.log("New doc adding error ", error);
+        }
         const { result, error } = await getTokenWithUId(updatedUser.uid);
         if (result) {
           setCookie("uid", updatedUser.uid);

@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/card";
 import DotIcon from "@/components/icons/doticon";
 import { redirect, useRouter, useSearchParams } from "next/navigation";
-import { useEffect,useState } from "react";
+import { useEffect, useState } from "react";
 // import ChartCard from "@/components/basic/chartcards/chartcard";
 import { UserAuth } from "@/app/context/firebaseauth/authcontext";
 import { useCookies } from "next-client-cookies";
@@ -37,13 +37,25 @@ import {
 import app from "@/firebase/config";
 import CreateGraph from "@/components/basic/creategraph";
 import LoggedInNavBar from "@/components/basic/navbar/loggedin-navbar";
+import getUserSubscriptionPlan from "@/libs/subscription/subscription";
 
-export default function Component() {
-
+export default function Dashboard() {
+  const [isPro, setIsPro] = useState();
+  const [onTrial, setOnTrial] = useState(true);
+  //get user subscription plan
+  useEffect(() => {
+    fetch("/api/payment/getusersubscriptionplan")
+      .then((data) => data.json())
+      .then((data) => {
+        console.log(data);
+        data.isPro && setIsPro(data.isPro);
+        data.onTrial && setOnTrial(data.onTrial);
+      });
+  }, []);
 
   const { user, logout } = UserAuth();
   useEffect(() => {
-    console.log("user ",user)
+    console.log("user ", user);
     if (!user) {
       //redirect to /login page when not logged in.
       redirect("/");
@@ -57,7 +69,6 @@ export default function Component() {
 
   const notionAuthUrl = `https://api.notion.com/v1/oauth/authorize?owner=user&client_id=34d5c9a9-5b7d-4b77-be4b-6a5521f6560c&response_type=code`;
 
- 
   const [docs, setDocs] = useState([]);
 
   //if true then show the add to notion button
@@ -68,17 +79,15 @@ export default function Component() {
   //getting the notion status that is, is it new account or not if n is t then new account else already notion secret token associated with it
   const searchParams = useSearchParams();
 
-  useEffect(()=>{
+  useEffect(() => {
     if (searchParams.has("n")) {
-     
       const n = searchParams.get("n");
       setAddToNotion(true);
     } else {
       setAddToNotion(false);
     }
-  
-  },[])
- 
+  }, []);
+
   //getting the notion token
   useEffect(() => {
     if (cookies.get("access_token") == undefined) {
@@ -148,6 +157,13 @@ export default function Component() {
           <LoggedInNavBar />
         </div>
         <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6">
+          {
+            onTrial || !isPro && (
+              <div className="flex flex-col items-center justify-center gap-4 rounded-lg border border-dashed shadow-sm">
+                Upgrade to premium
+              </div>
+            )
+          }
           {addToNotion ? (
             <div
               className="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm"

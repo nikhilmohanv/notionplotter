@@ -17,7 +17,7 @@ export const AuthContextProvider = ({ children }) => {
   const GoogleSignIn = async () => {
     try {
       const provider = new GoogleAuthProvider();
-      await signInWithPopup(auth, provider);
+      await signInWithPopup(auth, provider).then()
     } catch (error) {
       console.error(error); // Handle errors gracefully
     }
