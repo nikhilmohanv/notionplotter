@@ -38,9 +38,13 @@ export default async function getUserSubscriptionPlan() {
         (1000 * 60 * 60 * 24) <=
       0
     ) {
+      console.log(
+        "making it false ",
+        (trialEndDate.getTime() - currentDate.getTime()) / (1000 * 60 * 60 * 24)
+      );
       const data = {
         onTrial: false,
-        isPro:false
+        isPro: false,
       };
       const { result, error } = await addDataWithId("subscription", uid, data);
       return {
