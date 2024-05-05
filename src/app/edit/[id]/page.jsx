@@ -1296,6 +1296,7 @@ export default function Edit() {
             )}
           </div>
 
+{/* filter */}
           <div className="sm:mb-14">
             <Filter
               getFilters={getFilters}
@@ -1306,9 +1307,9 @@ export default function Edit() {
               orAnd={andOr}
             />
           </div>
-         
-          <div className=" w-full bg-gray-100 p-4 border-t">
+         {/* save button */}
             {/* md:sticky md:bottom-9 md:left-0 */}
+          {/* <div className=" w-full bg-gray-100 p-4 border-t">
             {savingStatus ? (
               <Button disabled className="w-full">
                 <Loader2 className="mr-2 h-4 w-4  animate-spin" />
@@ -1319,7 +1320,7 @@ export default function Edit() {
                 Save
               </Button>
             )}
-          </div>
+          </div> */}
         </aside>
 
         <main className="flex-grow p-4">
