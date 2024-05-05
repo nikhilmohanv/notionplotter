@@ -846,17 +846,14 @@ export default function Edit() {
     setAggregation(value);
   };
 
-  console.log(xAxisValues);
-
-  console.log(yAxisValues);
 
   return (
     <>
       <LoggedInNavBar />
 
       <div key="1" className="flex flex-col h-screen md:flex-row">
-        <aside className="w-full lg:w-[400px] bg-gray-100 p-6 md:w-[300px] lg:overflow-auto md:overflow-auto">
-          {/* <h2 className="text-lg font-semibold mb-4">Chart Settings</h2> */}
+        <aside className="w-full lg:w-[400px] bg-gray-100 p-6 md:w-[300px] ">
+          {/* lg:overflow-auto md:overflow-auto */}
 
           <div className="grid grid-col-3">
             <div>
@@ -1298,7 +1295,8 @@ export default function Edit() {
               <Skeleton className="bg-white h-9 w-full" />
             )}
           </div>
-          <div>
+
+          <div className="sm:mb-14">
             <Filter
               getFilters={getFilters}
               dbId={dbId}
@@ -1308,8 +1306,7 @@ export default function Edit() {
               orAnd={andOr}
             />
           </div>
-          <br />
-          <br />
+         
           <div className="md:sticky md:bottom-9 md:left-0 w-full bg-gray-100 p-4 border-t">
             {savingStatus ? (
               <Button disabled className="w-full">
@@ -1318,7 +1315,7 @@ export default function Edit() {
               </Button>
             ) : (
               <Button onClick={saveToDb} className="w-full">
-                Save{" "}
+                Save
               </Button>
             )}
           </div>
@@ -1372,54 +1369,55 @@ export default function Edit() {
 
           {chartType == "Bar Chart" ? (
             <div
-            style={{
-              // display: "flex",
-              // justifyContent: "center", // Center horizontally
-              // alignItems: "center", // Center vertically
-              // overflow: "hidden",
-              // height: `75%`,
-              backgroundColor: backgroundColor,
-            }}>
-            <BarChart
-              xValues={xAxisValues}
-              yValues={yAxisValues}
-              label={label}
-              labelStatus={labelStatus}
-              lineSingleColor={lineSingleColor}
-              lineMultiColor={lineMultiColor}
-              colorStatus={colorStatus}
-              fillSingleColor={fillSingleColor}
-              fillMultiColor={fillMultiColor}
-              backgroundColor={backgroundColor}
-              fillColorStatus={fillColorStatus}
-            />
+              style={{
+                // display: "flex",
+                // justifyContent: "center", // Center horizontally
+                // alignItems: "center", // Center vertically
+                // overflow: "hidden",
+                // height: `75%`,
+                backgroundColor: backgroundColor,
+              }}
+            >
+              <BarChart
+                xValues={xAxisValues}
+                yValues={yAxisValues}
+                label={label}
+                labelStatus={labelStatus}
+                lineSingleColor={lineSingleColor}
+                lineMultiColor={lineMultiColor}
+                colorStatus={colorStatus}
+                fillSingleColor={fillSingleColor}
+                fillMultiColor={fillMultiColor}
+                backgroundColor={backgroundColor}
+                fillColorStatus={fillColorStatus}
+              />
             </div>
           ) : chartType == "Area Chart" ? (
             <div
-            style={{
-              // display: "flex",
-              // justifyContent: "center", // Center horizontally
-              // alignItems: "center", // Center vertically
-              // overflow: "hidden",
-              // height: `75%`,
-              backgroundColor: backgroundColor,
-            }}
-          >
-            <AreaChart
-              xValues={xAxisValues}
-              yValues={yAxisValues}
-              label={label}
-              labelStatus={labelStatus}
-              lineSingleColor={lineSingleColor}
-              lineMultiColor={lineMultiColor}
-              colorStatus={colorStatus}
-              backgroundColor={backgroundColor}
-              fillSingleColor={fillSingleColor}
-              fillMultiColor={fillMultiColor}
-              fillColorStatus={fillColorStatus}
-              yAxisName={yAxisName}
-              xAxisName={xAxisName}
-            />
+              style={{
+                // display: "flex",
+                // justifyContent: "center", // Center horizontally
+                // alignItems: "center", // Center vertically
+                // overflow: "hidden",
+                // height: `75%`,
+                backgroundColor: backgroundColor,
+              }}
+            >
+              <AreaChart
+                xValues={xAxisValues}
+                yValues={yAxisValues}
+                label={label}
+                labelStatus={labelStatus}
+                lineSingleColor={lineSingleColor}
+                lineMultiColor={lineMultiColor}
+                colorStatus={colorStatus}
+                backgroundColor={backgroundColor}
+                fillSingleColor={fillSingleColor}
+                fillMultiColor={fillMultiColor}
+                fillColorStatus={fillColorStatus}
+                yAxisName={yAxisName}
+                xAxisName={xAxisName}
+              />
             </div>
           ) : chartType == "Doughnut Chart" ? (
             <div

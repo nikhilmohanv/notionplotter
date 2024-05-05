@@ -215,7 +215,7 @@ export default function Dashboard() {
                               {/* <DialogTitle>Share link</DialogTitle> */}
                             </DialogHeader>
                             <div id="pricing" className="w-full">
-                              <div className="container grid items-center justify-center gap-1 text-center md:px-6">
+                              <div className=" grid items-center justify-center gap-1 text-center md:px-6">
                                 <div className="space-y-1">
                                   <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
                                     Pricing
@@ -226,7 +226,7 @@ export default function Dashboard() {
                                   </p> */}
                                 </div>
                                 <div className="flex justify-center">
-                                  <Card className="space-y-4 rounded-lg border-none bg-white p-6 dark:border-gray-800 dark:bg-gray-950">
+                                  <Card className="space-y-4 rounded-lg border-none bg-white">
                                     <div className="space-y-1">
                                       <h3 className="text-2xl font-bold">
                                         Pro
