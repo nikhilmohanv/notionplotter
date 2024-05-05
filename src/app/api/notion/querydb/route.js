@@ -10,5 +10,6 @@ export const POST = async (req) => {
     return NextResponse.json(dbs.results);
   } catch (err) {
     console.log("Error:", err);
+    return NextResponse.error(err);
   }
 };

@@ -70,10 +70,6 @@ export default async function getUserSubscriptionPlan() {
     isCanceled = subscription.data.attributes.cancelled;
   }
   await verifyPro();
-  console.log("is pro", isPro);
-  console.log(renewsAt);
-  console.log(isCanceled);
-  console.log(subscription);
 
   // if (renewsAt && isPro && isCanceled && subscription) {
   return {

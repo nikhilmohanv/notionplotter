@@ -1,6 +1,19 @@
 "use client";
 import Link from "next/link";
+
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   DropdownMenuTrigger,
   DropdownMenuLabel,
@@ -17,6 +30,7 @@ import {
   Card,
   CardHeader,
 } from "@/components/ui/card";
+import CheckIcon from "@/components/icons/checkicon";
 import DotIcon from "@/components/icons/doticon";
 import { redirect, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -37,23 +51,23 @@ import {
 import app from "@/firebase/config";
 import CreateGraph from "@/components/basic/creategraph";
 import LoggedInNavBar from "@/components/basic/navbar/loggedin-navbar";
-import getUserSubscriptionPlan from "@/libs/subscription/subscription";
 
 export default function Dashboard() {
-  const [isPro, setIsPro] = useState();
+  const [isPro, setIsPro] = useState(true);
   const [onTrial, setOnTrial] = useState(true);
   //get user subscription plan
   useEffect(() => {
     fetch("/api/payment/getusersubscriptionplan")
       .then((data) => data.json())
       .then((data) => {
-        console.log(data);
-        data.isPro && setIsPro(data.isPro);
-        data.onTrial && setOnTrial(data.onTrial);
+        console.log(data.isPro);
+        data.isPro !== undefined && setIsPro(data.isPro);
+
+        data.onTrial !== undefined && setOnTrial(data.onTrial);
       });
   }, []);
 
-  const { user, logout } = UserAuth();
+  const { user } = UserAuth();
   useEffect(() => {
     console.log("user ", user);
     if (!user) {
@@ -81,7 +95,6 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (searchParams.has("n")) {
-      const n = searchParams.get("n");
       setAddToNotion(true);
     } else {
       setAddToNotion(false);
@@ -146,7 +159,8 @@ export default function Dashboard() {
       console.log(err);
     }
   };
-
+  const checkoutUrl = "fs";
+  console.log("IS pro ", isPro);
   return (
     <div
       key="1"
@@ -157,13 +171,6 @@ export default function Dashboard() {
           <LoggedInNavBar />
         </div>
         <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6">
-          {
-            !isPro && (
-              <div className="flex flex-col items-center justify-center gap-4 rounded-lg border border-dashed shadow-sm">
-                Upgrade to premium
-              </div>
-            )
-          }
           {addToNotion ? (
             <div
               className="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm"
@@ -192,9 +199,77 @@ export default function Dashboard() {
                       </h2>
                     </div>
                     <div className="ml-auto flex-initial space-x-2">
-                      <Button>
-                        <Link href={notionAuthUrl}>Edit Notion Access</Link>
-                      </Button>
+                      {!isPro && (
+                        // <div className="flex flex-col items-center justify-center gap-4 rounded-lg border border-dashed shadow-sm">
+                        //   Upgrade to premium
+                        // </div>
+                        <Dialog>
+                          <DialogTrigger asChild>
+                            {/* <button id="subscribeButton">Upgrade to Pro</button> */}
+                            <Button id="subscribeButton" variant="outline">
+                              Upgrade to Pro
+                            </Button>
+                          </DialogTrigger>
+                          <DialogContent className="sm:max-w-md">
+                            <DialogHeader>
+                              {/* <DialogTitle>Share link</DialogTitle> */}
+                            </DialogHeader>
+                            <div id="pricing" className="w-full">
+                              <div className="container grid items-center justify-center gap-1 text-center md:px-6">
+                                <div className="space-y-1">
+                                  <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
+                                    Pricing
+                                  </h2>
+                                  {/* <p className="mx-auto max-w-[600px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
+                                    Choose the plan that fits your needs and
+                                    budget.
+                                  </p> */}
+                                </div>
+                                <div className="flex justify-center">
+                                  <Card className="space-y-4 rounded-lg border-none bg-white p-6 dark:border-gray-800 dark:bg-gray-950">
+                                    <div className="space-y-1">
+                                      <h3 className="text-2xl font-bold">
+                                        Pro
+                                      </h3>
+                                    </div>
+                                    <div className="space-y-2">
+                                      <div className="text-4xl font-bold">
+                                        $3.99
+                                      </div>
+                                      <div className="text-sm text-gray-500 dark:text-gray-400">
+                                        per month
+                                      </div>
+                                    </div>
+                                    <ul className="space-y-2 text-sm">
+                                      <li>
+                                        <CheckIcon className="mr-2 inline-block h-4 w-4" />
+                                        AI-powered image generation
+                                      </li>
+                                      <li>
+                                        <CheckIcon className="mr-2 inline-block h-4 w-4" />
+                                        Access to template library
+                                      </li>
+                                      <li>
+                                        <CheckIcon className="mr-2 inline-block h-4 w-4" />
+                                        Basic customization tools
+                                      </li>
+                                      <li>
+                                        <CheckIcon className="mr-2 inline-block h-4 w-4" />
+                                        5 GB storage
+                                      </li>
+                                    </ul>
+                                    <Button className="w-full">
+                                      <Link href={checkoutUrl} target="_blank">
+                                        Start Free Trial
+                                      </Link>
+                                    </Button>
+                                  </Card>
+                                </div>
+                              </div>
+                            </div>
+                          </DialogContent>
+                        </Dialog>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -202,7 +277,74 @@ export default function Dashboard() {
 
               <div className="grid gap-4 sm:grid-col-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 flex mt-3">
                 <div className="grid place-items-center border-dashed border-2 min-h-20 rounded-lg">
-                  <CreateGraph loading={loading} />
+                  {isPro ? (
+                    <CreateGraph loading={loading} />
+                  ) : (
+                    <Dialog>
+                      <DialogTrigger asChild>
+                        {/* <button id="subscribeButton">Upgrade to Pro</button> */}
+                        <Button id="subscribeButton" variant="outline">
+                          Upgrade to Pro
+                        </Button>
+                      </DialogTrigger>
+                      <DialogContent className="sm:max-w-md">
+                        <DialogHeader>
+                          {/* <DialogTitle>Share link</DialogTitle> */}
+                        </DialogHeader>
+                        <div id="pricing" className="w-full">
+                          <div className="container grid items-center justify-center gap-1 text-center md:px-6">
+                            <div className="space-y-1">
+                              <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
+                                Pricing
+                              </h2>
+                              {/* <p className="mx-auto max-w-[600px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
+                            Choose the plan that fits your needs and
+                            budget.
+                          </p> */}
+                            </div>
+                            <div className="flex justify-center">
+                              <Card className="space-y-4 rounded-lg border-none bg-white p-6 dark:border-gray-800 dark:bg-gray-950">
+                                <div className="space-y-1">
+                                  <h3 className="text-2xl font-bold">Pro</h3>
+                                </div>
+                                <div className="space-y-2">
+                                  <div className="text-4xl font-bold">
+                                    $3.99
+                                  </div>
+                                  <div className="text-sm text-gray-500 dark:text-gray-400">
+                                    per month
+                                  </div>
+                                </div>
+                                <ul className="space-y-2 text-sm">
+                                  <li>
+                                    <CheckIcon className="mr-2 inline-block h-4 w-4" />
+                                    AI-powered image generation
+                                  </li>
+                                  <li>
+                                    <CheckIcon className="mr-2 inline-block h-4 w-4" />
+                                    Access to template library
+                                  </li>
+                                  <li>
+                                    <CheckIcon className="mr-2 inline-block h-4 w-4" />
+                                    Basic customization tools
+                                  </li>
+                                  <li>
+                                    <CheckIcon className="mr-2 inline-block h-4 w-4" />
+                                    5 GB storage
+                                  </li>
+                                </ul>
+                                <Button className="w-full">
+                                  <Link href={checkoutUrl} target="_blank">
+                                    Start Free Trial
+                                  </Link>
+                                </Button>
+                              </Card>
+                            </div>
+                          </div>
+                        </div>
+                      </DialogContent>
+                    </Dialog>
+                  )}
                 </div>
                 {docs.length !== 0
                   ? docs.map((doc) => (

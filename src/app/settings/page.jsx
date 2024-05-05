@@ -1,26 +1,17 @@
+"use client";
 import Link from "next/link";
-import {
-  Bell,
-  CircleUser,
-  Home,
-  LineChart,
-  Menu,
-  Package,
-  Package2,
-  Search,
-  ShoppingCart,
-  Users,
-} from "lucide-react";
+import { CircleUser, Menu, Package2, Search } from "lucide-react";
 
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -31,210 +22,156 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import LoggedInNavBar from "@/components/basic/navbar/loggedin-navbar";
+import { UserAuth } from "../context/firebaseauth/authcontext";
+import { Label } from "@/components/ui/label";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function Dashboard() {
+  const { user, logout } = UserAuth();
+  const notionAuthUrl = `https://api.notion.com/v1/oauth/authorize?owner=user&client_id=34d5c9a9-5b7d-4b77-be4b-6a5521f6560c&response_type=code`;
   return (
-    <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
-      <div className="hidden border-r bg-muted/40 md:block">
-        <div className="flex h-full max-h-screen flex-col gap-2">
-          <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
-            <Link href="/" className="flex items-center gap-2 font-semibold">
-              <Package2 className="h-6 w-6" />
-              <span className="">Acme Inc</span>
-            </Link>
-            <Button variant="outline" size="icon" className="ml-auto h-8 w-8">
-              <Bell className="h-4 w-4" />
-              <span className="sr-only">Toggle notifications</span>
-            </Button>
-          </div>
-          <div className="flex-1">
-            <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
-              <Link
-                href="#"
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
-              >
-                <Home className="h-4 w-4" />
-                Dashboard
-              </Link>
-              <Link
-                href="#"
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
-              >
-                <ShoppingCart className="h-4 w-4" />
-                Orders
-                <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
-                  6
-                </Badge>
-              </Link>
-              <Link
-                href="#"
-                className="flex items-center gap-3 rounded-lg bg-muted px-3 py-2 text-primary transition-all hover:text-primary"
-              >
-                <Package className="h-4 w-4" />
-                Products{" "}
-              </Link>
-              <Link
-                href="#"
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
-              >
-                <Users className="h-4 w-4" />
-                Customers
-              </Link>
-              <Link
-                href="#"
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
-              >
-                <LineChart className="h-4 w-4" />
-                Analytics
-              </Link>
-            </nav>
-          </div>
-          <div className="mt-auto p-4">
-            <Card x-chunk="dashboard-02-chunk-0">
-              <CardHeader className="p-2 pt-0 md:p-4">
-                <CardTitle>Upgrade to Pro</CardTitle>
-                <CardDescription>
-                  Unlock all features and get unlimited access to our support
-                  team.
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="p-2 pt-0 md:p-4 md:pt-0">
-                <Button size="sm" className="w-full">
-                  Upgrade
-                </Button>
-              </CardContent>
-            </Card>
-          </div>
+    <div className="flex min-h-screen w-full flex-col">
+      <LoggedInNavBar />
+      <main className="flex min-h-[calc(100vh_-_theme(spacing.16))] flex-1 flex-col gap-4 bg-muted/40 p-4 md:gap-8 md:p-10">
+        <div className="mx-auto grid w-full max-w-6xl gap-2">
+          <h1 className="text-3xl font-semibold">Settings</h1>
         </div>
-      </div>
-      <div className="flex flex-col">
-        <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
-          <Sheet>
-            <SheetTrigger asChild>
-              <Button
-                variant="outline"
-                size="icon"
-                className="shrink-0 md:hidden"
-              >
-                <Menu className="h-5 w-5" />
-                <span className="sr-only">Toggle navigation menu</span>
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="left" className="flex flex-col">
-              <nav className="grid gap-2 text-lg font-medium">
-                <Link
-                  href="#"
-                  className="flex items-center gap-2 text-lg font-semibold"
-                >
-                  <Package2 className="h-6 w-6" />
-                  <span className="sr-only">Acme Inc</span>
-                </Link>
-                <Link
-                  href="#"
-                  className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-                >
-                  <Home className="h-5 w-5" />
-                  Dashboard
-                </Link>
-                <Link
-                  href="#"
-                  className="mx-[-0.65rem] flex items-center gap-4 rounded-xl bg-muted px-3 py-2 text-foreground hover:text-foreground"
-                >
-                  <ShoppingCart className="h-5 w-5" />
-                  Orders
-                  <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
-                    6
-                  </Badge>
-                </Link>
-                <Link
-                  href="#"
-                  className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-                >
-                  <Package className="h-5 w-5" />
-                  Products
-                </Link>
-                <Link
-                  href="#"
-                  className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-                >
-                  <Users className="h-5 w-5" />
-                  Customers
-                </Link>
-                <Link
-                  href="#"
-                  className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-                >
-                  <LineChart className="h-5 w-5" />
-                  Analytics
-                </Link>
-              </nav>
-              <div className="mt-auto">
+        <div className="mx-auto grid w-full max-w-6xl items-start ">
+          <Tabs defaultValue="account" className="w-full">
+            <TabsList className="grid w-full grid-cols-2">
+              <TabsTrigger value="account">Account</TabsTrigger>
+              <TabsTrigger value="notion">Notion</TabsTrigger>
+            </TabsList>
+            <TabsContent value="account">
+              <div className="grid gap-6">
+                {/* email and password */}
                 <Card>
                   <CardHeader>
-                    <CardTitle>Upgrade to Pro</CardTitle>
-                    <CardDescription>
-                      Unlock all features and get unlimited access to our
-                      support team.
-                    </CardDescription>
+                    <CardTitle>Account</CardTitle>
                   </CardHeader>
-                  <CardContent>
-                    <Button size="sm" className="w-full">
-                      Upgrade
-                    </Button>
+                  <CardContent className="space-y-2">
+                    <div className="space-y-1">
+                      <Label htmlFor="name">Name</Label>
+                      {user && (
+                        <Input id="name" defaultValue={user.displayName} />
+                      )}
+                    </div>
+                    <div className="space-y-1">
+                      <Label htmlFor="email">Username</Label>
+                      {user && <Input id="email" defaultValue={user.email} />}
+                    </div>
+                  </CardContent>
+                </Card>
+                {/* subscription */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Subscription</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-2">
+                    <div className=" md:px-6">
+                      <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+                        <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-950">
+                          <h2 className="text-2xl font-bold">
+                            Billing Details
+                          </h2>
+                          <div className="mt-6 space-y-4">
+                            <div className="flex items-center justify-between">
+                              <span className="text-gray-500 dark:text-gray-400">
+                                Next Due Date
+                              </span>
+                              <span className="font-medium">May 1, 2024</span>
+                            </div>
+                            <div className="flex items-center justify-between">
+                              <span className="text-gray-500 dark:text-gray-400">
+                                Subscription
+                              </span>
+                              <span className="font-medium">$3.99/month</span>
+                            </div>
+                            <div className="flex items-center justify-between">
+                              <span className="text-gray-500 dark:text-gray-400">
+                                Payment Method
+                              </span>
+                              <div className="flex items-center gap-2">
+                                {/* <CreditCardIcon className="h-5 w-5 text-gray-500 dark:text-gray-400" /> */}
+                                <span className="font-medium">
+                                  Visa ending in 1234
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-950">
+                          <h2 className="text-2xl font-bold">
+                            Manage Subscription
+                          </h2>
+                          <div className="mt-6 space-y-4">
+                            <Button className="w-full" variant="outline">
+                              Cancel Subscription
+                            </Button>
+                            <Button className="w-full" variant="outline">
+                              Pause Subscription
+                            </Button>
+                            <Button className="w-full">
+                              Update Payment Information
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </CardContent>
                 </Card>
               </div>
-            </SheetContent>
-          </Sheet>
-          <div className="w-full flex-1">
-            <form>
-              <div className="relative">
-                <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-                <Input
-                  type="search"
-                  placeholder="Search products..."
-                  className="w-full appearance-none bg-background pl-8 shadow-none md:w-2/3 lg:w-1/3"
-                />
-              </div>
-            </form>
-          </div>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="secondary" size="icon" className="rounded-full">
-                <CircleUser className="h-5 w-5" />
-                <span className="sr-only">Toggle user menu</span>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>Settings</DropdownMenuItem>
-              <DropdownMenuItem>Support</DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>Logout</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </header>
-        <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
-          <div className="flex items-center">
-            <h1 className="text-lg font-semibold md:text-2xl">Inventory</h1>
-          </div>
-          <div
-            className="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm"
-            x-chunk="dashboard-02-chunk-1"
-          >
-            <div className="flex flex-col items-center gap-1 text-center">
-              <h3 className="text-2xl font-bold tracking-tight">
-                You have no products
-              </h3>
-              <p className="text-sm text-muted-foreground">
-                You can start selling as soon as you add a product.
-              </p>
-              <Button className="mt-4">Add Product</Button>
-            </div>
-          </div>
-        </main>
-      </div>
+            </TabsContent>
+            <TabsContent value="notion">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Notion</CardTitle>
+                  <CardDescription>
+                    Edit access to notion pages and databases.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-2">
+                  <Button>
+                    <Link href={notionAuthUrl}>Edit access</Link>
+                  </Button>
+                </CardContent>
+              </Card>
+            </TabsContent>
+          </Tabs>
+
+          {/* <div className="grid gap-6">
+            <Card x-chunk="dashboard-04-chunk-1">
+              <CardHeader>
+                <CardTitle>Name</CardTitle>
+              </CardHeader>
+              <CardContent>
+                {user && (
+                  <Input
+                    placeholder="Name"
+                    className="text-black"
+                    defaultValue={user.displayName}
+                  ></Input>
+                )}
+              </CardContent>
+            </Card>
+            <Card x-chunk="dashboard-04-chunk-1">
+              <CardHeader>
+                <CardTitle>Email</CardTitle>
+              </CardHeader>
+              <CardContent>
+                {user && (
+                  <Input
+                    placeholder="Email"
+                    className="text-black"
+                    defaultValue={user.email}
+                  ></Input>
+                )}
+              </CardContent>
+            </Card>
+          </div> */}
+        </div>
+      </main>
     </div>
   );
 }

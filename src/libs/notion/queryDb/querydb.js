@@ -151,6 +151,7 @@ export default async function querydb(id, filter, andOr) {
       },
     };
   });
+  console.log("authenticated")
   try {
     const response = await notion.databases.query({
       database_id: id,
@@ -167,8 +168,8 @@ export default async function querydb(id, filter, andOr) {
 
     return response;
   } catch (err) {
-    console.error(err);
+    console.log(err);
     // throw err;
-    return filtered;
+    return err
   }
 }

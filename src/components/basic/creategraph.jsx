@@ -124,7 +124,12 @@ export default function CreateGraph({ loading }) {
 
   useEffect(() => {
     if (databaseID !== null && databaseID !== undefined) {
-      fetch("/api/notion/querydb?id=" + databaseID)
+      fetch("/api/notion/querydb?id=" + databaseID,{
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        }
+      })
         .then((response) => response.json())
         .then((data) => {
           setRows(data);

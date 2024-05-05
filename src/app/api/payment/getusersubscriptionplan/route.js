@@ -5,7 +5,6 @@ export const GET = async (req) => {
   try {
     const userSubscription = await getUserSubscriptionPlan();
 
-    console.log(userSubscription);
 
     return NextResponse.json(userSubscription);
   } catch (err) {
