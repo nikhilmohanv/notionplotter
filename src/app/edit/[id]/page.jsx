@@ -1307,7 +1307,8 @@ export default function Edit() {
             />
           </div>
          
-          <div className="md:sticky md:bottom-9 md:left-0 w-full bg-gray-100 p-4 border-t">
+          <div className=" w-full bg-gray-100 p-4 border-t">
+            {/* md:sticky md:bottom-9 md:left-0 */}
             {savingStatus ? (
               <Button disabled className="w-full">
                 <Loader2 className="mr-2 h-4 w-4  animate-spin" />
