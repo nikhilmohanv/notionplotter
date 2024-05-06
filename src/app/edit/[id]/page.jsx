@@ -846,15 +846,12 @@ export default function Edit() {
     setAggregation(value);
   };
 
-
   return (
     <>
       <LoggedInNavBar />
 
-      <div key="1" className="flex flex-col h-screen md:flex-row">
-        <aside className="w-full lg:w-[400px] bg-gray-100 p-6 md:w-[300px] ">
-          {/* lg:overflow-auto md:overflow-auto */}
-
+      <div key="1" className="flex flex-col md:h-screen md:flex-row ">
+        <aside className="w-full lg:w-[400px] bg-gray-100 p-6 md:w-[300px] lg:overflow-auto md:overflow-auto">
           <div className="grid grid-col-3">
             <div>
               <Link href={"/dashboard"}>
@@ -1097,114 +1094,121 @@ export default function Edit() {
           {/* graph line color */}
           <div className="mb-6">
             <h3 className="text-sm font-medium mb-2">Line Color</h3>
-
-            <Tabs defaultValue={colorStatus} className="w-full">
-              <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger
-                  value="lineSingle"
-                  onClick={() => {
-                    setColorStatus("lineSingle");
-                  }}
-                >
-                  Single Color
-                </TabsTrigger>
-                <TabsTrigger
-                  value="lineMulti"
-                  onClick={() => {
-                    setColorStatus("lineMulti");
-                  }}
-                >
-                  Multi Color
-                </TabsTrigger>
-              </TabsList>
-              <TabsContent value="lineSingle">
-                <div className="w-full bg-neutral-50 rounded">
-                  <input
-                    type="color"
-                    value={lineSingleColor}
-                    onChange={(e) => setLineSingleColor(e.target.value)}
-                    className="w-12 h-12 p-0 m-2"
-                  />
-                </div>
-              </TabsContent>
-              <TabsContent value="lineMulti">
-                <div className="w-full bg-neutral-50 rounded">
-                  {lineMultiColor.map((item, index) => (
-                    <>
-                      <input
-                        name="color"
-                        type="color"
-                        key={index}
-                        value={item}
-                        onChange={(event) => addNewColor(event, index)}
-                        className="w-12 h-12 p-0 m-2"
-                      />
-                      {index === lineMultiColor.length - 1 && (
-                        <button onClick={() => handleAddColor()}>
-                          <PlusIcon className="w-12 h-12 p-0 " />
-                        </button>
-                      )}
-                    </>
-                  ))}
-                </div>
-              </TabsContent>
-            </Tabs>
+            {dbId ? (
+              <Tabs defaultValue={colorStatus} className="w-full">
+                <TabsList className="grid w-full grid-cols-2">
+                  <TabsTrigger
+                    value="lineSingle"
+                    onClick={() => {
+                      setColorStatus("lineSingle");
+                    }}
+                  >
+                    Single Color
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="lineMulti"
+                    onClick={() => {
+                      setColorStatus("lineMulti");
+                    }}
+                  >
+                    Multi Color
+                  </TabsTrigger>
+                </TabsList>
+                <TabsContent value="lineSingle">
+                  <div className="w-full bg-neutral-50 rounded">
+                    <input
+                      type="color"
+                      value={lineSingleColor}
+                      onChange={(e) => setLineSingleColor(e.target.value)}
+                      className="w-12 h-12 p-0 m-2"
+                    />
+                  </div>
+                </TabsContent>
+                <TabsContent value="lineMulti">
+                  <div className="w-full bg-neutral-50 rounded">
+                    {lineMultiColor.map((item, index) => (
+                      <>
+                        <input
+                          name="color"
+                          type="color"
+                          key={index}
+                          value={item}
+                          onChange={(event) => addNewColor(event, index)}
+                          className="w-12 h-12 p-0 m-2"
+                        />
+                        {index === lineMultiColor.length - 1 && (
+                          <button onClick={() => handleAddColor()}>
+                            <PlusIcon className="w-12 h-12 p-0 " />
+                          </button>
+                        )}
+                      </>
+                    ))}
+                  </div>
+                </TabsContent>
+              </Tabs>
+            ) : (
+              <Skeleton className="bg-white h-12 w-full" />
+            )}
           </div>
 
           {/* area filling color selection */}
 
           <div className="mb-6">
             <h3 className="text-sm font-medium mb-2">Fill Color</h3>
-            <Tabs defaultValue={fillColorStatus} className="w-full">
-              <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger
-                  value="fillSingle"
-                  onClick={() => {
-                    setFillColorStatus("fillSingle");
-                  }}
-                >
-                  Single Color
-                </TabsTrigger>
-                <TabsTrigger
-                  value="fillMulti"
-                  onClick={() => {
-                    setFillColorStatus("fillMulti");
-                  }}
-                >
-                  Multi Color
-                </TabsTrigger>
-              </TabsList>
-              <TabsContent value="fillSingle">
-                <div className="w-full bg-neutral-50 rounded">
-                  <input
-                    type="color"
-                    value={fillSingleColor}
-                    onChange={(e) => setFillSingleColor(e.target.value)}
-                    className="w-12 h-12 p-0 m-2"
-                  />
-                </div>
-              </TabsContent>
-              <TabsContent value="fillMulti">
-                <div className="w-full bg-neutral-50 rounded">
-                  {fillMultiColor.map((item, index) => (
-                    <>
-                      <input
-                        name="color"
-                        type="color"
-                        value={item}
-                        onChange={(event) => addNewFillColor(event, index)}
-                        className="w-12 h-12 p-0 m-2"
-                      />
-                      {index === fillMultiColor.length - 1 && (
-                        <button onClick={() => handleAddFillColor()}>
-                          <PlusIcon className="w-12 h-12 p-0 " />
-                        </button>
-                      )}
-                    </>
-                  ))}
-                </div>
-              </TabsContent>
-            </Tabs>
+            {dbId ? (
+              <Tabs defaultValue={fillColorStatus} className="w-full">
+                <TabsList className="grid w-full grid-cols-2">
+                  <TabsTrigger
+                    value="fillSingle"
+                    onClick={() => {
+                      setFillColorStatus("fillSingle");
+                    }}
+                  >
+                    Single Color
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="fillMulti"
+                    onClick={() => {
+                      setFillColorStatus("fillMulti");
+                    }}
+                  >
+                    Multi Color
+                  </TabsTrigger>
+                </TabsList>
+                <TabsContent value="fillSingle">
+                  <div className="w-full bg-neutral-50 rounded">
+                    <input
+                      type="color"
+                      value={fillSingleColor}
+                      onChange={(e) => setFillSingleColor(e.target.value)}
+                      className="w-12 h-12 p-0 m-2"
+                    />
+                  </div>
+                </TabsContent>
+                <TabsContent value="fillMulti">
+                  <div className="w-full bg-neutral-50 rounded">
+                    {fillMultiColor.map((item, index) => (
+                      <>
+                        <input
+                          name="color"
+                          type="color"
+                          value={item}
+                          onChange={(event) => addNewFillColor(event, index)}
+                          className="w-12 h-12 p-0 m-2"
+                        />
+                        {index === fillMultiColor.length - 1 && (
+                          <button onClick={() => handleAddFillColor()}>
+                            <PlusIcon className="w-12 h-12 p-0 " />
+                          </button>
+                        )}
+                      </>
+                    ))}
+                  </div>
+                </TabsContent>
+              </Tabs>
+            ) : (
+              <Skeleton className="bg-white h-12 w-full" />
+            )}
           </div>
 
           {/* background color selector */}
@@ -1296,7 +1300,7 @@ export default function Edit() {
             )}
           </div>
 
-{/* filter */}
+          {/* filter */}
           <div className="sm:mb-14">
             <Filter
               getFilters={getFilters}
@@ -1307,9 +1311,8 @@ export default function Edit() {
               orAnd={andOr}
             />
           </div>
-         {/* save button */}
-            {/* md:sticky md:bottom-9 md:left-0 */}
-          {/* <div className=" w-full bg-gray-100 p-4 border-t">
+          {/* save button */}
+          <div className="md:sticky md:bottom-9 md:left-0  w-full bg-gray-100 p-4 border-t">
             {savingStatus ? (
               <Button disabled className="w-full">
                 <Loader2 className="mr-2 h-4 w-4  animate-spin" />
@@ -1320,7 +1323,7 @@ export default function Edit() {
                 Save
               </Button>
             )}
-          </div> */}
+          </div>
         </aside>
 
         <main className="flex-grow p-4">
