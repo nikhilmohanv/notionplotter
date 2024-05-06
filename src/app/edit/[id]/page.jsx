@@ -850,7 +850,7 @@ export default function Edit() {
     <>
       <LoggedInNavBar />
 
-      <div key="1" className="flex flex-col md:flex-row ">
+      <div key="1" className="flex flex-col md:h-screen md:flex-row ">
         <aside className="w-full lg:w-[400px] bg-gray-100 p-6 md:w-[300px] lg:overflow-auto md:overflow-auto">
           <div className="grid grid-col-3">
             <div>
