@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-
+import axios from "axios";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -53,16 +53,38 @@ import CreateGraph from "@/components/basic/creategraph";
 import LoggedInNavBar from "@/components/basic/navbar/loggedin-navbar";
 
 export default function Dashboard() {
-  const [isPro, setIsPro] = useState(true);
+  const cookies = useCookies();
+
+  // if isPro is set on cookie then get that value so that i don't have to wait until then the usesubscripiton api will be fetched gradually
+  const [isPro, setIsPro] = useState(false);
   const [onTrial, setOnTrial] = useState(true);
+
   //get user subscription plan
   useEffect(() => {
+    if (cookies.get("isPro" == "true  ")) {
+      setIsPro(true)
+      console.log("inside true")
+
+    } else {
+      setIsPro(false)
+
+      console.log("IS pro at false", isPro);
+
+    }
+    if(typeof cookies.get("isPro") == "boolean"){
+      console.log("it is boolean")
+    }else{
+      console.log("not boolean")
+    }
+    console.log("is pro cookie ",cookies.get("isPro"))
+    console.log("IS pro at outside", isPro);
+
     fetch("/api/payment/getusersubscriptionplan")
       .then((data) => data.json())
       .then((data) => {
         console.log(data.isPro);
         data.isPro !== undefined && setIsPro(data.isPro);
-
+        cookies.set("isPro", data.isPro);
         data.onTrial !== undefined && setOnTrial(data.onTrial);
       });
   }, []);
@@ -76,7 +98,6 @@ export default function Dashboard() {
     }
   }, [user]);
 
-  const cookies = useCookies();
   const db = getFirestore(app);
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(true);
@@ -159,8 +180,24 @@ export default function Dashboard() {
       console.log(err);
     }
   };
-  const checkoutUrl = "fs";
-  console.log("IS pro ", isPro);
+  const [checkoutUrl, setCheckoutUrl] = useState("");
+  useEffect(() => {
+    const getCheckoutUrl = async () => {
+      try {
+        const response = await axios.post("/api/productPurchase", {
+          productId: "357049",
+        });
+
+        console.log(response.data);
+        setCheckoutUrl(response.data.checkoutUrl);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    if (!isPro) {
+      getCheckoutUrl();
+    }
+  }, [isPro]);
   return (
     <div
       key="1"
@@ -297,10 +334,6 @@ export default function Dashboard() {
                               <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
                                 Pricing
                               </h2>
-                              {/* <p className="mx-auto max-w-[600px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
-                            Choose the plan that fits your needs and
-                            budget.
-                          </p> */}
                             </div>
                             <div className="flex justify-center">
                               <Card className="space-y-4 rounded-lg border-none bg-white p-6 dark:border-gray-800 dark:bg-gray-950">

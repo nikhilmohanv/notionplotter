@@ -124,11 +124,11 @@ export default function CreateGraph({ loading }) {
 
   useEffect(() => {
     if (databaseID !== null && databaseID !== undefined) {
-      fetch("/api/notion/querydb?id=" + databaseID,{
+      fetch("/api/notion/querydb?id=" + databaseID, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-        }
+        },
       })
         .then((response) => response.json())
         .then((data) => {
@@ -237,16 +237,16 @@ export default function CreateGraph({ loading }) {
     e.preventDefault();
     let xAxisName;
     let yAxisName;
-//     const currentTimeStamp = Date.now();
-//     const utcDate = new Date(currentTimeStamp);
-//     const date = utcDate.toLocaleString("en-US", {
-//       timeZone: "America/Los_Angeles",
-//     });
-// console.log(currentTimeStamp)
+    //     const currentTimeStamp = Date.now();
+    //     const utcDate = new Date(currentTimeStamp);
+    //     const date = utcDate.toLocaleString("en-US", {
+    //       timeZone: "America/Los_Angeles",
+    //     });
+    // console.log(currentTimeStamp)
 
-// const currentDate = new Date();
-// const losAngelesTime = currentDate.toLocaleString("en-US", {timeZone:"America/Los_Angeles"});
-    const timestamp=Timestamp.fromDate(new Date())
+    // const currentDate = new Date();
+    // const losAngelesTime = currentDate.toLocaleString("en-US", {timeZone:"America/Los_Angeles"});
+    const timestamp = Timestamp.fromDate(new Date());
 
     colNameAndId.forEach((col) => {
       if (col.id === xAxis) {
@@ -289,9 +289,7 @@ export default function CreateGraph({ loading }) {
       {databases.length > 0 ? (
         <Dialog>
           <DialogTrigger asChild>
-            <Button size="sm">
-              Add new chart
-            </Button>
+            <Button size="sm">Add new chart</Button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[600px]">
             <DialogHeader>
@@ -539,9 +537,9 @@ export default function CreateGraph({ loading }) {
         </Dialog>
       ) : (
         <Button disabled size="sm">
-        <Loader2 className="mr-2 h-4 w-4  animate-spin" />
-        Please wait
-      </Button>
+          <Loader2 className="mr-2 h-4 w-4  animate-spin" />
+          Please wait
+        </Button>
       )}
     </>
   );

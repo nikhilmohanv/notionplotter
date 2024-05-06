@@ -6,26 +6,7 @@ import Link from "next/link";
 import axios from "axios";
 
 export default function Pricing() {
-  const [checkoutUrl, setCheckoutUrl] = useState("");
-  useEffect(() => {
-    const getCheckoutUrl = async () => {
-      try {
-        const response = await axios.post("/api/productPurchase", {
-          productId: "357049",
-        });
-
-        console.log(response.data);
-        setCheckoutUrl(response.data.checkoutUrl);
-
-        // window.open(response.data.checkoutUrl, "_blank");
-      } catch (error) {
-        console.error(error);
-        alert("Failed to buy product #1");
-      }
-    };
-
-    getCheckoutUrl();
-  },[]);
+  
 
   return (
     <section id="pricing" className="w-full py-12 md:py-24 lg:py-32">

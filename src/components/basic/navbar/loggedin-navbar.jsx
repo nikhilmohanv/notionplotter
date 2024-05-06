@@ -39,19 +39,19 @@ export default function LoggedInNavBar() {
             <LineChartIcon className="h-6 w-6" />
             <span className="">NotionPlotter</span>
           </Link>
-          {/* <Link
-            href="#"
+          <Link
+            href="/dashboard"
             className="text-foreground transition-colors hover:text-foreground"
           >
             Dashboard
           </Link>
           <Link
-            href="#"
+            href="/settings"
             className="text-muted-foreground transition-colors hover:text-foreground"
           >
-            Orders
+            Settings
           </Link>
-          <Link
+          {/* <Link
             href="#"
             className="text-muted-foreground transition-colors hover:text-foreground"
           >
@@ -91,8 +91,12 @@ export default function LoggedInNavBar() {
                 <span className="sr-only">Notion2Charts</span>
               </Link>
 
-              <Link href="#" className="hover:text-foreground">
+              <Link href="/dashboard" className="hover:text-foreground">
                 Dashboard
+              </Link>
+
+              <Link href="/settings" className="hover:text-foreground">
+                Settings
               </Link>
               {/*    <Link
                 href="#"
