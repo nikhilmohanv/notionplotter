@@ -1,9 +1,6 @@
 "use client"
 import * as React from 'react';
 import PropTypes from 'prop-types';
-
-
-
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
@@ -12,7 +9,7 @@ import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import AutoAwesomeRoundedIcon from '@mui/icons-material/AutoAwesomeRounded';
 // import SvgMaterialDesign from 'docs/src/icons/SvgMaterialDesign';
-import AppAppBar from './appappbar';
+import AppAppBar from './AppAppBar';
 import Hero from './Hero';
 import LogoCollection from './LogoCollection';
 import Highlights from './Highlights';

@@ -4,8 +4,7 @@ import getUserSubscriptionPlan from "@/libs/subscription/subscription";
 import getDocument from "@/firebase/firestore/getdata";
 import { cookies } from "next/headers";
 
-import { prisma } from "~/prisma/db";
-
+  
 export async function POST(request) {
   try {
     const cookieStore = cookies();
@@ -43,7 +42,6 @@ export async function POST(request) {
         },
       }
     );
-
     return NextResponse.json({
       message: `Your subscription has been resumed.`,
     });
