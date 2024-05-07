@@ -1,219 +1,97 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Card from '@mui/material/Card';
-import Chip from '@mui/material/Chip';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import Container from '@mui/material/Container';
-import Divider from '@mui/material/Divider';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
-import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
-import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Check } from "lucide-react";
 
-const tiers = [
+// enum PopularPlanType {
+//   NO = 0,
+//   YES = 1,
+// }
+
+// interface PricingProps {
+//   title: string;
+//   popular: PopularPlanType;
+//   price: number;
+//   description: string;
+//   buttonText: string;
+//   benefitList: string[];
+// }
+
+const pricingList = [
   {
-    title: 'Free',
-    price: '0',
-    description: [
-      '10 users included',
-      '2 GB of storage',
-      'Help center access',
-      'Email support',
+    title: "Pro",
+    popular: 0,
+    price: 3.99,
+    description:
+      "",
+    buttonText: "Get Started",
+    benefitList: [
+      "Unlimited Charts", "24/7 Support", "No branding","Color Customization","Advanced filtering and sorting",
     ],
-    buttonText: 'Sign up for free',
-    buttonVariant: 'outlined',
   },
-  {
-    title: 'Professional',
-    subheader: 'Recommended',
-    price: '15',
-    description: [
-      '20 users included',
-      '10 GB of storage',
-      'Help center access',
-      'Priority email support',
-      'Dedicated team',
-      'Best deals',
-    ],
-    buttonText: 'Start now',
-    buttonVariant: 'contained',
-  },
-  {
-    title: 'Enterprise',
-    price: '30',
-    description: [
-      '50 users included',
-      '30 GB of storage',
-      'Help center access',
-      'Phone & email support',
-    ],
-    buttonText: 'Contact us',
-    buttonVariant: 'outlined',
-  },
+ 
 ];
 
-export default function Pricing() {
+export const Pricing = () => {
   return (
-    <Container
-      id="pricing"
-      sx={{
-        pt: { xs: 4, sm: 12 },
-        pb: { xs: 8, sm: 16 },
-        position: 'relative',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        gap: { xs: 3, sm: 6 },
-      }}
-    >
-      <Box
-        sx={{
-          width: { sm: '100%', md: '60%' },
-          textAlign: { sm: 'left', md: 'center' },
-        }}
-      >
-        <Typography component="h2" variant="h4" color="text.primary">
-          Pricing
-        </Typography>
-        <Typography variant="body1" color="text.secondary">
-          Quickly build an effective pricing table for your potential customers with
-          this layout. <br />
-          It&apos;s built with default Material UI components with little
-          customization.
-        </Typography>
-      </Box>
-      <Grid container spacing={3} alignItems="center" justifyContent="center">
-        {tiers.map((tier) => (
-          <Grid
-            item
-            key={tier.title}
-            xs={12}
-            sm={tier.title === 'Enterprise' ? 12 : 6}
-            md={4}
+    <section id="pricing" className="container ">
+      <h2 className="text-3xl md:text-4xl font-bold text-center">
+        Get
+        <span className="bg-gradient-to-b from-primary/60 to-primary text-transparent bg-clip-text">
+          {" "}
+          Unlimited{" "}
+        </span>
+        Access
+      </h2>
+      <h3 className="text-xl text-center text-muted-foreground pt-4 pb-8">
+        {/* Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias
+        reiciendis. */}
+      </h3>
+      <div className="grid flex justify-center justify-items-center  gap-8">
+        {pricingList.map((pricing) => (
+          <Card
+            key={pricing.title}
+           className="w-80"
           >
-            <Card
-              sx={{
-                p: 2,
-                display: 'flex',
-                flexDirection: 'column',
-                gap: 4,
-                border: tier.title === 'Professional' ? '1px solid' : undefined,
-                borderColor:
-                  tier.title === 'Professional' ? 'primary.main' : undefined,
-                background:
-                  tier.title === 'Professional'
-                    ? 'linear-gradient(#033363, #021F3B)'
-                    : undefined,
-              }}
-            >
-              <CardContent>
-                <Box
-                  sx={{
-                    mb: 1,
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    color:
-                      tier.title === 'Professional' ? 'primary.contrastText' : '',
-                  }}
-                >
-                  <Typography component="h3" variant="h6">
-                    {tier.title}
-                  </Typography>
-                  {tier.title === 'Professional' && (
-                    <Chip
-                      icon={<AutoAwesomeIcon />}
-                      label={tier.subheader}
-                      size="small"
-                      sx={{
-                        background: (theme) =>
-                          theme.palette.mode === 'light' ? '' : 'none',
-                        backgroundColor: 'primary.contrastText',
-                        '& .MuiChip-label': {
-                          color: 'primary.dark',
-                        },
-                        '& .MuiChip-icon': {
-                          color: 'primary.dark',
-                        },
-                      }}
-                    />
-                  )}
-                </Box>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    alignItems: 'baseline',
-                    color:
-                      tier.title === 'Professional'
-                        ? 'primary.contrastText'
-                        : undefined,
-                  }}
-                >
-                  <Typography component="h3" variant="h2">
-                    ${tier.price}
-                  </Typography>
-                  <Typography component="h3" variant="h6">
-                    &nbsp; per month
-                  </Typography>
-                </Box>
-                <Divider
-                  sx={{
-                    my: 2,
-                    opacity: 0.2,
-                    borderColor: 'grey.500',
-                  }}
-                />
-                {tier.description.map((line) => (
-                  <Box
-                    key={line}
-                    sx={{
-                      py: 1,
-                      display: 'flex',
-                      gap: 1.5,
-                      alignItems: 'center',
-                    }}
-                  >
-                    <CheckCircleRoundedIcon
-                      sx={{
-                        width: 20,
-                        color:
-                          tier.title === 'Professional'
-                            ? 'primary.light'
-                            : 'primary.main',
-                      }}
-                    />
-                    <Typography
-                      component="text"
-                      variant="subtitle2"
-                      sx={{
-                        color:
-                          tier.title === 'Professional'
-                            ? 'primary.contrastText'
-                            : undefined,
-                      }}
-                    >
-                      {line}
-                    </Typography>
-                  </Box>
+            <CardHeader>
+              <CardTitle className="flex item-center justify-between">
+                {pricing.title}
+               
+              </CardTitle>
+              <div>
+                <span className="text-3xl font-bold">${pricing.price}</span>
+                <span className="text-muted-foreground"> /month</span>
+              </div>
+
+              <CardDescription>{pricing.description}</CardDescription>
+            </CardHeader>
+
+            <CardContent>
+              <Button className="w-full">{pricing.buttonText}</Button>
+            </CardContent>
+
+            <hr className="w-4/5 m-auto mb-4" />
+
+            <CardFooter className="flex">
+              <div className="space-y-4">
+                {pricing.benefitList.map((benefit) => (
+                  <span key={benefit} className="flex">
+                    <Check className="text-green-500" />{" "}
+                    <h3 className="ml-2">{benefit}</h3>
+                  </span>
                 ))}
-              </CardContent>
-              <CardActions>
-                <Button
-                  fullWidth
-                  variant={tier.buttonVariant}
-                  component="a"
-                  href="/material-ui/getting-started/templates/checkout/"
-                  target="_blank"
-                >
-                  {tier.buttonText}
-                </Button>
-              </CardActions>
-            </Card>
-          </Grid>
+              </div>
+            </CardFooter>
+          </Card>
         ))}
-      </Grid>
-    </Container>
+      </div>
+    </section>
   );
-}
+};
