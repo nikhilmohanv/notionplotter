@@ -31,7 +31,7 @@ const pricingList = [
     price: 3.99,
     description:
       "",
-    buttonText: "Get Started",
+    buttonText: "Start 7 days trial",
     benefitList: [
       "Unlimited Charts", "24/7 Support", "No branding","Color Customization","Advanced filtering and sorting",
     ],
@@ -39,7 +39,7 @@ const pricingList = [
  
 ];
 
-export const Pricing = () => {
+export const Pricing = ({handleSignIn}) => {
   return (
     <section id="pricing" className="container pt-20 sm:pt-5">
       <h2 className="text-3xl md:text-4xl font-bold text-center">
@@ -74,7 +74,7 @@ export const Pricing = () => {
             </CardHeader>
 
             <CardContent>
-              <Button className="w-full">{pricing.buttonText}</Button>
+              <Button onClick={handleSignIn} className="w-full">{pricing.buttonText}</Button>
             </CardContent>
 
             <hr className="w-4/5 m-auto mb-4" />

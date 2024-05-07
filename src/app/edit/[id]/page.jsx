@@ -116,6 +116,8 @@ export default function Edit() {
   // couting the rows in the data extractedProperties
   const [count, setCount] = useState(0);
 
+  const [lengend, setLegend] = useState(false);
+
   //this adds a new color input to the multicolor input array
   const handleAddColor = () => {
     setLineMultiColor([...lineMultiColor, "#000000"]);
@@ -1275,6 +1277,12 @@ export default function Edit() {
             ) : (
               <Skeleton className="bg-white h-9 w-full" />
             )}
+          </div>
+
+          {/* legend */}
+          <div className="flex items-center space-x-2">
+            <Switch id="airplane-mode" />
+            <Label htmlFor="airplane-mode">Airplane Mode</Label>
           </div>
 
           {/* aggregation function */}

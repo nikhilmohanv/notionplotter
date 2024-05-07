@@ -3,7 +3,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { HeroCards } from "./HeroCards";
 // import { GitHubLogoIcon } from "@radix-ui/react-icons";
 
-export const Hero = () => {
+export const Hero = ({handleSignIn}) => {
   return (
     <section className="container grid lg:grid-cols-2 place-items-center pt-10 md:py-10 md:gap-10">
       <div className="text-center lg:text-start space-y-6">
@@ -29,13 +29,13 @@ export const Hero = () => {
         </p>
 
         <div className="space-y-4 md:space-y-0 md:space-x-4">
-          <Button className="w-full md:w-1/3">Start 7 days free trial</Button>
+          <Button onClick={handleSignIn} className="w-full md:w-1/3">Start 7 days free trial</Button>
         </div>
       </div>
 
       {/* Hero cards sections */}
       <div className="z-10">
-        <HeroCards />
+        <HeroCards signInButton={handleSignIn}/>
       </div>
 
       {/* Shadow effect */}
