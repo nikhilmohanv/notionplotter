@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { About } from "./About";
 import { Cta } from "./Cta";
 import { FAQ } from "./FAQ";
@@ -30,7 +30,7 @@ function App() {
       <Pricing />
       {/* <Newsletter /> */}
       <FAQ />
-      <Footer />
+      {/* <Footer /> */}
       <ScrollToTop />
     </>
   );

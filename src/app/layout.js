@@ -12,7 +12,7 @@ import { Analytics } from "@vercel/analytics/react";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Notion2charts",
+  title: "NotionPlotter",
   description: "Create charts for notion",
 };
 

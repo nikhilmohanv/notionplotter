@@ -13,8 +13,8 @@ import {
   
   const FAQList = [
     {
-      question: "Is this template free?",
-      answer: "Yes. It is a free ChadcnUI template.",
+      question: "Is this tool free?",
+      answer: "No, it cost $3.99 per month. You can try it for free for 7 days.",
       value: "item-1",
     },
     {

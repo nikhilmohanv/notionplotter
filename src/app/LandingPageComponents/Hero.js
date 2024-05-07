@@ -5,7 +5,7 @@ import { HeroCards } from "./HeroCards";
 
 export const Hero = () => {
   return (
-    <section className="container grid lg:grid-cols-2 place-items-center pt-10  md:py-10 gap-10">
+    <section className="container grid lg:grid-cols-2 place-items-center pt-10 md:py-10 md:gap-10">
       <div className="text-center lg:text-start space-y-6">
         <main className="text-5xl md:text-6xl font-bold">
           <h1 className="inline">
@@ -15,7 +15,7 @@ export const Hero = () => {
             charts
             <br />
           </h1>{" "}
-          for{" "}
+          from{" "}
           <h2 className="inline">
             <span className="inline bg-gradient-to-r from-[#61DAFB] via-[#1fc0f1] to-[#03a3d7] text-transparent bg-clip-text">
               Notion
@@ -29,7 +29,7 @@ export const Hero = () => {
         </p>
 
         <div className="space-y-4 md:space-y-0 md:space-x-4">
-          <Button className="w-full md:w-1/3">Get Started</Button>
+          <Button className="w-full md:w-1/3">Start 7 days free trial</Button>
         </div>
       </div>
 

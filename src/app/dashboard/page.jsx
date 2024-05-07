@@ -62,21 +62,19 @@ export default function Dashboard() {
   //get user subscription plan
   useEffect(() => {
     if (cookies.get("isPro" == "true  ")) {
-      setIsPro(true)
-      console.log("inside true")
-
+      setIsPro(true);
+      console.log("inside true");
     } else {
-      setIsPro(false)
+      setIsPro(false);
 
       console.log("IS pro at false", isPro);
-
     }
-    if(typeof cookies.get("isPro") == "boolean"){
-      console.log("it is boolean")
-    }else{
-      console.log("not boolean")
+    if (typeof cookies.get("isPro") == "boolean") {
+      console.log("it is boolean");
+    } else {
+      console.log("not boolean");
     }
-    console.log("is pro cookie ",cookies.get("isPro"))
+    console.log("is pro cookie ", cookies.get("isPro"));
     console.log("IS pro at outside", isPro);
 
     fetch("/api/payment/getusersubscriptionplan")
@@ -244,7 +242,7 @@ export default function Dashboard() {
                           <DialogTrigger asChild>
                             {/* <button id="subscribeButton">Upgrade to Pro</button> */}
                             <Button id="subscribeButton" variant="outline">
-                              Upgrade to Pro
+                              Upgrade
                             </Button>
                           </DialogTrigger>
                           <DialogContent className="sm:max-w-md">
@@ -252,7 +250,7 @@ export default function Dashboard() {
                               {/* <DialogTitle>Share link</DialogTitle> */}
                             </DialogHeader>
                             <div id="pricing" className="w-full">
-                              <div className=" grid items-center justify-center gap-1 text-center md:px-6">
+                              <div className="grid items-center justify-center gap-1 text-center md:px-6">
                                 <div className="space-y-1">
                                   <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
                                     Pricing

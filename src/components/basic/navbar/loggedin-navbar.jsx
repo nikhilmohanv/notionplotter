@@ -88,7 +88,7 @@ export default function LoggedInNavBar() {
                 className="flex items-center gap-2 text-lg font-semibold"
               >
                 <LineChartIcon className="h-6 w-6" />
-                <span className="sr-only">Notion2Charts</span>
+                <span className="sr-only">NotionPlotter</span>
               </Link>
 
               <Link href="/dashboard" className="hover:text-foreground">

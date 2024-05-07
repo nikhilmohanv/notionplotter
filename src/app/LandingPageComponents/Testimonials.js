@@ -63,7 +63,7 @@ export const Testimonials = () => {
   return (
     <section
       id="testimonials"
-      className="container  sm:py-20"
+      className="container pt-10 sm:py-20"
     >
       <h2 className="text-3xl md:text-4xl font-bold">
         Discover Why

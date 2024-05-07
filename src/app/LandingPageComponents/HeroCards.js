@@ -71,23 +71,23 @@ export const HeroCards = () => {
             <span className="text-muted-foreground"> /month</span>
           </div>
 
-          <CardDescription>
+          {/* <CardDescription>
             Lorem ipsum dolor sit, amet ipsum consectetur adipisicing elit.
-          </CardDescription>
+          </CardDescription> */}
         </CardHeader>
 
         <CardContent>
-          <Button className="w-full">Start 14 days Free Trial</Button>
+          <Button className="w-full">Start 7 days Free Trial</Button>
         </CardContent>
 
-        <hr className="w-4/5 m-auto mb-4" />
+        <hr className="w-4/5 m-auto mb-7" />
 
         <CardFooter className="flex">
           <div className="space-y-4">
             {[
               "Unlimited Charts",
               "24/7 Support",
-              "No branding",
+              // "No branding",
               "Color Customization",
               "Advanced filtering and sorting",
             ].map((benefit) => (
@@ -101,7 +101,7 @@ export const HeroCards = () => {
       </Card>
 
       {/* Service */}
-      <Card className="absolute w-[350px] -right-[10px] bottom-[35px]  drop-shadow-xl shadow-black/10 dark:shadow-white/10">
+      <Card className="absolute w-[350px] -right-[10px] bottom-[85px]  drop-shadow-xl shadow-black/10 dark:shadow-white/10">
         <CardHeader className="space-y-1 flex md:flex-row justify-start items-start gap-4">
           <div className="mt-1 bg-primary/20 p-1 rounded-2xl">
             <LightBulbIcon />

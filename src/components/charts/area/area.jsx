@@ -73,8 +73,8 @@ const AreaChart = ({
     return rgba;
   };
   console.log(fillColorStatus);
-  console.log(colorStatus)
-  
+  console.log(colorStatus);
+
   useEffect(() => {
     const newFillColor = [];
     if (fillColorStatus === "fillSingle") {
@@ -119,8 +119,8 @@ const AreaChart = ({
           maintainAspectRation: true,
           plugins: {
             legend: {
-              position: "top",
               display: false,
+              position: "top",
               labels: {
                 usePointStyle: true,
               },

@@ -43,29 +43,11 @@ const features = [
     title: "Dark/Light theme",
     description: "You can switch between dark and light theme.",
   },
-  {
-    title: "Reviews",
-    description: "You can add reviews to your charts.",
-  },
-  {
-    title: "Features",
-    description: "You can add features to your charts.",
-  },
-  {
-    title: "Pricing",
-    description: "You can add pricing to your charts.",
-  },
-  {
-    title: "Customizable",
-    description: "You can customize your charts to your liking.",
-  },
 ];
-
-const featureList = ["Dark/Light theme", "Reviews", "Features", "Pricing"];
 
 export const Features = () => {
   return (
-    <section id="features" className="container  space-y-8">
+    <section id="features" className="container space-y-8">
       <h2 className="text-3xl lg:text-4xl font-bold md:text-center">
         <span className="bg-gradient-to-b from-primary/60 to-primary text-transparent bg-clip-text">
           Features
