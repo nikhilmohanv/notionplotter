@@ -33,6 +33,7 @@ import PieChart from "@/components/charts/pie/pie";
 import { Skeleton } from "@/components/ui/skeleton";
 import Filter from "@/app/filters/filter";
 import { Copy } from "lucide-react";
+import { Switch } from "@/components/ui/switch";
 
 import {
   Dialog,
@@ -116,7 +117,9 @@ export default function Edit() {
   // couting the rows in the data extractedProperties
   const [count, setCount] = useState(0);
 
-  const [lengend, setLegend] = useState(false);
+  const [legend, setLegend] = useState(true);
+
+  console.log("legend ",legend)
 
   //this adds a new color input to the multicolor input array
   const handleAddColor = () => {
@@ -191,6 +194,7 @@ export default function Edit() {
         data.filters && setFilters(data.filters);
         data.andOr && setAndOr(data.andOr);
         data.aggregation && setAggregation(data.aggregation);
+        data.legend != undefined && setLegend(data.legend)
         setDbUid(data.userid);
 
         if (data.xaxis && data.yaxis) {
@@ -315,6 +319,7 @@ export default function Edit() {
       filters: filters,
       andOr: andOr,
       aggregation: aggregation,
+      legend: legend,
     };
 
     //updating current fb firestore
@@ -1280,10 +1285,26 @@ export default function Edit() {
           </div>
 
           {/* legend */}
-          <div className="flex items-center space-x-2">
+          <div>
+            <div className="mb-6">
+              <div className="flex bg-white flex-row items-center justify-between rounded-lg border p-4">
+                <div className="space-y-0.5">
+                  <Label className="text-base">Legend</Label>
+                </div>
+
+                <Switch
+                  checked={legend}
+                  onCheckedChange={setLegend}
+                  
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* <div className="flex items-center space-x-2">
             <Switch id="airplane-mode" />
             <Label htmlFor="airplane-mode">Airplane Mode</Label>
-          </div>
+          </div> */}
 
           {/* aggregation function */}
           <div className="mb-6">
@@ -1403,6 +1424,7 @@ export default function Edit() {
                 fillMultiColor={fillMultiColor}
                 backgroundColor={backgroundColor}
                 fillColorStatus={fillColorStatus}
+                legend={legend}
               />
             </div>
           ) : chartType == "Area Chart" ? (
@@ -1430,6 +1452,8 @@ export default function Edit() {
                 fillColorStatus={fillColorStatus}
                 yAxisName={yAxisName}
                 xAxisName={xAxisName}
+                legend={legend}
+
               />
             </div>
           ) : chartType == "Doughnut Chart" ? (
@@ -1455,6 +1479,7 @@ export default function Edit() {
                 fillMultiColor={fillMultiColor}
                 backgroundColor={backgroundColor}
                 fillColorStatus={fillColorStatus}
+                legend={legend}
               />
             </div>
           ) : chartType == "Pie Chart" ? (
@@ -1480,6 +1505,8 @@ export default function Edit() {
                 fillMultiColor={fillMultiColor}
                 backgroundColor={backgroundColor}
                 fillColorStatus={fillColorStatus}
+                legend={legend}
+
               />
             </div>
           ) : (

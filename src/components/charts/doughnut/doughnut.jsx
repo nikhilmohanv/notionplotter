@@ -20,6 +20,7 @@ const DoughnutChart = ({
   fillMultiColor,
   backgroundColor,
   fillColorStatus,
+  legend
 }) => {
 
   const [darkMode, setDarkMode] = useState(false);
@@ -84,7 +85,7 @@ const DoughnutChart = ({
           plugins: {
             legend: {
               position: "bottom",
-              display: true,
+              display: legend,
             },
 
             title: {

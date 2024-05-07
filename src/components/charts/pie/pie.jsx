@@ -18,6 +18,7 @@ export default function PieChart({
   fillColorStatus,
   height,
   width,
+  legend
 }) {
   const [darkMode, setDarkMode] = useState(false);
   const [lineColor, setLineColor] = useState([]);
@@ -83,7 +84,7 @@ export default function PieChart({
           plugins: {
             legend: {
               position: "bottom",
-              display: true,
+              display: legend,
             },
 
             title: {

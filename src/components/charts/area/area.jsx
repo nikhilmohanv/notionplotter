@@ -41,6 +41,7 @@ const AreaChart = ({
   width,
   yAxisName,
   xAxisName,
+  legend
 }) => {
   const [darkMode, setDarkMode] = useState(false);
   const [lineColor, setLineColor] = useState([]);
@@ -119,7 +120,7 @@ const AreaChart = ({
           maintainAspectRation: true,
           plugins: {
             legend: {
-              display: false,
+              display: legend,
               position: "top",
               labels: {
                 usePointStyle: true,

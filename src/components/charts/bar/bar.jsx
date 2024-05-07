@@ -36,6 +36,7 @@ const BarChart = ({
   fillMultiColor,
   backgroundColor,
   fillColorStatus,
+  legend,
 }) => {
   const [darkMode, setDarkMode] = useState(false);
   const [lineColor, setLineColor] = useState([]);
@@ -109,7 +110,9 @@ const BarChart = ({
           maintainAspectRation: true,
           legend: {
             // display false makes the dataset label hide
-            display: true,
+            display: legend,
+            position: "bottom",
+            
           },
 
           title: {
