@@ -56,12 +56,12 @@ export default function Dashboard() {
   const cookies = useCookies();
 
   // if isPro is set on cookie then get that value so that i don't have to wait until then the usesubscripiton api will be fetched gradually
-  const [isPro, setIsPro] = useState(false);
+  const [isPro, setIsPro] = useState();
   const [onTrial, setOnTrial] = useState(true);
-
+  console.log("is pro ", isPro);
   //get user subscription plan
   useEffect(() => {
-    if (cookies.get("isPro" == "true  ")) {
+    if (cookies.get("isPro") == "true") {
       setIsPro(true);
       console.log("inside true");
     } else {
