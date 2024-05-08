@@ -33,7 +33,7 @@ export async function POST(request) {
       headers: {
         Accept: "application/vnd.api+json",
         "Content-Type": "application/vnd.api+json",
-        Authorization: `Bearer ${process.env.LEMON_SQUEEZY_API_KEY}`,
+        Authorization: `${process.env.LEMON_SQUEEZY_API_KEY}`,
       },
       body: JSON.stringify({
         data: {

@@ -74,6 +74,8 @@ export async function POST(req) {
         const updata = {
           variantId: body.data.attributes.variant_id,
           renews_at: body.data.attributes.renews_at,
+          updatePaymentMethod: body.data.attributes.urls.update_payment_method,
+
         };
 
         const resp = addDataWithId("subscription", userId, updata);
