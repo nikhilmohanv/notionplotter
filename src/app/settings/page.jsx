@@ -26,9 +26,32 @@ import LoggedInNavBar from "@/components/basic/navbar/loggedin-navbar";
 import { UserAuth } from "../context/firebaseauth/authcontext";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useEffect, useState } from "react";
+import ManageSubscription from "@/libs/subscription/manageSubscription";
+import { useCookies } from "next-client-cookies";
 
 export default function Dashboard() {
   const { user, logout } = UserAuth();
+  const [isPro, setIsPro] = useState(false);
+  const [onTrial, setOnTrial] = useState();
+  const [isCanceled, setIsCanceled] = useState();
+  const [renewsAt, setRenewsAt] = useState();
+  const cookies = useCookies();
+  const [userId, setUserId] = useState(cookies.get("uid"));
+  useEffect(()=>{
+    fetch("/api/payment/getusersubscriptionplan")
+    .then((data) => data.json())
+    .then((data) => {
+      console.log(data.isPro);
+      data.isPro !== undefined && setIsPro(data.isPro);
+      cookies.set("isPro", data.isPro);
+      data.onTrial !== undefined && setOnTrial(data.onTrial);
+      data.isCanceled !== undefined && setIsCanceled(data.isCanceled);
+      data.renews_at !== undefined && setRenewsAt(data.renews_at);
+      // });
+    });
+  },[])
+  
   const notionAuthUrl = `https://api.notion.com/v1/oauth/authorize?owner=user&client_id=34d5c9a9-5b7d-4b77-be4b-6a5521f6560c&response_type=code`;
   return (
     <div className="flex min-h-screen w-full flex-col">
@@ -64,6 +87,15 @@ export default function Dashboard() {
                   </CardContent>
                 </Card>
                 {/* subscription */}
+                {isPro ? (
+                  <ManageSubscription
+                    userId={userId}
+                    isCanceled={isCanceled}
+                    currentPeriodEnd={renewsAt}
+                  />
+                ) : (
+                  "subscribe"
+                )}
                 <Card>
                   <CardHeader>
                     <CardTitle>Subscription</CardTitle>

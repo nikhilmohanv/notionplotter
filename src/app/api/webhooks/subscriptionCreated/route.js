@@ -61,6 +61,7 @@ export async function POST(req) {
           card_last_four: body.data.attributes.card_last_four,
           status_formatted: body.data.attributes.status_formatted,
           onTrial: false,
+          updatePaymentMethod: body.data.attributes.urls.update_payment_method,
         };
 
         const resp = addDataWithId("subscription", userId, data);

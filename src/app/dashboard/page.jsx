@@ -58,6 +58,8 @@ export default function Dashboard() {
   // if isPro is set on cookie then get that value so that i don't have to wait until then the usesubscripiton api will be fetched gradually
   const [isPro, setIsPro] = useState();
   const [onTrial, setOnTrial] = useState(true);
+  const { user } = UserAuth();
+
   console.log("is pro ", isPro);
   //get user subscription plan
   useEffect(() => {
@@ -86,13 +88,18 @@ export default function Dashboard() {
         data.onTrial !== undefined && setOnTrial(data.onTrial);
       });
   }, []);
-
-  const { user } = UserAuth();
+  useEffect(() => {
+    if (cookies.get("access_token") == undefined) {
+      setAddToNotion(true);
+    } else {
+      setAddToNotion(false);
+    }
+  }, [cookies.get("access_token")]);
   useEffect(() => {
     console.log("user ", user);
-    if (!user) {
+    if (!cookies.get("uid")) {
       //redirect to /login page when not logged in.
-      redirect("/");
+      redirect("/");  
     }
   }, [user]);
 
@@ -121,13 +128,7 @@ export default function Dashboard() {
   }, []);
 
   //getting the notion token
-  useEffect(() => {
-    if (cookies.get("access_token") == undefined) {
-      setAddToNotion(true);
-    } else {
-      setAddToNotion(false);
-    }
-  }, [cookies.get("access_token")]);
+  
 
   //getting all created graphs from firestore
   useEffect(() => {
