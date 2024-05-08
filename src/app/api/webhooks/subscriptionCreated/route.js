@@ -64,26 +64,32 @@ export async function POST(req) {
           updatePaymentMethod: body.data.attributes.urls.update_payment_method,
         };
 
-        const resp = addDataWithId("subscription", userId, data);
+        const { result, error } = await addDataWithId(
+          "subscription",
+          userId,
+          data
+        );
 
         // stroring subscription history
-        const result = addData("subscription_history", data);
+        const resp = await addData("subscription_history", data);
       }
 
       case "subscription_updated": {
-        const updata = {
+        const data = {
           variantId: body.data.attributes.variant_id,
           renews_at: body.data.attributes.renews_at,
           updatePaymentMethod: body.data.attributes.urls.update_payment_method,
-
         };
 
-        const resp = addDataWithId("subscription", userId, updata);
+        const { result, error } = await addDataWithId(
+          "subscription",
+          userId,
+          data
+        );
       }
     }
 
     // Logic according to event
-
     return Response.json({ message: "Webhook received" }, { status: 200 });
   } catch (err) {
     console.error(err);

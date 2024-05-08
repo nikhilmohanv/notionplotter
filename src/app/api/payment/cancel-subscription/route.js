@@ -41,7 +41,7 @@ export async function POST(request) {
       statusFormatted: cancelledSub.data?.data.attributes.status_formatted,
       renews_at: cancelledSub.data?.data.attributes.ends_at,
     };
-    const {}=await addDataWithId("subscription",uid,data)
+    const {} = await addDataWithId("subscription", uid, data);
     // await axios.patch(
     //   `https://api.lemonsqueezy.com/v1/subscriptions/${subscriptionId}`,
     //   {
