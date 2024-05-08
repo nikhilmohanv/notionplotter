@@ -70,6 +70,11 @@ export default function Embed() {
   //to store all multi color values
   const [fillMultiColor, setFillMultiColor] = useState([""]);
 
+  const [legend, setLegend] = useState(true);
+
+  // for storing legend position
+  const [legendPosition, setLegendPosition] = useState();
+
   useEffect(() => {
     fetch("/api/firebase/getdocument?collection=graphs&docId=" + id, {
       method: "POST",
@@ -92,6 +97,8 @@ export default function Embed() {
         data.lineMultiColor && setLineMultiColor(data.lineMultiColor);
         data.colorStatus && setColorStatus(data.colorStatus);
         data.fillColorStatus && setFillColorStatus(data.fillColorStatus);
+        data.legend != undefined && setLegend(data.legend);
+        data.legendPosition && setLegendPosition(data.legendPosition);
 
         if (data.xaxis && data.yaxis) {
           const xaxis = data.xaxis.split(", ");
@@ -134,6 +141,8 @@ export default function Embed() {
               fillMultiColor={fillMultiColor}
               backgroundColor={backgroundColor}
               fillColorStatus={fillColorStatus}
+              legend={legend}
+              legendPosition={legendPosition}
             />
           </div>
         );
@@ -160,6 +169,8 @@ export default function Embed() {
               fillColorStatus={fillColorStatus}
               height={windowSize.innerHeight}
               width={windowSize.innerWidth}
+              legend={legend}
+              legendPosition={legendPosition}
             />
           </div>
         );
@@ -170,7 +181,7 @@ export default function Embed() {
             style={{
               display: "flex",
               justifyContent: "center",
-              alignItems: "center",
+              // alignItems: "center",
               overflow: "hidden",
               height: `${windowSize.innerHeight}px`,
             }}
@@ -187,6 +198,8 @@ export default function Embed() {
               fillMultiColor={fillMultiColor}
               backgroundColor={backgroundColor}
               fillColorStatus={fillColorStatus}
+              legend={legend}
+              legendPosition={legendPosition}
             />
           </div>
         );
@@ -197,7 +210,7 @@ export default function Embed() {
             style={{
               display: "flex",
               justifyContent: "center",
-              alignItems: "center",
+              // alignItems: "center",
               overflow: "hidden",
               height: `${windowSize.innerHeight}px`,
             }}
@@ -216,6 +229,8 @@ export default function Embed() {
               fillColorStatus={fillColorStatus}
               height={windowSize.innerHeight}
               width={windowSize.innerWidth}
+              legend={legend}
+              legendPosition={legendPosition}
             />
           </div>
         );

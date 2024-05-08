@@ -72,7 +72,7 @@ export async function POST(req) {
       case "subscription_updated": {
         const updata = {
           variantId: body.data.attributes.variant_id,
-          currentPeriodEnd: body.data.attributes.renews_at,
+          renews_at: body.data.attributes.renews_at,
         };
 
         const resp = addDataWithId("subscription", userId, updata);
