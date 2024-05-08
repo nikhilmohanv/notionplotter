@@ -20,7 +20,10 @@ const DoughnutChart = ({
   fillMultiColor,
   backgroundColor,
   fillColorStatus,
-  legend
+  legend,
+  legendPosition,
+  yAxisName,
+  xAxisName
 }) => {
 
   const [darkMode, setDarkMode] = useState(false);
@@ -71,7 +74,7 @@ const DoughnutChart = ({
           labels: xValues,
           datasets: [
             {
-              label: label,
+              label: yAxisName,
               data: yValues,
               backgroundColor: fillColor,
               borderColor: lineColor,
@@ -84,7 +87,7 @@ const DoughnutChart = ({
           maintainAspectRation: true,
           plugins: {
             legend: {
-              position: "bottom",
+              position: legendPosition,
               display: legend,
             },
 

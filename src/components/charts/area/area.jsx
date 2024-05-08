@@ -41,7 +41,8 @@ const AreaChart = ({
   width,
   yAxisName,
   xAxisName,
-  legend
+  legend,
+  legendPosition
 }) => {
   const [darkMode, setDarkMode] = useState(false);
   const [lineColor, setLineColor] = useState([]);
@@ -62,8 +63,7 @@ const AreaChart = ({
       setDarkMode(true);
     }
   }, [backgroundColor]);
-  console.log(backgroundColor);
-  console.log(darkMode);
+
   const hex2rgb = (hex) => {
     const r = parseInt(hex.slice(1, 3), 16);
     const g = parseInt(hex.slice(3, 5), 16);
@@ -73,8 +73,6 @@ const AreaChart = ({
     const rgba = `rgba(${r}, ${g}, ${b}, 0.1)`;
     return rgba;
   };
-  console.log(fillColorStatus);
-  console.log(colorStatus);
 
   useEffect(() => {
     const newFillColor = [];
@@ -87,6 +85,12 @@ const AreaChart = ({
     }
     setFillColor(newFillColor);
   }, [fillColorStatus, fillSingleColor, fillMultiColor]);
+
+// creating datasets
+
+// function createDatasets(xValues,yValues){
+
+// }
 
   return (
     <div id="chart">
@@ -121,10 +125,10 @@ const AreaChart = ({
           plugins: {
             legend: {
               display: legend,
-              position: "top",
-              labels: {
-                usePointStyle: true,
-              },
+              position: legendPosition,
+              // labels: {
+              //   usePointStyle: true,
+              // },
             },
 
             title: {

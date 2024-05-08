@@ -119,8 +119,8 @@ export default function Edit() {
 
   const [legend, setLegend] = useState(true);
 
-  console.log("legend ",legend)
-
+  // for storing legend position
+  const [legendPosition, setLegendPosition] = useState();
   //this adds a new color input to the multicolor input array
   const handleAddColor = () => {
     setLineMultiColor([...lineMultiColor, "#000000"]);
@@ -194,7 +194,8 @@ export default function Edit() {
         data.filters && setFilters(data.filters);
         data.andOr && setAndOr(data.andOr);
         data.aggregation && setAggregation(data.aggregation);
-        data.legend != undefined && setLegend(data.legend)
+        data.legend != undefined && setLegend(data.legend);
+        data.legendPosition && setLegendPosition(data.legendPosition);
         setDbUid(data.userid);
 
         if (data.xaxis && data.yaxis) {
@@ -320,6 +321,7 @@ export default function Edit() {
       andOr: andOr,
       aggregation: aggregation,
       legend: legend,
+      legendPosition: legendPosition,
     };
 
     //updating current fb firestore
@@ -1287,24 +1289,41 @@ export default function Edit() {
           {/* legend */}
           <div>
             <div className="mb-6">
-              <div className="flex bg-white flex-row items-center justify-between rounded-lg border p-4">
+              <div className="flex bg-white flex-row h-12 items-center justify-between rounded-lg border p-4">
                 <div className="space-y-0.5">
-                  <Label className="text-base">Legend</Label>
+                  <Label className="text-sm font-medium mb-2">Legend</Label>
                 </div>
 
-                <Switch
-                  checked={legend}
-                  onCheckedChange={setLegend}
-                  
-                />
+                <Switch checked={legend} onCheckedChange={setLegend} />
               </div>
             </div>
           </div>
 
-          {/* <div className="flex items-center space-x-2">
-            <Switch id="airplane-mode" />
-            <Label htmlFor="airplane-mode">Airplane Mode</Label>
-          </div> */}
+          {legend && (
+            <div className="mb-6">
+              <h3 className="text-sm font-medium mb-2">Legend Position</h3>
+              {legendPosition && (
+                <Select
+                  onValueChange={setLegendPosition}
+                  defaultValue={legendPosition ? legendPosition :"top"}
+                >
+                  <SelectTrigger id="legendPosition">
+                    <SelectValue placeholder={legendPosition} />
+                  </SelectTrigger>
+                  <SelectContent position="popper">
+                    <SelectGroup>
+                      <SelectItem value="top">Top</SelectItem>
+                      <SelectItem value="bottom">Bottom</SelectItem>
+                      <SelectItem value="left">Left</SelectItem>
+                      <SelectItem value="right">Right</SelectItem>
+                      <SelectItem value="center">Center</SelectItem>
+                      <SelectItem value="chartArea">Chart Area</SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              )}
+            </div>
+          )}
 
           {/* aggregation function */}
           <div className="mb-6">
@@ -1340,6 +1359,7 @@ export default function Edit() {
               orAnd={andOr}
             />
           </div>
+
           {/* save button */}
           <div className="md:sticky md:bottom-9 md:left-0  w-full bg-gray-100 p-4 border-t">
             {savingStatus ? (
@@ -1425,6 +1445,9 @@ export default function Edit() {
                 backgroundColor={backgroundColor}
                 fillColorStatus={fillColorStatus}
                 legend={legend}
+                legendPosition={legendPosition}
+                yAxisName={yAxisName}
+                xAxisName={xAxisName}
               />
             </div>
           ) : chartType == "Area Chart" ? (
@@ -1453,7 +1476,7 @@ export default function Edit() {
                 yAxisName={yAxisName}
                 xAxisName={xAxisName}
                 legend={legend}
-
+                legendPosition={legendPosition}
               />
             </div>
           ) : chartType == "Doughnut Chart" ? (
@@ -1480,6 +1503,9 @@ export default function Edit() {
                 backgroundColor={backgroundColor}
                 fillColorStatus={fillColorStatus}
                 legend={legend}
+                legendPosition={legendPosition}
+                yAxisName={yAxisName}
+                xAxisName={xAxisName}
               />
             </div>
           ) : chartType == "Pie Chart" ? (
@@ -1506,7 +1532,9 @@ export default function Edit() {
                 backgroundColor={backgroundColor}
                 fillColorStatus={fillColorStatus}
                 legend={legend}
-
+                legendPosition={legendPosition}
+                yAxisName={yAxisName}
+                xAxisName={xAxisName}
               />
             </div>
           ) : (

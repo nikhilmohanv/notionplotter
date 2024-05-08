@@ -18,7 +18,11 @@ export default function PieChart({
   fillColorStatus,
   height,
   width,
-  legend
+  legend,
+  legendPosition,
+  yAxisName,
+xAxisName
+
 }) {
   const [darkMode, setDarkMode] = useState(false);
   const [lineColor, setLineColor] = useState([]);
@@ -68,7 +72,7 @@ export default function PieChart({
           labels: xValues,
           datasets: [
             {
-              label: label,
+              label: yAxisName,
             
               data: yValues,
               backgroundColor: fillColor,
@@ -83,7 +87,7 @@ export default function PieChart({
           maintainAspectRation: true,
           plugins: {
             legend: {
-              position: "bottom",
+              position: legendPosition,
               display: legend,
             },
 

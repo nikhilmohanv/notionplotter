@@ -37,6 +37,9 @@ const BarChart = ({
   backgroundColor,
   fillColorStatus,
   legend,
+  legendPosition,
+  yAxisName,
+  xAxisName
 }) => {
   const [darkMode, setDarkMode] = useState(false);
   const [lineColor, setLineColor] = useState([]);
@@ -96,7 +99,7 @@ const BarChart = ({
           labels: xValues,
           datasets: [
             {
-              // label: "Dataset 1",
+              label: yAxisName,
               backgroundColor: fillColor, //["#c41c1c","#11a248","#ec5555","#11a248"],
               borderColor: lineColor,
               borderWidth: 1,
@@ -111,7 +114,7 @@ const BarChart = ({
           legend: {
             // display false makes the dataset label hide
             display: legend,
-            position: "bottom",
+            position: legendPosition,
             
           },
 
