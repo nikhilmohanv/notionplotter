@@ -11,9 +11,10 @@ import {
 } from "@/components/ui/card";
 import { Check, Linkedin } from "lucide-react";
 import { LightBulbIcon } from "./Icons";
+import LoginButton from "@/components/basic/loginbutton";
 // import { GitHubLogoIcon } from "@radix-ui/react-icons";
 
-export const HeroCards = ({signInButton}) => {
+export const HeroCards = ({ handleSignIn }) => {
   return (
     <div className="hidden lg:flex flex-row flex-wrap gap-8 relative w-[700px] h-[500px]">
       {/* Testimonial */}
@@ -77,7 +78,7 @@ export const HeroCards = ({signInButton}) => {
         </CardHeader>
 
         <CardContent>
-          <Button onClick={signInButton} className="w-full">Start 7 days Free Trial</Button>
+          <Button onClick={handleSignIn}>Start 7 days trial</Button>{" "}
         </CardContent>
 
         <hr className="w-4/5 m-auto mb-7" />

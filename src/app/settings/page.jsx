@@ -38,20 +38,23 @@ export default function Dashboard() {
   const [renewsAt, setRenewsAt] = useState();
   const cookies = useCookies();
   const [userId, setUserId] = useState(cookies.get("uid"));
-  useEffect(()=>{
+  const [updatePaymentMethod, setUpdatePaymentMethod] = useState();
+  useEffect(() => {
     fetch("/api/payment/getusersubscriptionplan")
-    .then((data) => data.json())
-    .then((data) => {
-      console.log(data.isPro);
-      data.isPro !== undefined && setIsPro(data.isPro);
-      cookies.set("isPro", data.isPro);
-      data.onTrial !== undefined && setOnTrial(data.onTrial);
-      data.isCanceled !== undefined && setIsCanceled(data.isCanceled);
-      data.renews_at !== undefined && setRenewsAt(data.renews_at);
-      // });
-    });
-  },[])
-  
+      .then((data) => data.json())
+      .then((data) => {
+        console.log(data.isPro);
+        data.isPro !== undefined && setIsPro(data.isPro);
+        cookies.set("isPro", data.isPro);
+        data.onTrial !== undefined && setOnTrial(data.onTrial);
+        data.isCanceled !== undefined && setIsCanceled(data.isCanceled);
+        data.renews_at !== undefined && setRenewsAt(data.renews_at);
+        data.updatePaymentMethod != undefined &&
+          setUpdatePaymentMethod(data.updatePaymentMethod);
+        // });
+      });
+  }, []);
+
   const notionAuthUrl = `https://api.notion.com/v1/oauth/authorize?owner=user&client_id=34d5c9a9-5b7d-4b77-be4b-6a5521f6560c&response_type=code`;
   return (
     <div className="flex min-h-screen w-full flex-col">
@@ -87,7 +90,105 @@ export default function Dashboard() {
                   </CardContent>
                 </Card>
                 {/* subscription */}
-                {isPro ? (
+                {onTrial ? (
+                  <>
+                    <Card>
+                      <CardHeader>
+                        <CardTitle>Subscription</CardTitle>
+                      </CardHeader>
+                      <CardContent className="space-y-2 b-0">
+                        <div className=" md:px-6">
+                          <div className="grid grid-cols-1 gap-8 md:grid-cols-1">
+                            <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-950">
+                              <h2 className="text-2xl font-bold">
+                                Billing Details
+                              </h2>
+                              <div className="mt-6 space-y-4">
+                                <div className="flex items-center justify-between">
+                                  <span className="text-gray-500 dark:text-gray-400">
+                                    Subscription Mode
+                                  </span>
+                                  <span className="font-medium">
+                                    Free trial
+                                  </span>
+                                </div>
+                                <div className="flex items-center justify-between">
+                                  <span className="text-gray-500 dark:text-gray-400">
+                                    Trial End Date
+                                  </span>
+                                  <span className="font-medium">
+                                    {new Date(renewsAt).toDateString()}
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                            {/* <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-950">
+                              <h2 className="text-2xl font-bold">
+                                Manage Subscription
+                              </h2>
+                              <div className="mt-6 space-y-4">
+                                <Button
+                                  // onClick={handleCancelSubscription}
+                                  className="w-full"
+                                  variant="outline"
+                                >
+                                  Cancel Subscription
+                                </Button>
+                                <Button className="w-full" variant="outline">
+                                  Pause Subscription
+                                </Button>
+                                <Button className="w-full">
+                                  Update Payment Information
+                                </Button>
+                              </div>
+                            </div> */}
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </>
+                ) : isPro ? (
+                  <ManageSubscription
+                    userId={userId}
+                    isCanceled={isCanceled}
+                    currentPeriodEnd={renewsAt}
+                    updatePaymentMethod={updatePaymentMethod}
+                  />
+                ) : (
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>Subscription</CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-2 b-0">
+                      <div className="">
+                        <div className="grid grid-cols-1 gap-8">
+                          <div className="rounded-lg bg-white  shadow-sm dark:border-gray-800 dark:bg-gray-950">
+                            Your subscription expired <br />
+                            <br />
+                            <Button className="w-full">Subscrible</Button>
+                            {/* <div className="mt-6 space-y-4"> */}
+                            {/* <div className="flex items-center justify-between">
+                                <span className="text-gray-500 dark:text-gray-400">
+                                  Subscription Mode
+                                </span>
+                                <span className="font-medium">Free trial</span>
+                              </div>
+                              <div className="flex items-center justify-between">
+                                <span className="text-gray-500 dark:text-gray-400">
+                                  Trial End Date
+                                </span>
+                                <span className="font-medium">
+                                  {new Date(renewsAt).toDateString()}
+                                </span>
+                              </div> */}
+                            {/* </div> */}
+                          </div>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                )}
+                {/* {isPro ? (
                   <ManageSubscription
                     userId={userId}
                     isCanceled={isCanceled}
@@ -95,64 +196,7 @@ export default function Dashboard() {
                   />
                 ) : (
                   "subscribe"
-                )}
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Subscription</CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-2">
-                    <div className=" md:px-6">
-                      <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-                        <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-950">
-                          <h2 className="text-2xl font-bold">
-                            Billing Details
-                          </h2>
-                          <div className="mt-6 space-y-4">
-                            <div className="flex items-center justify-between">
-                              <span className="text-gray-500 dark:text-gray-400">
-                                Next Due Date
-                              </span>
-                              <span className="font-medium">May 1, 2024</span>
-                            </div>
-                            <div className="flex items-center justify-between">
-                              <span className="text-gray-500 dark:text-gray-400">
-                                Subscription
-                              </span>
-                              <span className="font-medium">$3.99/month</span>
-                            </div>
-                            <div className="flex items-center justify-between">
-                              <span className="text-gray-500 dark:text-gray-400">
-                                Payment Method
-                              </span>
-                              <div className="flex items-center gap-2">
-                                {/* <CreditCardIcon className="h-5 w-5 text-gray-500 dark:text-gray-400" /> */}
-                                <span className="font-medium">
-                                  Visa ending in 1234
-                                </span>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-950">
-                          <h2 className="text-2xl font-bold">
-                            Manage Subscription
-                          </h2>
-                          <div className="mt-6 space-y-4">
-                            <Button className="w-full" variant="outline">
-                              Cancel Subscription
-                            </Button>
-                            <Button className="w-full" variant="outline">
-                              Pause Subscription
-                            </Button>
-                            <Button className="w-full">
-                              Update Payment Information
-                            </Button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
+                )} */}
               </div>
             </TabsContent>
             <TabsContent value="notion">

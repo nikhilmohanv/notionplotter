@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { buttonVariants } from "@/components/ui/button";
 import { HeroCards } from "./HeroCards";
+import LoginButton from "@/components/basic/loginbutton";
 // import { GitHubLogoIcon } from "@radix-ui/react-icons";
 
 export const Hero = ({handleSignIn}) => {
@@ -29,13 +30,13 @@ export const Hero = ({handleSignIn}) => {
         </p>
 
         <div className="space-y-4 md:space-y-0 md:space-x-4">
-          <Button onClick={handleSignIn} className="w-full md:w-1/3">Start 7 days free trial</Button>
+          <Button onClick={handleSignIn}>Start 7 days trial</Button>{" "}
         </div>
       </div>
 
       {/* Hero cards sections */}
       <div className="z-10">
-        <HeroCards signInButton={handleSignIn}/>
+        <HeroCards handleSignIn={handleSignIn}/>
       </div>
 
       {/* Shadow effect */}

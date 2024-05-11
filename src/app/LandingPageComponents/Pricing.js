@@ -29,17 +29,19 @@ const pricingList = [
     title: "Pro",
     popular: 0,
     price: 3.99,
-    description:
-      "",
+    description: "",
     buttonText: "Start 7 days trial",
     benefitList: [
-      "Unlimited Charts", "24/7 Support", "No branding","Color Customization","Advanced filtering and sorting",
+      "Unlimited Charts",
+      "24/7 Support",
+      "No branding",
+      "Color Customization",
+      "Advanced filtering and sorting",
     ],
   },
- 
 ];
 
-export const Pricing = ({handleSignIn}) => {
+export const Pricing = ({ handleSignIn }) => {
   return (
     <section id="pricing" className="container pt-20 sm:pt-5">
       <h2 className="text-3xl md:text-4xl font-bold text-center">
@@ -56,14 +58,10 @@ export const Pricing = ({handleSignIn}) => {
       </h3>
       <div className="grid flex justify-center justify-items-center  gap-8">
         {pricingList.map((pricing) => (
-          <Card
-            key={pricing.title}
-           className="w-80"
-          >
+          <Card key={pricing.title} className="w-80">
             <CardHeader>
               <CardTitle className="flex item-center justify-between">
                 {pricing.title}
-               
               </CardTitle>
               <div>
                 <span className="text-3xl font-bold">${pricing.price}</span>
@@ -72,10 +70,9 @@ export const Pricing = ({handleSignIn}) => {
 
               <CardDescription>{pricing.description}</CardDescription>
             </CardHeader>
-
             <CardContent>
-              <Button onClick={handleSignIn} className="w-full">{pricing.buttonText}</Button>
-            </CardContent>
+              <Button onClick={handleSignIn}>Start 7 days trial</Button>
+            </CardContent>  
 
             <hr className="w-4/5 m-auto mb-4" />
 

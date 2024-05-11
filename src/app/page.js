@@ -1,8 +1,4 @@
-"use client";
-import { Button } from "@/components/ui/button";
-import { Loading, UserAuth } from "@/app/context/firebaseauth/authcontext";
-import Link from "next/link";
-import { useEffect, useState } from "react";
+"use client"
 import { setCookie } from "cookies-next";
 import getTokenWithUId from "../firebase/firestore/getaccesstoken";
 import { onAuthStateChanged } from "firebase/auth";
@@ -12,7 +8,7 @@ import { Card } from "@/components/ui/card";
 import LineChartIcon from "@/components/icons/linechart";
 import addData from "@/firebase/firestore/adddata";
 import addDataWithId from "@/firebase/firestore/adddatawithid";
-
+import { useState,useEffect } from "react";
 import { FAQ } from "./LandingPageComponents/FAQ";
 import { Features } from "./LandingPageComponents/Features";
 // import { Footer } from "./Footer";
@@ -26,6 +22,8 @@ import { ScrollToTop } from "./LandingPageComponents/ScrollToTop";
 // import { Sponsors } from "./Sponsors";
 // import { Team } from "./Team";
 import { Testimonials } from "./LandingPageComponents/Testimonials";
+import LoginButton from "@/components/basic/loginbutton";
+import { UserAuth } from "./context/firebaseauth/authcontext";
 
 export default function Home() {
   const { user, GoogleSignIn } = UserAuth();
@@ -68,13 +66,13 @@ export default function Home() {
           updatedUser.metadata.creationTime ==
           updatedUser.metadata.lastSignInTime
         ) {
-          const trialEndDate = new Date()
-            trialEndDate.setDate(trialEndDate.getDate() + 7) //7 days trial
+          const trialEndDate = new Date();
+          trialEndDate.setDate(trialEndDate.getDate() + 7); //7 days trial
           const data = {
             uid: updatedUser.uid,
             onTrial: true,
             trialStartDate: new Date(),
-            trialEndDate:`${trialEndDate}`
+            trialEndDate: `${trialEndDate}`,
           };
           const { result, error } = await addDataWithId(
             "subscription",
@@ -396,8 +394,8 @@ export default function Home() {
     //   </main>
     // </div>
     <>
-    <Navbar />
-      <Hero handleSignIn={handleSignIn}/>
+      <Navbar />
+      <Hero handleSignIn={handleSignIn} />
       {/* <Sponsors /> */}
       <HowItWorks />
       <Features />
@@ -405,12 +403,12 @@ export default function Home() {
       {/* <Cta /> */}
       <Testimonials />
       {/* <Team /> */}
-      <Pricing handleSignIn={handleSignIn}/>
+      <Pricing handleSignIn={handleSignIn} />
       {/* <Newsletter /> */}
       <FAQ />
       {/* <Footer /> */}
       <ScrollToTop />
-      </>
+    </>
   );
 }
 

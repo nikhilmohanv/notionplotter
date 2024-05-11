@@ -1305,7 +1305,7 @@ export default function Edit() {
               {legendPosition && (
                 <Select
                   onValueChange={setLegendPosition}
-                  defaultValue={legendPosition ? legendPosition :"top"}
+                  defaultValue={legendPosition ? legendPosition : "top"}
                 >
                   <SelectTrigger id="legendPosition">
                     <SelectValue placeholder={legendPosition} />

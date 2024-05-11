@@ -51,6 +51,7 @@ import {
 import app from "@/firebase/config";
 import CreateGraph from "@/components/basic/creategraph";
 import LoggedInNavBar from "@/components/basic/navbar/loggedin-navbar";
+import UpgradeButton from "@/components/basic/upgradebutton";
 
 export default function Dashboard() {
   const cookies = useCookies();
@@ -239,72 +240,73 @@ export default function Dashboard() {
                         // <div className="flex flex-col items-center justify-center gap-4 rounded-lg border border-dashed shadow-sm">
                         //   Upgrade to premium
                         // </div>
-                        <Dialog>
-                          <DialogTrigger asChild>
-                            {/* <button id="subscribeButton">Upgrade to Pro</button> */}
-                            <Button id="subscribeButton" variant="outline">
-                              Upgrade
-                            </Button>
-                          </DialogTrigger>
-                          <DialogContent className="sm:max-w-md">
-                            <DialogHeader>
-                              {/* <DialogTitle>Share link</DialogTitle> */}
-                            </DialogHeader>
-                            <div id="pricing" className="w-full">
-                              <div className="grid items-center justify-center gap-1 text-center md:px-6">
-                                <div className="space-y-1">
-                                  <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
-                                    Pricing
-                                  </h2>
-                                  {/* <p className="mx-auto max-w-[600px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
-                                    Choose the plan that fits your needs and
-                                    budget.
-                                  </p> */}
-                                </div>
-                                <div className="flex justify-center">
-                                  <Card className="space-y-4 rounded-lg border-none bg-white">
-                                    <div className="space-y-1">
-                                      <h3 className="text-2xl font-bold">
-                                        Pro
-                                      </h3>
-                                    </div>
-                                    <div className="space-y-2">
-                                      <div className="text-4xl font-bold">
-                                        $3.99
-                                      </div>
-                                      <div className="text-sm text-gray-500 dark:text-gray-400">
-                                        per month
-                                      </div>
-                                    </div>
-                                    <ul className="space-y-2 text-sm">
-                                      <li>
-                                        <CheckIcon className="mr-2 inline-block h-4 w-4" />
-                                        AI-powered image generation
-                                      </li>
-                                      <li>
-                                        <CheckIcon className="mr-2 inline-block h-4 w-4" />
-                                        Access to template library
-                                      </li>
-                                      <li>
-                                        <CheckIcon className="mr-2 inline-block h-4 w-4" />
-                                        Basic customization tools
-                                      </li>
-                                      <li>
-                                        <CheckIcon className="mr-2 inline-block h-4 w-4" />
-                                        5 GB storage
-                                      </li>
-                                    </ul>
-                                    <Button className="w-full">
-                                      <Link href={checkoutUrl} target="_blank">
-                                        Start Free Trial
-                                      </Link>
-                                    </Button>
-                                  </Card>
-                                </div>
-                              </div>
-                            </div>
-                          </DialogContent>
-                        </Dialog>
+                        // <Dialog>
+                        //   <DialogTrigger asChild>
+                        //     {/* <button id="subscribeButton">Upgrade to Pro</button> */}
+                        //     <Button id="subscribeButton" variant="outline">
+                        //       Upgrade
+                        //     </Button>
+                        //   </DialogTrigger>
+                        //   <DialogContent className="sm:max-w-md">
+                        //     <DialogHeader>
+                        //       {/* <DialogTitle>Share link</DialogTitle> */}
+                        //     </DialogHeader>
+                        //     <div id="pricing" className="w-full">
+                        //       <div className="grid items-center justify-center gap-1 text-center md:px-6">
+                        //         <div className="space-y-1">
+                        //           <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
+                        //             Pricing
+                        //           </h2>
+                        //           {/* <p className="mx-auto max-w-[600px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
+                        //             Choose the plan that fits your needs and
+                        //             budget.
+                        //           </p> */}
+                        //         </div>
+                        //         <div className="flex justify-center">
+                        //           <Card className="space-y-4 rounded-lg border-none bg-white">
+                        //             <div className="space-y-1">
+                        //               <h3 className="text-2xl font-bold">
+                        //                 Pro
+                        //               </h3>
+                        //             </div>
+                        //             <div className="space-y-2">
+                        //               <div className="text-4xl font-bold">
+                        //                 $3.99
+                        //               </div>
+                        //               <div className="text-sm text-gray-500 dark:text-gray-400">
+                        //                 per month
+                        //               </div>
+                        //             </div>
+                        //             <ul className="space-y-2 text-sm">
+                        //               <li>
+                        //                 <CheckIcon className="mr-2 inline-block h-4 w-4" />
+                        //                 AI-powered image generation
+                        //               </li>
+                        //               <li>
+                        //                 <CheckIcon className="mr-2 inline-block h-4 w-4" />
+                        //                 Access to template library
+                        //               </li>
+                        //               <li>
+                        //                 <CheckIcon className="mr-2 inline-block h-4 w-4" />
+                        //                 Basic customization tools
+                        //               </li>
+                        //               <li>
+                        //                 <CheckIcon className="mr-2 inline-block h-4 w-4" />
+                        //                 5 GB storage
+                        //               </li>
+                        //             </ul>
+                        //             <Button className="w-full">
+                        //               <Link href={checkoutUrl} target="_blank">
+                        //                 Start Free Trial
+                        //               </Link>
+                        //             </Button>
+                        //           </Card>
+                        //         </div>
+                        //       </div>
+                        //     </div>
+                        //   </DialogContent>
+                        // </Dialog>
+                        <UpgradeButton isPro={isPro}/>
                       )}
                     </div>
                   </div>
@@ -316,66 +318,7 @@ export default function Dashboard() {
                   {isPro ? (
                     <CreateGraph loading={loading} />
                   ) : (
-                    <Dialog>
-                      <DialogTrigger asChild>
-                        {/* <button id="subscribeButton">Upgrade to Pro</button> */}
-                        <Button id="subscribeButton" variant="outline">
-                          Upgrade to Pro
-                        </Button>
-                      </DialogTrigger>
-                      <DialogContent className="sm:max-w-md">
-                        <DialogHeader>
-                          {/* <DialogTitle>Share link</DialogTitle> */}
-                        </DialogHeader>
-                        <div id="pricing" className="w-full">
-                          <div className="container grid items-center justify-center gap-1 text-center md:px-6">
-                            <div className="space-y-1">
-                              <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
-                                Pricing
-                              </h2>
-                            </div>
-                            <div className="flex justify-center">
-                              <Card className="space-y-4 rounded-lg border-none bg-white p-6 dark:border-gray-800 dark:bg-gray-950">
-                                <div className="space-y-1">
-                                  <h3 className="text-2xl font-bold">Pro</h3>
-                                </div>
-                                <div className="space-y-2">
-                                  <div className="text-4xl font-bold">
-                                    $3.99
-                                  </div>
-                                  <div className="text-sm text-gray-500 dark:text-gray-400">
-                                    per month
-                                  </div>
-                                </div>
-                                <ul className="space-y-2 text-sm">
-                                  <li>
-                                    <CheckIcon className="mr-2 inline-block h-4 w-4" />
-                                    AI-powered image generation
-                                  </li>
-                                  <li>
-                                    <CheckIcon className="mr-2 inline-block h-4 w-4" />
-                                    Access to template library
-                                  </li>
-                                  <li>
-                                    <CheckIcon className="mr-2 inline-block h-4 w-4" />
-                                    Basic customization tools
-                                  </li>
-                                  <li>
-                                    <CheckIcon className="mr-2 inline-block h-4 w-4" />
-                                    5 GB storage
-                                  </li>
-                                </ul>
-                                <Button className="w-full">
-                                  <Link href={checkoutUrl} target="_blank">
-                                    Start Free Trial
-                                  </Link>
-                                </Button>
-                              </Card>
-                            </div>
-                          </div>
-                        </div>
-                      </DialogContent>
-                    </Dialog>
+                    <UpgradeButton isPro={isPro}/>
                   )}
                 </div>
                 {docs.length !== 0

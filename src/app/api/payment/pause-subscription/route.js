@@ -28,7 +28,7 @@ export async function POST(request) {
         throw new Error(`Lemon Squeezy API error: ${error.message}`);
       },
     });
-    const resp = await updateSubscription(subscriptionId, {
+    const pauseSub = await updateSubscription(subscriptionId, {
       pause: {
         mode: "void",
       },

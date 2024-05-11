@@ -157,16 +157,22 @@ export default function LoggedInNavBar() {
               <DropdownMenuContent align="end">
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                  <Link href="/billing">Billing</Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Link href="/pricing">pricing</Link>
-                </DropdownMenuItem>
+                {/* <DropdownMenuItem>
+                    <Link href="/billing">Billing</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Link href="/pricing">pricing</Link>
+                  </DropdownMenuItem>
 
-                <DropdownMenuSeparator />
+                  <DropdownMenuSeparator /> */}
                 <DropdownMenuItem>
-                  <Button onClick={handleSignOut}>Logout</Button>
+                  <Button
+                    variant="ghost"
+                    className="w-full"
+                    onClick={handleSignOut}
+                  >
+                    Logout
+                  </Button>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
