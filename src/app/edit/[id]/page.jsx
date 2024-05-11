@@ -1302,10 +1302,10 @@ export default function Edit() {
           {legend && (
             <div className="mb-6">
               <h3 className="text-sm font-medium mb-2">Legend Position</h3>
-              {legendPosition && (
+              {/* {legendPosition && ( */}
                 <Select
                   onValueChange={setLegendPosition}
-                  defaultValue={legendPosition ? legendPosition : "top"}
+                  defaultValue={legendPosition != undefined ? legendPosition : "top"}
                 >
                   <SelectTrigger id="legendPosition">
                     <SelectValue placeholder={legendPosition} />
@@ -1321,7 +1321,7 @@ export default function Edit() {
                     </SelectGroup>
                   </SelectContent>
                 </Select>
-              )}
+              {/* // )} */}
             </div>
           )}
 
