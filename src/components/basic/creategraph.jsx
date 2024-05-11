@@ -59,6 +59,9 @@ export default function CreateGraph({ loading }) {
   const cookies = useCookies();
   const [rows, setRows] = useState([]);
 
+  // if true then load the create chart button if false show as create button. when started to create charts it set to true when completed it is set to false
+  const [chartCreation, setChartCreation] = useState(false);
+
   //store x axis datas
   const [xAxisValues, setXAxisValues] = useState([]);
 
@@ -235,6 +238,7 @@ export default function CreateGraph({ loading }) {
   //creating new graph
   const createGraph = async (e) => {
     e.preventDefault();
+    setChartCreation(true);
     let xAxisName;
     let yAxisName;
     //     const currentTimeStamp = Date.now();
@@ -276,6 +280,7 @@ export default function CreateGraph({ loading }) {
     };
     const { result, error } = await addData("graphs", data);
     if (result) {
+      setChartCreation(false);
       return router.push(`/edit/${result.id}`);
     }
 
@@ -519,9 +524,16 @@ export default function CreateGraph({ loading }) {
                           </DialogClose>
                           <DialogTrigger asChild>
                             {yAxis && xAxis ? (
-                              <Button type="submit" onClick={createGraph}>
-                                Create
-                              </Button>
+                              chartCreation ? (
+                                <Button disabled size="sm">
+                                  <Loader2 className="mr-2 h-4 w-4  animate-spin" />
+                                  Creating Chart
+                                </Button>
+                              ) : (
+                                <Button type="submit" onClick={createGraph}>
+                                  Create
+                                </Button>
+                              )
                             ) : (
                               <Button disabled>Create</Button>
                             )}

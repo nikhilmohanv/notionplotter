@@ -120,7 +120,7 @@ export default function Edit() {
   const [legend, setLegend] = useState(true);
 
   // for storing legend position
-  const [legendPosition, setLegendPosition] = useState();
+  const [legendPosition, setLegendPosition] = useState("top");
   //this adds a new color input to the multicolor input array
   const handleAddColor = () => {
     setLineMultiColor([...lineMultiColor, "#000000"]);
@@ -157,7 +157,7 @@ export default function Edit() {
     setFilters(filter);
     setAndOr(orAnd);
   };
-
+  const [extractedProperties, setExtractedProperties] = useState([]);
   //store chart type
   const [chartType, setChartType] = useState("");
 
@@ -209,7 +209,7 @@ export default function Edit() {
         if ("labelStatus" in data) {
           setLabelStatus(data.labelStatus);
         } else {
-          setLabelStatus(false);
+          setLabelStatus(true);
         }
       });
   }, [id]);
@@ -337,7 +337,6 @@ export default function Edit() {
   };
 
   //it stores extracted data from the api
-  let extractedProperties = [];
   useEffect(() => {
     rows.forEach((page) => {
       // setCount(prevCount => prevCount + 1);
@@ -694,16 +693,24 @@ export default function Edit() {
 
             value = rollupArrayValues;
           }
-
-          // Store the result in the array
-          extractedProperties.push({
+          const sampleExtracted = {
             name: propertyName,
             id: id,
             type: propertyType,
             value: value,
             formulaType: formulaType ? formulaType : null,
             rollupType: rollupType ? rollupType : null,
-          });
+          };
+          // Store the result in the array
+          setExtractedProperties((prevValue) => [...prevValue,sampleExtracted]);
+          // extractedProperties.push({
+          //   name: propertyName,
+          //   id: id,
+          //   type: propertyType,
+          //   value: value,
+          //   formulaType: formulaType ? formulaType : null,
+          //   rollupType: rollupType ? rollupType : null,
+          // });
         }
       }
     });
@@ -712,6 +719,8 @@ export default function Edit() {
   console.log(extractedProperties);
 
   useEffect(() => {
+    console.log("x called");
+
     if (xAxis != null && xAxis != undefined) {
       console.log(extractedProperties);
 
@@ -808,20 +817,31 @@ export default function Edit() {
   }, [xAxis, extractedProperties]);
 
   useEffect(() => {
+    console.log("y called");
+    console.log("y axis", yAxis);
     if (yAxis != null && yAxis != undefined) {
+      console.log("inside if");
       let YAxisData;
+      console.log("extracted properties ", extractedProperties.length);
       if (extractedProperties.length > 0) {
+        console.log("inside 2 if");
         YAxisData = extractedProperties.filter((obj) => obj.id == yAxis);
       }
       if (YAxisData) {
+        console.log("inside 3 if");
+
         const extractedYValues = YAxisData.map((obj) => {
           if (aggregation == "count") {
+            console.log("inside count if");
+
             if (Array.isArray(obj.value)) {
               return obj.value.length;
             } else {
               return 1;
             }
           } else if (aggregation == "sum") {
+            console.log("inside sum if");
+
             if (Array.isArray(obj.value)) {
               let sum = 0;
               obj.value.forEach((element) => {
@@ -835,8 +855,9 @@ export default function Edit() {
           return obj.value;
         });
         // Store the result in the state variable
-
+        console.log("extracted ", extractedYValues);
         setYAxisValues(extractedYValues);
+        console.log("permentant ", yAxisValues);
       }
       // setXAxisValues()
     }
@@ -1302,10 +1323,12 @@ export default function Edit() {
           {legend && (
             <div className="mb-6">
               <h3 className="text-sm font-medium mb-2">Legend Position</h3>
-              {/* {legendPosition && ( */}
+              {dbId && (
                 <Select
                   onValueChange={setLegendPosition}
-                  defaultValue={legendPosition != undefined ? legendPosition : "top"}
+                  defaultValue={
+                    legendPosition != undefined ? legendPosition : "top"
+                  }
                 >
                   <SelectTrigger id="legendPosition">
                     <SelectValue placeholder={legendPosition} />
@@ -1321,7 +1344,7 @@ export default function Edit() {
                     </SelectGroup>
                   </SelectContent>
                 </Select>
-              {/* // )} */}
+              )}
             </div>
           )}
 
@@ -1448,6 +1471,7 @@ export default function Edit() {
                 legendPosition={legendPosition}
                 yAxisName={yAxisName}
                 xAxisName={xAxisName}
+                aggregation={aggregation}
               />
             </div>
           ) : chartType == "Area Chart" ? (

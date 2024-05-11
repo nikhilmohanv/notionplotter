@@ -39,8 +39,10 @@ const BarChart = ({
   legend,
   legendPosition,
   yAxisName,
-  xAxisName
+  xAxisName,
+  aggregation
 }) => {
+  console.log("aggregation ",aggregation)
   const [darkMode, setDarkMode] = useState(false);
   const [lineColor, setLineColor] = useState([]);
   const [fillColor, setFillColor] = useState([]);
