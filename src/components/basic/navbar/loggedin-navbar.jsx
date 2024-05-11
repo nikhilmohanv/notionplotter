@@ -21,8 +21,8 @@ export default function LoggedInNavBar() {
   const handleSignOut = async () => {
     try {
       await logout();
-      deleteCookie("access_token", { path: "/", domain: ".localhost" });
-      deleteCookie("uid", { path: "/", domain: ".localhost" });
+      deleteCookie("access_token", { path: "/" });
+      deleteCookie("uid", { path: "/" });
       redirect("/");
     } catch (error) {
       console.log(error);

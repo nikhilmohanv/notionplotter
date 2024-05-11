@@ -132,6 +132,19 @@ export default function Edit() {
 
   const [filterLoadingState, setFilterLoadingState] = useState(false);
 
+
+  useEffect(()=>{
+    // create a program to track if there is any unsaved changes in the input fields if there is any then show a warning
+    const unsavedChanges = () => {
+      if (xAxisValues.length === 0 || yAxisValues.length === 0 || name === "" || xAxisName === "" || yAxisName ===
+      "" || legend === false || legendPosition === "" || aggregation === "" || filters.length === 0 || andOr === "") {
+        return false;
+        } else {
+          return true;
+          }
+          }
+  })
+
   //adding new empty string to the state fillMultiColor
   const handleAddFillColor = () => {
     setFillMultiColor([...fillMultiColor, "#000000"]);

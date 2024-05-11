@@ -61,24 +61,16 @@ export default function Dashboard() {
   const [onTrial, setOnTrial] = useState(true);
   const { user } = UserAuth();
 
-  console.log("is pro ", isPro);
   //get user subscription plan
   useEffect(() => {
     if (cookies.get("isPro") == "true") {
       setIsPro(true);
-      console.log("inside true");
     } else {
       setIsPro(false);
-
-      console.log("IS pro at false", isPro);
     }
     if (typeof cookies.get("isPro") == "boolean") {
-      console.log("it is boolean");
     } else {
-      console.log("not boolean");
     }
-    console.log("is pro cookie ", cookies.get("isPro"));
-    console.log("IS pro at outside", isPro);
 
     fetch("/api/payment/getusersubscriptionplan")
       .then((data) => data.json())
@@ -100,7 +92,7 @@ export default function Dashboard() {
     console.log("user ", user);
     if (!cookies.get("uid")) {
       //redirect to /login page when not logged in.
-      redirect("/");  
+      redirect("/");
     }
   }, [user]);
 
@@ -129,7 +121,6 @@ export default function Dashboard() {
   }, []);
 
   //getting the notion token
-  
 
   //getting all created graphs from firestore
   useEffect(() => {
@@ -306,7 +297,7 @@ export default function Dashboard() {
                         //     </div>
                         //   </DialogContent>
                         // </Dialog>
-                        <UpgradeButton isPro={isPro}/>
+                        <UpgradeButton isPro={isPro} />
                       )}
                     </div>
                   </div>
@@ -318,7 +309,7 @@ export default function Dashboard() {
                   {isPro ? (
                     <CreateGraph loading={loading} />
                   ) : (
-                    <UpgradeButton isPro={isPro}/>
+                    <UpgradeButton isPro={isPro} />
                   )}
                 </div>
                 {docs.length !== 0
