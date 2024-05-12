@@ -13,9 +13,7 @@ const DoughnutChart = ({
   yValues,
   label,
   labelStatus,
-  lineSingleColor,
-  lineMultiColor,
-  colorStatus,
+ 
   fillSingleColor,
   fillMultiColor,
   backgroundColor,
@@ -30,13 +28,13 @@ const DoughnutChart = ({
   const [lineColor, setLineColor] = useState([]);
   const [fillColor, setFillColor] = useState([]);
 
-  useEffect(() => {
-    if (colorStatus == "lineSingle") {
-      setLineColor(lineSingleColor);
-    } else {
-      setLineColor(lineMultiColor);
-    }
-  }, [colorStatus, lineSingleColor, lineMultiColor]);
+  // useEffect(() => {
+  //   if (colorStatus == "lineSingle") {
+  //     setLineColor(lineSingleColor);
+  //   } else {
+  //     setLineColor(lineMultiColor);
+  //   }
+  // }, [colorStatus, lineSingleColor, lineMultiColor]);
 
   useEffect(() => {
     if (backgroundColor != "#ffffff") {
@@ -59,14 +57,17 @@ const DoughnutChart = ({
   useEffect(() => {
     const newFillColor = [];
     if (fillColorStatus === "fillSingle") {
+      setLineColor(fillSingleColor)
       newFillColor.push(hex2rgb(fillSingleColor));
     } else if (fillColorStatus === "fillMulti") {
+      setLineColor(fillMultiColor)
       fillMultiColor.forEach((color) => {
         newFillColor.push(hex2rgb(color));
       });
     }
     setFillColor(newFillColor);
   }, [fillColorStatus, fillSingleColor, fillMultiColor]);
+  console.log("y values ",yValues)
   return (
     // <div style={{ backgroundColor: backgroundColor }}>
       <Doughnut
@@ -77,7 +78,7 @@ const DoughnutChart = ({
               label: yAxisName,
               data: yValues,
               backgroundColor: fillColor,
-              borderColor: lineColor,
+              borderColor: "#FFFFFF",
               borderWidth: 1,
             },
           ],

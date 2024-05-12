@@ -9,9 +9,7 @@ export default function PieChart({
   yValues,
   label,
   labelStatus,
-  lineSingleColor,
-  lineMultiColor,
-  colorStatus,
+ 
   backgroundColor,
   fillSingleColor,
   fillMultiColor,
@@ -28,13 +26,13 @@ xAxisName
   const [lineColor, setLineColor] = useState([]);
   const [fillColor, setFillColor] = useState([]);
 
-  useEffect(() => {
-    if (colorStatus == "lineSingle") {
-      setLineColor(lineSingleColor);
-    } else {
-      setLineColor(lineMultiColor);
-    }
-  }, [colorStatus, lineSingleColor, lineMultiColor]);
+  // useEffect(() => {
+  //   if (colorStatus == "lineSingle") {
+  //     setLineColor(lineSingleColor);
+  //   } else {
+  //     setLineColor(lineMultiColor);
+  //   }
+  // }, [colorStatus, lineSingleColor, lineMultiColor]);
 
   useEffect(() => {
     if (backgroundColor.trim().toLowerCase() == "#ffffff") {
@@ -57,8 +55,10 @@ xAxisName
   useEffect(() => {
     const newFillColor = [];
     if (fillColorStatus === "fillSingle") {
+      setLineColor(fillSingleColor)
       newFillColor.push(hex2rgb(fillSingleColor));
     } else if (fillColorStatus === "fillMulti") {
+      setLineColor(fillMultiColor)
       fillMultiColor.forEach((color) => {
         newFillColor.push(hex2rgb(color));
       });
@@ -76,7 +76,7 @@ xAxisName
             
               data: yValues,
               backgroundColor: fillColor,
-              borderColor: lineColor,
+              borderColor: "#FFFFFF",
               borderWidth: 1,
               // borderRadius: 10,
             },

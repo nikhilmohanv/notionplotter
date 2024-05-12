@@ -15,18 +15,28 @@ import { redirect } from "next/navigation";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
 import LineChartIcon from "@/components/icons/linechart";
+import { useEffect } from "react";
+import { useCookies } from "next-client-cookies";
 
 export default function LoggedInNavBar() {
   const { user, logout } = UserAuth();
+  const cookies = useCookies();
   const handleSignOut = async () => {
     try {
       await logout();
-      deleteCookie("access_token", { path: "/" });
-      deleteCookie("uid", { path: "/" });
+      deleteCookie("access_token");
+      deleteCookie("uid");
       redirect("/");
     } catch (error) {
       console.log(error);
     }
+
+    useEffect(() => {
+      if (!cookies.get("uid")) {
+        //redirect to /login page when not logged in.
+        redirect("/");
+      }
+    }, [user]);
   };
   return (
     <>
@@ -37,7 +47,7 @@ export default function LoggedInNavBar() {
             className="flex items-center gap-2 text-lg font-semibold md:text-base"
           >
             <LineChartIcon className="h-6 w-6" />
-            <span className="">NotionPlotter</span>
+            <span >NotionPlotter</span>
           </Link>
           <Link
             href="/dashboard"

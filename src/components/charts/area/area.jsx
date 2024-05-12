@@ -30,9 +30,7 @@ const AreaChart = ({
   yValues,
   label,
   labelStatus,
-  lineSingleColor,
-  lineMultiColor,
-  colorStatus,
+ 
   backgroundColor,
   fillSingleColor,
   fillMultiColor,
@@ -47,14 +45,6 @@ const AreaChart = ({
   const [darkMode, setDarkMode] = useState(false);
   const [lineColor, setLineColor] = useState([]);
   const [fillColor, setFillColor] = useState([]);
-
-  useEffect(() => {
-    if (colorStatus == "lineSingle") {
-      setLineColor(lineSingleColor);
-    } else {
-      setLineColor(lineMultiColor);
-    }
-  }, [colorStatus, lineSingleColor, lineMultiColor]);
 
   useEffect(() => {
     if (backgroundColor.trim().toLowerCase() == "#ffffff") {
@@ -77,8 +67,10 @@ const AreaChart = ({
   useEffect(() => {
     const newFillColor = [];
     if (fillColorStatus === "fillSingle") {
+      setLineColor(fillSingleColor)
       newFillColor.push(hex2rgb(fillSingleColor));
     } else if (fillColorStatus === "fillMulti") {
+      setLineColor(fillMultiColor)
       fillMultiColor.forEach((color) => {
         newFillColor.push(hex2rgb(color));
       });

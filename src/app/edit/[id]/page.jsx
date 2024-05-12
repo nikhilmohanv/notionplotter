@@ -132,18 +132,27 @@ export default function Edit() {
 
   const [filterLoadingState, setFilterLoadingState] = useState(false);
 
-
-  useEffect(()=>{
+  useEffect(() => {
     // create a program to track if there is any unsaved changes in the input fields if there is any then show a warning
     const unsavedChanges = () => {
-      if (xAxisValues.length === 0 || yAxisValues.length === 0 || name === "" || xAxisName === "" || yAxisName ===
-      "" || legend === false || legendPosition === "" || aggregation === "" || filters.length === 0 || andOr === "") {
+      if (
+        xAxisValues.length === 0 ||
+        yAxisValues.length === 0 ||
+        name === "" ||
+        xAxisName === "" ||
+        yAxisName === "" ||
+        legend === false ||
+        legendPosition === "" ||
+        aggregation === "" ||
+        filters.length === 0 ||
+        andOr === ""
+      ) {
         return false;
-        } else {
-          return true;
-          }
-          }
-  })
+      } else {
+        return true;
+      }
+    };
+  });
 
   //adding new empty string to the state fillMultiColor
   const handleAddFillColor = () => {
@@ -351,6 +360,7 @@ export default function Edit() {
 
   //it stores extracted data from the api
   useEffect(() => {
+    setExtractedProperties([]);
     rows.forEach((page) => {
       // setCount(prevCount => prevCount + 1);
       // Extract properties from the 'properties' object
@@ -706,6 +716,7 @@ export default function Edit() {
 
             value = rollupArrayValues;
           }
+
           const sampleExtracted = {
             name: propertyName,
             id: id,
@@ -715,7 +726,10 @@ export default function Edit() {
             rollupType: rollupType ? rollupType : null,
           };
           // Store the result in the array
-          setExtractedProperties((prevValue) => [...prevValue,sampleExtracted]);
+          setExtractedProperties((prevValue) => [
+            ...prevValue,
+            sampleExtracted,
+          ]);
           // extractedProperties.push({
           //   name: propertyName,
           //   id: id,
@@ -738,11 +752,12 @@ export default function Edit() {
       console.log(extractedProperties);
 
       let XAxisData;
+      let extractedXValues;
       if (extractedProperties.length > 0) {
         XAxisData = extractedProperties.filter((obj) => obj.id == xAxis);
       }
       if (XAxisData) {
-        const extractedXValues = XAxisData.map((obj) => {
+        extractedXValues = XAxisData.map((obj) => {
           if (
             obj.type == "people" ||
             obj.type == "created_by" ||
@@ -752,11 +767,6 @@ export default function Edit() {
             obj.rollupType == "last_edited_by"
           ) {
             if (obj.value != "No name") {
-              // let name: any = "";
-              // obj.value.map((n) => {
-              //   name = name + n.name + " ";
-              // });
-              // return name;
               return obj.value[0].name;
             } else {
               return obj.value;
@@ -797,6 +807,7 @@ export default function Edit() {
             obj.rollupType === "email"
           ) {
             if (Array.isArray(obj.value)) {
+              console.log("it is a string array");
               return obj.value[0];
             }
           } else if (
@@ -818,12 +829,15 @@ export default function Edit() {
               return obj.value[0];
             }
           }
-
           return obj.value;
         });
 
+        console.log("Extracted x values ", extractedXValues);
+
         // Store the result in the state variable
+        console.log("x axis values before insering ", xAxisValues);
         setXAxisValues(extractedXValues);
+        console.log("x axis values after insering ", xAxisValues);
       }
       // setXAxisValues()
     }
@@ -868,7 +882,7 @@ export default function Edit() {
           return obj.value;
         });
         // Store the result in the state variable
-        console.log("extracted ", extractedYValues);
+        console.log("extracted y", extractedYValues);
         setYAxisValues(extractedYValues);
         console.log("permentant ", yAxisValues);
       }
@@ -891,693 +905,683 @@ export default function Edit() {
 
   return (
     <>
-      <LoggedInNavBar />
+      <div className="h-screen">
+        <LoggedInNavBar />
 
-      <div key="1" className="flex flex-col md:h-screen md:flex-row ">
-        <aside className="w-full lg:w-[400px] bg-gray-100 p-6 md:w-[300px] lg:overflow-auto md:overflow-auto">
-          <div className="grid grid-col-3">
-            <div>
-              <Link href={"/dashboard"}>
-                <LeftArrow />
-              </Link>
-            </div>
-          </div>
-          <br />
-          <div className="mb-6">
-            <h3 className="text-sm font-medium mb-2">Chart type</h3>
-
-            <div className="grid grid-cols-4 gap-4">
-              {/* bar chart */}
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <div className="flex items-center mr-2">
-                      <input
-                        className="mr-2"
-                        id="barChart"
-                        type="radio"
-                        name="chartType"
-                        value="Bar Chart"
-                        onChange={(e) => {
-                          setChartType(e.target.value);
-                        }}
-                        style={{
-                          opacity: 0,
-                          position: "absolute",
-                          height: 1,
-                          width: 1,
-                        }}
-                      />
-
-                      <label htmlFor="barChart">
-                        {chartType != "Bar Chart" ? (
-                          <Button
-                            variant="outline"
-                            onClick={() => setChartType("Bar Chart")}
-                          >
-                            <BarChartIconBlack className="text-indigo-600" />
-                          </Button>
-                        ) : (
-                          <Button>
-                            <BarChartIconWhite className="text-indigo-600" />
-                          </Button>
-                        )}
-                      </label>
-                    </div>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Bar Chart</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-
-              {/* Area Chart */}
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <div className="flex items-center mr-2">
-                      <input
-                        className="mr-2"
-                        id="areaChart"
-                        type="radio"
-                        name="chartType"
-                        value="Area Chart"
-                        onChange={(e) => {
-                          setChartType(e.target.value);
-                        }}
-                        style={{
-                          opacity: 0,
-                          position: "absolute",
-                          height: 1,
-                          width: 1,
-                        }}
-                      />
-
-                      <label htmlFor="areaChart">
-                        {chartType != "Area Chart" ? (
-                          <Button
-                            variant="outline"
-                            onClick={() => setChartType("Area Chart")}
-                          >
-                            <AreaChartIconBlack className="text-indigo-600" />
-                          </Button>
-                        ) : (
-                          <Button>
-                            <AreaChartIconWhite className="text-indigo-600" />
-                          </Button>
-                        )}
-                      </label>
-                    </div>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Area Chart</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-
-              {/* Pie Chart */}
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <div className="flex items-center mr-2">
-                      <input
-                        className="mr-2"
-                        id="pieChart"
-                        type="radio"
-                        name="chartType"
-                        value="Pie Chart"
-                        onChange={(e) => {
-                          setChartType(e.target.value);
-                        }}
-                        style={{
-                          opacity: 0,
-                          position: "absolute",
-                          height: 1,
-                          width: 1,
-                        }}
-                      />
-
-                      <label htmlFor="pieChart">
-                        {chartType != "Pie Chart" ? (
-                          <Button
-                            variant="outline"
-                            onClick={() => setChartType("Pie Chart")}
-                          >
-                            <PieChartIconBlack className="text-indigo-600" />
-                          </Button>
-                        ) : (
-                          <Button>
-                            <PieChartIconWhite className="text-indigo-600" />
-                          </Button>
-                        )}
-                      </label>
-                    </div>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Pie Chart</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-
-              {/* KPI Chart */}
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <div className="flex items-center mr-2">
-                      <input
-                        className="mr-2"
-                        id="doughnutChart"
-                        type="radio"
-                        name="chartType"
-                        value="Doughnut Chart"
-                        onChange={(e) => {
-                          setChartType(e.target.value);
-                        }}
-                        style={{
-                          opacity: 0,
-                          position: "absolute",
-                          height: 1,
-                          width: 1,
-                        }}
-                      />
-
-                      <label htmlFor="doughnutChart">
-                        {chartType != "Doughnut Chart" ? (
-                          <Button
-                            variant="outline"
-                            onClick={() => setChartType("Doughnut Chart")}
-                          >
-                            <DoughNutBlack className="text-indigo-600" />
-                          </Button>
-                        ) : (
-                          <Button>
-                            <DoughNutWhite className="text-indigo-600" />
-                          </Button>
-                        )}
-                      </label>
-                    </div>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Doughnut Chart</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-            </div>
-          </div>
-
-          <div className="mb-6">
-            <h3 className="text-sm font-medium mb-2">Label</h3>
-            <div className="flex items-center">
-              <div className="flex items-center mr-2">
-                <input
-                  className="mr-2"
-                  id="labelVisibility"
-                  type="checkbox"
-                  style={{
-                    opacity: 0,
-                    position: "absolute",
-                    height: 1,
-                    width: 1,
-                  }}
-                />
-
-                <label htmlFor="labelVisibility">
-                  {labelStatus ? (
-                    <Button
-                      variant="outline"
-                      onClick={() => setLabelStatus(!labelStatus)}
-                    >
-                      <EyeClose />
-                    </Button>
-                  ) : (
-                    <Button
-                      variant="outline"
-                      onClick={() => setLabelStatus(!labelStatus)}
-                    >
-                      <EyeOpen className="text-gray-400" />
-                    </Button>
-                  )}
-                </label>
+        <div className="flex flex-col h-full md:flex-row">
+          <aside className="w-full lg:w-[400px] bg-gray-100 p-6 md:w-[300px] lg:overflow-auto md:overflow-auto">
+            <div className="grid grid-col-3">
+              <div>
+                <Link href={"/dashboard"}>
+                  <LeftArrow />
+                </Link>
               </div>
+            </div>
+            <br />
+            <div className="mb-6">
+              <h3 className="text-sm font-medium mb-2">Chart type</h3>
+
+              <div className="grid grid-cols-4 gap-4">
+                {/* bar chart */}
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <div className="flex items-center mr-2">
+                        <input
+                          className="mr-2"
+                          id="barChart"
+                          type="radio"
+                          name="chartType"
+                          value="Bar Chart"
+                          onChange={(e) => {
+                            setChartType(e.target.value);
+                          }}
+                          style={{
+                            opacity: 0,
+                            position: "absolute",
+                            height: 1,
+                            width: 1,
+                          }}
+                        />
+
+                        <label htmlFor="barChart">
+                          {chartType != "Bar Chart" ? (
+                            <Button
+                              variant="outline"
+                              onClick={() => setChartType("Bar Chart")}
+                            >
+                              <BarChartIconBlack className="text-indigo-600" />
+                            </Button>
+                          ) : (
+                            <Button>
+                              <BarChartIconWhite className="text-indigo-600" />
+                            </Button>
+                          )}
+                        </label>
+                      </div>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Bar Chart</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+
+                {/* Area Chart */}
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <div className="flex items-center mr-2">
+                        <input
+                          className="mr-2"
+                          id="areaChart"
+                          type="radio"
+                          name="chartType"
+                          value="Area Chart"
+                          onChange={(e) => {
+                            setChartType(e.target.value);
+                          }}
+                          style={{
+                            opacity: 0,
+                            position: "absolute",
+                            height: 1,
+                            width: 1,
+                          }}
+                        />
+
+                        <label htmlFor="areaChart">
+                          {chartType != "Area Chart" ? (
+                            <Button
+                              variant="outline"
+                              onClick={() => setChartType("Area Chart")}
+                            >
+                              <AreaChartIconBlack className="text-indigo-600" />
+                            </Button>
+                          ) : (
+                            <Button>
+                              <AreaChartIconWhite className="text-indigo-600" />
+                            </Button>
+                          )}
+                        </label>
+                      </div>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Area Chart</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+
+                {/* Pie Chart */}
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <div className="flex items-center mr-2">
+                        <input
+                          className="mr-2"
+                          id="pieChart"
+                          type="radio"
+                          name="chartType"
+                          value="Pie Chart"
+                          onChange={(e) => {
+                            setChartType(e.target.value);
+                          }}
+                          style={{
+                            opacity: 0,
+                            position: "absolute",
+                            height: 1,
+                            width: 1,
+                          }}
+                        />
+
+                        <label htmlFor="pieChart">
+                          {chartType != "Pie Chart" ? (
+                            <Button
+                              variant="outline"
+                              onClick={() => setChartType("Pie Chart")}
+                            >
+                              <PieChartIconBlack className="text-indigo-600" />
+                            </Button>
+                          ) : (
+                            <Button>
+                              <PieChartIconWhite className="text-indigo-600" />
+                            </Button>
+                          )}
+                        </label>
+                      </div>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Pie Chart</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+
+                {/* KPI Chart */}
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <div className="flex items-center mr-2">
+                        <input
+                          className="mr-2"
+                          id="doughnutChart"
+                          type="radio"
+                          name="chartType"
+                          value="Doughnut Chart"
+                          onChange={(e) => {
+                            setChartType(e.target.value);
+                          }}
+                          style={{
+                            opacity: 0,
+                            position: "absolute",
+                            height: 1,
+                            width: 1,
+                          }}
+                        />
+
+                        <label htmlFor="doughnutChart">
+                          {chartType != "Doughnut Chart" ? (
+                            <Button
+                              variant="outline"
+                              onClick={() => setChartType("Doughnut Chart")}
+                            >
+                              <DoughNutBlack className="text-indigo-600" />
+                            </Button>
+                          ) : (
+                            <Button>
+                              <DoughNutWhite className="text-indigo-600" />
+                            </Button>
+                          )}
+                        </label>
+                      </div>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Doughnut Chart</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              </div>
+            </div>
+
+            <div className="mb-6">
+              <h3 className="text-sm font-medium mb-2">Label</h3>
+              <div className="flex items-center">
+                <div className="flex items-center mr-2">
+                  <input
+                    className="mr-2"
+                    id="labelVisibility"
+                    type="checkbox"
+                    style={{
+                      opacity: 0,
+                      position: "absolute",
+                      height: 1,
+                      width: 1,
+                    }}
+                  />
+
+                  <label htmlFor="labelVisibility">
+                    {labelStatus ? (
+                      <Button
+                        variant="outline"
+                        onClick={() => setLabelStatus(!labelStatus)}
+                      >
+                        <EyeClose />
+                      </Button>
+                    ) : (
+                      <Button
+                        variant="outline"
+                        onClick={() => setLabelStatus(!labelStatus)}
+                      >
+                        <EyeOpen className="text-gray-400" />
+                      </Button>
+                    )}
+                  </label>
+                </div>
+                {dbId ? (
+                  <Input
+                    placeholder="Enter label"
+                    value={label}
+                    onChange={(e) => setLabel(e.target.value)}
+                    // {labelStatus&& disabled}
+                    disabled={labelStatus ? true : false}
+                  />
+                ) : (
+                  <Skeleton className="bg-white h-9 w-full" />
+                )}
+              </div>
+              {/* </div> */}
+            </div>
+
+            {/* graph line color */}
+            <div className="mb-6">
+              <h3 className="text-sm font-medium mb-2">Line Color</h3>
               {dbId ? (
-                <Input
-                  placeholder="Enter label"
-                  value={label}
-                  onChange={(e) => setLabel(e.target.value)}
-                  // {labelStatus&& disabled}
-                  disabled={labelStatus ? true : false}
-                />
+                <Tabs defaultValue={colorStatus} className="w-full">
+                  <TabsList className="grid w-full grid-cols-2">
+                    <TabsTrigger
+                      value="lineSingle"
+                      onClick={() => {
+                        setColorStatus("lineSingle");
+                      }}
+                    >
+                      Single Color
+                    </TabsTrigger>
+                    <TabsTrigger
+                      value="lineMulti"
+                      onClick={() => {
+                        setColorStatus("lineMulti");
+                      }}
+                    >
+                      Multi Color
+                    </TabsTrigger>
+                  </TabsList>
+                  <TabsContent value="lineSingle">
+                    <div className="w-full bg-neutral-50 rounded">
+                      <input
+                        type="color"
+                        value={lineSingleColor}
+                        onChange={(e) => setLineSingleColor(e.target.value)}
+                        className="w-12 h-12 p-0 m-2"
+                      />
+                    </div>
+                  </TabsContent>
+                  <TabsContent value="lineMulti">
+                    <div className="w-full bg-neutral-50 rounded">
+                      {lineMultiColor.map((item, index) => (
+                        <>
+                          <input
+                            name="color"
+                            type="color"
+                            key={index}
+                            value={item}
+                            onChange={(event) => addNewColor(event, index)}
+                            className="w-12 h-12 p-0 m-2"
+                          />
+                          {index === lineMultiColor.length - 1 && (
+                            <button onClick={() => handleAddColor()}>
+                              <PlusIcon className="w-12 h-12 p-0 " />
+                            </button>
+                          )}
+                        </>
+                      ))}
+                    </div>
+                  </TabsContent>
+                </Tabs>
+              ) : (
+                <Skeleton className="bg-white h-12 w-full" />
+              )}
+            </div>
+
+            {/* area filling color selection */}
+
+            <div className="mb-6">
+              <h3 className="text-sm font-medium mb-2">Fill Color</h3>
+              {dbId ? (
+                <Tabs defaultValue={fillColorStatus} className="w-full">
+                  <TabsList className="grid w-full grid-cols-2">
+                    <TabsTrigger
+                      value="fillSingle"
+                      onClick={() => {
+                        setFillColorStatus("fillSingle");
+                      }}
+                    >
+                      Single Color
+                    </TabsTrigger>
+                    <TabsTrigger
+                      value="fillMulti"
+                      onClick={() => {
+                        setFillColorStatus("fillMulti");
+                      }}
+                    >
+                      Multi Color
+                    </TabsTrigger>
+                  </TabsList>
+                  <TabsContent value="fillSingle">
+                    <div className="w-full bg-neutral-50 rounded">
+                      <input
+                        type="color"
+                        value={fillSingleColor}
+                        onChange={(e) => setFillSingleColor(e.target.value)}
+                        className="w-12 h-12 p-0 m-2"
+                      />
+                    </div>
+                  </TabsContent>
+                  <TabsContent value="fillMulti">
+                    <div className="w-full bg-neutral-50 rounded">
+                      {fillMultiColor.map((item, index) => (
+                        <>
+                          <input
+                            name="color"
+                            type="color"
+                            value={item}
+                            onChange={(event) => addNewFillColor(event, index)}
+                            className="w-12 h-12 p-0 m-2"
+                          />
+                          {index === fillMultiColor.length - 1 && (
+                            <button onClick={() => handleAddFillColor()}>
+                              <PlusIcon className="w-12 h-12 p-0 " />
+                            </button>
+                          )}
+                        </>
+                      ))}
+                    </div>
+                  </TabsContent>
+                </Tabs>
+              ) : (
+                <Skeleton className="bg-white h-12 w-full" />
+              )}
+            </div>
+
+            {/* background color selector */}
+            <div className="mb-6">
+              <h3 className="text-sm font-medium mb-2">Background Color</h3>
+              {dbId ? (
+                <div className="w-full bg-neutral-50 rounded">
+                  <label htmlFor="bgcolor">
+                    <input
+                      type="color"
+                      name="bgcolor"
+                      value={backgroundColor}
+                      onChange={(e) => setBackgroundColor(e.target.value)}
+                      className="w-12 h-12 p-0 m-2"
+                    />
+                  </label>
+                </div>
               ) : (
                 <Skeleton className="bg-white h-9 w-full" />
               )}
             </div>
-            {/* </div> */}
-          </div>
 
-          {/* graph line color */}
-          <div className="mb-6">
-            <h3 className="text-sm font-medium mb-2">Line Color</h3>
-            {dbId ? (
-              <Tabs defaultValue={colorStatus} className="w-full">
-                <TabsList className="grid w-full grid-cols-2">
-                  <TabsTrigger
-                    value="lineSingle"
-                    onClick={() => {
-                      setColorStatus("lineSingle");
-                    }}
-                  >
-                    Single Color
-                  </TabsTrigger>
-                  <TabsTrigger
-                    value="lineMulti"
-                    onClick={() => {
-                      setColorStatus("lineMulti");
-                    }}
-                  >
-                    Multi Color
-                  </TabsTrigger>
-                </TabsList>
-                <TabsContent value="lineSingle">
-                  <div className="w-full bg-neutral-50 rounded">
-                    <input
-                      type="color"
-                      value={lineSingleColor}
-                      onChange={(e) => setLineSingleColor(e.target.value)}
-                      className="w-12 h-12 p-0 m-2"
-                    />
-                  </div>
-                </TabsContent>
-                <TabsContent value="lineMulti">
-                  <div className="w-full bg-neutral-50 rounded">
-                    {lineMultiColor.map((item, index) => (
-                      <>
-                        <input
-                          name="color"
-                          type="color"
-                          key={index}
-                          value={item}
-                          onChange={(event) => addNewColor(event, index)}
-                          className="w-12 h-12 p-0 m-2"
-                        />
-                        {index === lineMultiColor.length - 1 && (
-                          <button onClick={() => handleAddColor()}>
-                            <PlusIcon className="w-12 h-12 p-0 " />
-                          </button>
-                        )}
-                      </>
-                    ))}
-                  </div>
-                </TabsContent>
-              </Tabs>
-            ) : (
-              <Skeleton className="bg-white h-12 w-full" />
-            )}
-          </div>
-
-          {/* area filling color selection */}
-
-          <div className="mb-6">
-            <h3 className="text-sm font-medium mb-2">Fill Color</h3>
-            {dbId ? (
-              <Tabs defaultValue={fillColorStatus} className="w-full">
-                <TabsList className="grid w-full grid-cols-2">
-                  <TabsTrigger
-                    value="fillSingle"
-                    onClick={() => {
-                      setFillColorStatus("fillSingle");
-                    }}
-                  >
-                    Single Color
-                  </TabsTrigger>
-                  <TabsTrigger
-                    value="fillMulti"
-                    onClick={() => {
-                      setFillColorStatus("fillMulti");
-                    }}
-                  >
-                    Multi Color
-                  </TabsTrigger>
-                </TabsList>
-                <TabsContent value="fillSingle">
-                  <div className="w-full bg-neutral-50 rounded">
-                    <input
-                      type="color"
-                      value={fillSingleColor}
-                      onChange={(e) => setFillSingleColor(e.target.value)}
-                      className="w-12 h-12 p-0 m-2"
-                    />
-                  </div>
-                </TabsContent>
-                <TabsContent value="fillMulti">
-                  <div className="w-full bg-neutral-50 rounded">
-                    {fillMultiColor.map((item, index) => (
-                      <>
-                        <input
-                          name="color"
-                          type="color"
-                          value={item}
-                          onChange={(event) => addNewFillColor(event, index)}
-                          className="w-12 h-12 p-0 m-2"
-                        />
-                        {index === fillMultiColor.length - 1 && (
-                          <button onClick={() => handleAddFillColor()}>
-                            <PlusIcon className="w-12 h-12 p-0 " />
-                          </button>
-                        )}
-                      </>
-                    ))}
-                  </div>
-                </TabsContent>
-              </Tabs>
-            ) : (
-              <Skeleton className="bg-white h-12 w-full" />
-            )}
-          </div>
-
-          {/* background color selector */}
-          <div className="mb-6">
-            <h3 className="text-sm font-medium mb-2">Background Color</h3>
-            {dbId ? (
-              <div className="w-full bg-neutral-50 rounded">
-                <label htmlFor="bgcolor">
-                  <input
-                    type="color"
-                    name="bgcolor"
-                    value={backgroundColor}
-                    onChange={(e) => setBackgroundColor(e.target.value)}
-                    className="w-12 h-12 p-0 m-2"
-                  />
-                </label>
-              </div>
-            ) : (
-              <Skeleton className="bg-white h-9 w-full" />
-            )}
-          </div>
-
-          {/* xaxis values */}
-          <div className="mb-6">
-            <h3 className="text-sm font-medium mb-2">X-Axis</h3>
-            {colNameAndId ? (
-              <Select onValueChange={handleXSelect} defaultValue={xAxisName}>
-                <SelectTrigger id="xaxis">
-                  <SelectValue placeholder={xAxisName} />
-                </SelectTrigger>
-                <SelectContent position="popper">
-                  <SelectGroup>
-                    {colNameAndId.map((col) => (
-                      <SelectItem key={col.id} value={col.id}>
-                        {col.name}
-                      </SelectItem>
-                    ))}
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-            ) : (
-              <Skeleton className="bg-white h-9 w-full" />
-            )}
-          </div>
-
-          {/* yaxis values */}
-          <div className="mb-6">
-            <h3 className="text-sm font-medium mb-2">Y-Axis</h3>
-            {colNameAndId ? (
-              <Select onValueChange={handleYSelect} defaultValue={yAxisName}>
-                <SelectTrigger id="xaxis">
-                  <SelectValue placeholder={yAxisName} />
-                </SelectTrigger>
-                <SelectContent position="popper">
-                  <SelectGroup>
-                    {colNameAndId.map((col) => (
-                      <SelectItem key={col.id} value={col.id}>
-                        {col.name}
-                      </SelectItem>
-                    ))}
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-            ) : (
-              <Skeleton className="bg-white h-9 w-full" />
-            )}
-          </div>
-
-          {/* legend */}
-          <div>
+            {/* xaxis values */}
             <div className="mb-6">
-              <div className="flex bg-white flex-row h-12 items-center justify-between rounded-lg border p-4">
-                <div className="space-y-0.5">
-                  <Label className="text-sm font-medium mb-2">Legend</Label>
-                </div>
-
-                <Switch checked={legend} onCheckedChange={setLegend} />
-              </div>
-            </div>
-          </div>
-
-          {legend && (
-            <div className="mb-6">
-              <h3 className="text-sm font-medium mb-2">Legend Position</h3>
-              {dbId && (
-                <Select
-                  onValueChange={setLegendPosition}
-                  defaultValue={
-                    legendPosition != undefined ? legendPosition : "top"
-                  }
-                >
-                  <SelectTrigger id="legendPosition">
-                    <SelectValue placeholder={legendPosition} />
+              <h3 className="text-sm font-medium mb-2">X-Axis</h3>
+              {colNameAndId ? (
+                <Select onValueChange={handleXSelect} defaultValue={xAxisName}>
+                  <SelectTrigger id="xaxis">
+                    <SelectValue placeholder={xAxisName} />
                   </SelectTrigger>
                   <SelectContent position="popper">
                     <SelectGroup>
-                      <SelectItem value="top">Top</SelectItem>
-                      <SelectItem value="bottom">Bottom</SelectItem>
-                      <SelectItem value="left">Left</SelectItem>
-                      <SelectItem value="right">Right</SelectItem>
-                      <SelectItem value="center">Center</SelectItem>
-                      <SelectItem value="chartArea">Chart Area</SelectItem>
+                      {colNameAndId.map((col) => (
+                        <SelectItem key={col.id} value={col.id}>
+                          {col.name}
+                        </SelectItem>
+                      ))}
                     </SelectGroup>
                   </SelectContent>
                 </Select>
+              ) : (
+                <Skeleton className="bg-white h-9 w-full" />
               )}
             </div>
-          )}
 
-          {/* aggregation function */}
-          <div className="mb-6">
-            <h3 className="text-sm font-medium mb-2">Aggregation</h3>
-            {dbId ? (
-              <Select
-                onValueChange={handleAggregationChange}
-                defaultValue={aggregation}
-              >
-                <SelectTrigger id="aggregation">
-                  <SelectValue placeholder={aggregation} />
-                </SelectTrigger>
-                <SelectContent position="popper">
-                  <SelectGroup>
-                    <SelectItem value="count">Count</SelectItem>
-                    <SelectItem value="sum">Sum</SelectItem>
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-            ) : (
-              <Skeleton className="bg-white h-9 w-full" />
-            )}
-          </div>
+            {/* yaxis values */}
+            <div className="mb-6">
+              <h3 className="text-sm font-medium mb-2">Y-Axis</h3>
+              {colNameAndId ? (
+                <Select onValueChange={handleYSelect} defaultValue={yAxisName}>
+                  <SelectTrigger id="xaxis">
+                    <SelectValue placeholder={yAxisName} />
+                  </SelectTrigger>
+                  <SelectContent position="popper">
+                    <SelectGroup>
+                      {colNameAndId.map((col) => (
+                        <SelectItem key={col.id} value={col.id}>
+                          {col.name}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              ) : (
+                <Skeleton className="bg-white h-9 w-full" />
+              )}
+            </div>
 
-          {/* filter */}
-          <div className="sm:mb-14">
-            <Filter
-              getFilters={getFilters}
-              dbId={dbId}
-              filterLoadingState={filterLoadingState}
-              filters={filters}
-              colNameAndId={colNameAndId}
-              orAnd={andOr}
-            />
-          </div>
-
-          {/* save button */}
-          <div className="md:sticky md:bottom-9 md:left-0  w-full bg-gray-100 p-4 border-t">
-            {savingStatus ? (
-              <Button disabled className="w-full">
-                <Loader2 className="mr-2 h-4 w-4  animate-spin" />
-                Please wait
-              </Button>
-            ) : (
-              <Button onClick={saveToDb} className="w-full">
-                Save
-              </Button>
-            )}
-          </div>
-        </aside>
-
-        <main className="flex-grow p-4">
-          <header className="flex justify-between items-center ">
-            <div className="ml-auto flex-initial space-x-2">
-              <Dialog className="bg-transparent">
-                <DialogTrigger asChild>
-                  <Button variant="outline">Get Embed Link</Button>
-                </DialogTrigger>
-                <DialogContent className="sm:max-w-md ">
-                  <DialogHeader>
-                    <DialogTitle>Embed link</DialogTitle>
-                    <DialogDescription>
-                      Anyone who has this link will be able to view the graph.
-                    </DialogDescription>
-                  </DialogHeader>
-                  <div className="flex items-center space-x-2">
-                    <div className="grid flex-1 gap-2">
-                      <Label htmlFor="link" className="sr-only">
-                        Link
-                      </Label>
-                      <Input
-                        id="embedLink"
-                        defaultValue={previewurl}
-                        readOnly
-                      />
-                    </div>
-                    <Button
-                      onClick={copyToClipboard}
-                      size="sm"
-                      className="px-3"
-                    >
-                      <span className="sr-only">Copy</span>
-                      <Copy className="h-4 w-4" />
-                    </Button>
+            {/* legend */}
+            <div>
+              <div className="mb-6">
+                <div className="flex bg-white flex-row h-12 items-center justify-between rounded-lg border p-4">
+                  <div className="space-y-0.5">
+                    <Label className="text-sm font-medium mb-2">Legend</Label>
                   </div>
-                  <DialogFooter className="sm:justify-start">
-                    <DialogClose asChild>
-                      <Button type="button" variant="secondary">
-                        Close
-                      </Button>
-                    </DialogClose>
-                  </DialogFooter>
-                </DialogContent>
-              </Dialog>
-            </div>
-          </header>
 
-          {chartType == "Bar Chart" ? (
-            <div
-              style={{
-                // display: "flex",
-                // justifyContent: "center", // Center horizontally
-                // alignItems: "center", // Center vertically
-                // overflow: "hidden",
-                // height: `75%`,
-                backgroundColor: backgroundColor,
-              }}
-            >
-              <BarChart
-                xValues={xAxisValues}
-                yValues={yAxisValues}
-                label={label}
-                labelStatus={labelStatus}
-                lineSingleColor={lineSingleColor}
-                lineMultiColor={lineMultiColor}
-                colorStatus={colorStatus}
-                fillSingleColor={fillSingleColor}
-                fillMultiColor={fillMultiColor}
-                backgroundColor={backgroundColor}
-                fillColorStatus={fillColorStatus}
-                legend={legend}
-                legendPosition={legendPosition}
-                yAxisName={yAxisName}
-                xAxisName={xAxisName}
-                aggregation={aggregation}
+                  <Switch checked={legend} onCheckedChange={setLegend} />
+                </div>
+              </div>
+            </div>
+
+            {legend && (
+              <div className="mb-6">
+                <h3 className="text-sm font-medium mb-2">Legend Position</h3>
+                {dbId && (
+                  <Select
+                    onValueChange={setLegendPosition}
+                    defaultValue={
+                      legendPosition != undefined ? legendPosition : "top"
+                    }
+                  >
+                    <SelectTrigger id="legendPosition">
+                      <SelectValue placeholder={legendPosition} />
+                    </SelectTrigger>
+                    <SelectContent position="popper">
+                      <SelectGroup>
+                        <SelectItem value="top">Top</SelectItem>
+                        <SelectItem value="bottom">Bottom</SelectItem>
+                        <SelectItem value="left">Left</SelectItem>
+                        <SelectItem value="right">Right</SelectItem>
+                        <SelectItem value="center">Center</SelectItem>
+                        <SelectItem value="chartArea">Chart Area</SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                )}
+              </div>
+            )}
+
+            {/* aggregation function */}
+            <div className="mb-6">
+              <h3 className="text-sm font-medium mb-2">Aggregation</h3>
+              {dbId ? (
+                <Select
+                  onValueChange={handleAggregationChange}
+                  defaultValue={aggregation}
+                >
+                  <SelectTrigger id="aggregation">
+                    <SelectValue placeholder={aggregation} />
+                  </SelectTrigger>
+                  <SelectContent position="popper">
+                    <SelectGroup>
+                      <SelectItem value="count">Count</SelectItem>
+                      <SelectItem value="sum">Sum</SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              ) : (
+                <Skeleton className="bg-white h-9 w-full" />
+              )}
+            </div>
+
+            {/* filter */}
+            <div className="sm:mb-14">
+              <Filter
+                getFilters={getFilters}
+                dbId={dbId}
+                filterLoadingState={filterLoadingState}
+                filters={filters}
+                colNameAndId={colNameAndId}
+                orAnd={andOr}
               />
             </div>
-          ) : chartType == "Area Chart" ? (
-            <div
-              style={{
-                // display: "flex",
-                // justifyContent: "center", // Center horizontally
-                // alignItems: "center", // Center vertically
-                // overflow: "hidden",
-                // height: `75%`,
-                backgroundColor: backgroundColor,
-              }}
-            >
-              <AreaChart
-                xValues={xAxisValues}
-                yValues={yAxisValues}
-                label={label}
-                labelStatus={labelStatus}
-                lineSingleColor={lineSingleColor}
-                lineMultiColor={lineMultiColor}
-                colorStatus={colorStatus}
-                backgroundColor={backgroundColor}
-                fillSingleColor={fillSingleColor}
-                fillMultiColor={fillMultiColor}
-                fillColorStatus={fillColorStatus}
-                yAxisName={yAxisName}
-                xAxisName={xAxisName}
-                legend={legend}
-                legendPosition={legendPosition}
-              />
+
+            {/* save button */}
+            <div className="md:sticky md:bottom-9 md:left-0  w-full bg-gray-100 p-4 border-t">
+              {savingStatus ? (
+                <Button disabled className="w-full">
+                  <Loader2 className="mr-2 h-4 w-4  animate-spin" />
+                  Please wait
+                </Button>
+              ) : (
+                <Button onClick={saveToDb} className="w-full">
+                  Save
+                </Button>
+              )}
             </div>
-          ) : chartType == "Doughnut Chart" ? (
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center", // Center horizontally
-                alignItems: "center", // Center vertically
-                overflow: "hidden",
-                height: `75%`,
-                backgroundColor: backgroundColor,
-              }}
-            >
-              <DoughnutChart
-                xValues={xAxisValues}
-                yValues={yAxisValues}
-                label={label}
-                labelStatus={labelStatus}
-                lineSingleColor={lineSingleColor}
-                lineMultiColor={lineMultiColor}
-                colorStatus={colorStatus}
-                fillSingleColor={fillSingleColor}
-                fillMultiColor={fillMultiColor}
-                backgroundColor={backgroundColor}
-                fillColorStatus={fillColorStatus}
-                legend={legend}
-                legendPosition={legendPosition}
-                yAxisName={yAxisName}
-                xAxisName={xAxisName}
-              />
-            </div>
-          ) : chartType == "Pie Chart" ? (
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center", // Center horizontally
-                alignItems: "center", // Center vertically
-                overflow: "hidden",
-                height: `75%`,
-                backgroundColor: backgroundColor,
-              }}
-            >
-              <PieChart
-                xValues={xAxisValues}
-                yValues={yAxisValues}
-                label={label}
-                labelStatus={labelStatus}
-                lineSingleColor={lineSingleColor}
-                lineMultiColor={lineMultiColor}
-                colorStatus={colorStatus}
-                fillSingleColor={fillSingleColor}
-                fillMultiColor={fillMultiColor}
-                backgroundColor={backgroundColor}
-                fillColorStatus={fillColorStatus}
-                legend={legend}
-                legendPosition={legendPosition}
-                yAxisName={yAxisName}
-                xAxisName={xAxisName}
-              />
-            </div>
-          ) : (
-            <Skeleton className="w-full h-[600px] rounded" />
-          )}
-        </main>
+          </aside>
+
+          <main className="flex-grow p-4">
+            <header className="flex justify-between items-center ">
+              <div className="ml-auto flex-initial space-x-2">
+                <Dialog className="bg-transparent">
+                  <DialogTrigger asChild>
+                    <Button variant="outline">Get Embed Link</Button>
+                  </DialogTrigger>
+                  <DialogContent className="sm:max-w-md ">
+                    <DialogHeader>
+                      <DialogTitle>Embed link</DialogTitle>
+                      <DialogDescription>
+                        Anyone who has this link will be able to view the graph.
+                      </DialogDescription>
+                    </DialogHeader>
+                    <div className="flex items-center space-x-2">
+                      <div className="grid flex-1 gap-2">
+                        <Label htmlFor="link" className="sr-only">
+                          Link
+                        </Label>
+                        <Input
+                          id="embedLink"
+                          defaultValue={previewurl}
+                          readOnly
+                        />
+                      </div>
+                      <Button
+                        onClick={copyToClipboard}
+                        size="sm"
+                        className="px-3"
+                      >
+                        <span className="sr-only">Copy</span>
+                        <Copy className="h-4 w-4" />
+                      </Button>
+                    </div>
+                    <DialogFooter className="sm:justify-start">
+                      <DialogClose asChild>
+                        <Button type="button" variant="secondary">
+                          Close
+                        </Button>
+                      </DialogClose>
+                    </DialogFooter>
+                  </DialogContent>
+                </Dialog>
+              </div>
+            </header>
+
+            {chartType == "Bar Chart" ? (
+              <div
+                style={{
+                  // display: "flex",
+                  // justifyContent: "center", // Center horizontally
+                  // alignItems: "center", // Center vertically
+                  // overflow: "hidden",
+                  // height: `75%`,
+                  backgroundColor: backgroundColor,
+                }}
+              >
+                <BarChart
+                  xValues={xAxisValues}
+                  yValues={yAxisValues}
+                  label={label}
+                  labelStatus={labelStatus}
+                  fillSingleColor={fillSingleColor}
+                  fillMultiColor={fillMultiColor}
+                  backgroundColor={backgroundColor}
+                  fillColorStatus={fillColorStatus}
+                  legend={legend}
+                  legendPosition={legendPosition}
+                  yAxisName={yAxisName}
+                  xAxisName={xAxisName}
+                  aggregation={aggregation}
+                />
+              </div>
+            ) : chartType == "Area Chart" ? (
+              <div
+                style={{
+                  // display: "flex",
+                  // justifyContent: "center", // Center horizontally
+                  // alignItems: "center", // Center vertically
+                  // overflow: "hidden",
+                  // height: `75%`,
+                  backgroundColor: backgroundColor,
+                }}
+              >
+                <AreaChart
+                  xValues={xAxisValues}
+                  yValues={yAxisValues}
+                  label={label}
+                  labelStatus={labelStatus}
+                  backgroundColor={backgroundColor}
+                  fillSingleColor={fillSingleColor}
+                  fillMultiColor={fillMultiColor}
+                  fillColorStatus={fillColorStatus}
+                  yAxisName={yAxisName}
+                  xAxisName={xAxisName}
+                  legend={legend}
+                  legendPosition={legendPosition}
+                />
+              </div>
+            ) : chartType == "Doughnut Chart" ? (
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center", // Center horizontally
+                  alignItems: "center", // Center vertically
+                  overflow: "hidden",
+                  height: `75%`,
+                  backgroundColor: backgroundColor,
+                }}
+              >
+                <DoughnutChart
+                  xValues={xAxisValues}
+                  yValues={yAxisValues}
+                  label={label}
+                  labelStatus={labelStatus}
+                  fillSingleColor={fillSingleColor}
+                  fillMultiColor={fillMultiColor}
+                  backgroundColor={backgroundColor}
+                  fillColorStatus={fillColorStatus}
+                  legend={legend}
+                  legendPosition={legendPosition}
+                  yAxisName={yAxisName}
+                  xAxisName={xAxisName}
+                />
+              </div>
+            ) : chartType == "Pie Chart" ? (
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center", // Center horizontally
+                  alignItems: "center", // Center vertically
+                  overflow: "hidden",
+                  height: `75%`,
+                  backgroundColor: backgroundColor,
+                }}
+              >
+                <PieChart
+                  xValues={xAxisValues}
+                  yValues={yAxisValues}
+                  label={label}
+                  labelStatus={labelStatus}
+                  fillSingleColor={fillSingleColor}
+                  fillMultiColor={fillMultiColor}
+                  backgroundColor={backgroundColor}
+                  fillColorStatus={fillColorStatus}
+                  legend={legend}
+                  legendPosition={legendPosition}
+                  yAxisName={yAxisName}
+                  xAxisName={xAxisName}
+                />
+              </div>
+            ) : (
+              <Skeleton className="w-full h-[600px] rounded" />
+            )}
+          </main>
+        </div>
       </div>
     </>
   );

@@ -29,9 +29,7 @@ const BarChart = ({
   yValues,
   label,
   labelStatus,
-  lineSingleColor,
-  lineMultiColor,
-  colorStatus,
+ 
   fillSingleColor,
   fillMultiColor,
   backgroundColor,
@@ -47,13 +45,13 @@ const BarChart = ({
   const [lineColor, setLineColor] = useState([]);
   const [fillColor, setFillColor] = useState([]);
 
-  useEffect(() => {
-    if (colorStatus == "lineSingle") {
-      setLineColor(lineSingleColor);
-    } else {
-      setLineColor(lineMultiColor);
-    }
-  }, [colorStatus, lineSingleColor, lineMultiColor]);
+  // useEffect(() => {
+  //   if (colorStatus == "lineSingle") {
+  //     setLineColor(lineSingleColor);
+  //   } else {
+  //     setLineColor(lineMultiColor);
+  //   }
+  // }, [colorStatus, lineSingleColor, lineMultiColor]);
 
   useEffect(() => {
     if (backgroundColor != "#ffffff") {
@@ -76,8 +74,10 @@ const BarChart = ({
   useEffect(() => {
     const newFillColor = [];
     if (fillColorStatus === "fillSingle") {
+      setLineColor(fillSingleColor)
       newFillColor.push(hex2rgb(fillSingleColor));
     } else if (fillColorStatus === "fillMulti") {
+      setLineColor(fillMultiColor)
       fillMultiColor.forEach((color) => {
         newFillColor.push(hex2rgb(color));
       });
@@ -106,7 +106,7 @@ const BarChart = ({
               borderColor: lineColor,
               borderWidth: 1,
               data: yValues,
-              borderRadius: 10,
+              borderRadius: 5,
             },
           ],
         }}
