@@ -23,21 +23,20 @@ export default function LoggedInNavBar() {
   const cookies = useCookies();
   const handleSignOut = async () => {
     try {
-      await logout();
       deleteCookie("access_token");
       deleteCookie("uid");
+      await logout();
       redirect("/");
     } catch (error) {
       console.log(error);
     }
-
-    useEffect(() => {
-      if (!cookies.get("uid")) {
-        //redirect to /login page when not logged in.
-        redirect("/");
-      }
-    }, [user]);
   };
+  useEffect(() => {
+    if (!cookies.get("uid")) {
+      //redirect to /login page when not logged in.
+      redirect("/");
+    }
+  }, [user]);
   return (
     <>
       <header className="sticky top-0 flex h-16 items-center gap-4  bg-background px-4 md:px-6">
@@ -47,7 +46,7 @@ export default function LoggedInNavBar() {
             className="flex items-center gap-2 text-lg font-semibold md:text-base"
           >
             <LineChartIcon className="h-6 w-6" />
-            <span >NotionPlotter</span>
+            <span>NotionPlotter</span>
           </Link>
           <Link
             href="/dashboard"
