@@ -1496,7 +1496,7 @@ export default function Edit() {
                   legendPosition={legendPosition}
                   yAxisName={yAxisName}
                   xAxisName={xAxisName}
-                  aggregation={aggregation}
+                 
                 />
               </div>
             ) : chartType == "Area Chart" ? (
