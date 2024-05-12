@@ -1150,7 +1150,7 @@ export default function Edit() {
             </div>
 
             {/* graph line color */}
-            <div className="mb-6">
+            {/* <div className="mb-6">
               <h3 className="text-sm font-medium mb-2">Line Color</h3>
               {dbId ? (
                 <Tabs defaultValue={colorStatus} className="w-full">
@@ -1207,7 +1207,7 @@ export default function Edit() {
               ) : (
                 <Skeleton className="bg-white h-12 w-full" />
               )}
-            </div>
+            </div> */}
 
             {/* area filling color selection */}
 
@@ -1412,7 +1412,7 @@ export default function Edit() {
             </div>
 
             {/* save button */}
-            <div className="md:sticky md:bottom-9 md:left-0  w-full bg-gray-100 p-4 border-t">
+            <div className="md:sticky md:bottom-9 md:left-0  w-full bg-gray-100 pt-4 md:px-1 pb-2 border-t">
               {savingStatus ? (
                 <Button disabled className="w-full">
                   <Loader2 className="mr-2 h-4 w-4  animate-spin" />

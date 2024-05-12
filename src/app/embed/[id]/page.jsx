@@ -134,9 +134,7 @@ export default function Embed() {
               yValues={yAxisValues}
               label={label}
               labelStatus={labelStatus}
-              lineSingleColor={lineSingleColor}
-              lineMultiColor={lineMultiColor}
-              colorStatus={colorStatus}
+              
               fillSingleColor={fillSingleColor}
               fillMultiColor={fillMultiColor}
               backgroundColor={backgroundColor}
@@ -160,9 +158,7 @@ export default function Embed() {
               yValues={yAxisValues}
               label={label}
               labelStatus={labelStatus}
-              lineSingleColor={lineSingleColor}
-              lineMultiColor={lineMultiColor}
-              colorStatus={colorStatus}
+              
               backgroundColor={backgroundColor}
               fillSingleColor={fillSingleColor}
               fillMultiColor={fillMultiColor}
@@ -191,9 +187,7 @@ export default function Embed() {
               yValues={yAxisValues}
               label={label}
               labelStatus={labelStatus}
-              lineSingleColor={lineSingleColor}
-              lineMultiColor={lineMultiColor}
-              colorStatus={colorStatus}
+              
               fillSingleColor={fillSingleColor}
               fillMultiColor={fillMultiColor}
               backgroundColor={backgroundColor}
@@ -220,9 +214,7 @@ export default function Embed() {
               yValues={yAxisValues}
               label={label}
               labelStatus={labelStatus}
-              lineSingleColor={lineSingleColor}
-              lineMultiColor={lineMultiColor}
-              colorStatus={colorStatus}
+              
               fillSingleColor={fillSingleColor}
               fillMultiColor={fillMultiColor}
               backgroundColor={backgroundColor}
