@@ -134,7 +134,6 @@ export default function Embed() {
               yValues={yAxisValues}
               label={label}
               labelStatus={labelStatus}
-              
               fillSingleColor={fillSingleColor}
               fillMultiColor={fillMultiColor}
               backgroundColor={backgroundColor}
@@ -158,7 +157,6 @@ export default function Embed() {
               yValues={yAxisValues}
               label={label}
               labelStatus={labelStatus}
-              
               backgroundColor={backgroundColor}
               fillSingleColor={fillSingleColor}
               fillMultiColor={fillMultiColor}
@@ -187,7 +185,6 @@ export default function Embed() {
               yValues={yAxisValues}
               label={label}
               labelStatus={labelStatus}
-              
               fillSingleColor={fillSingleColor}
               fillMultiColor={fillMultiColor}
               backgroundColor={backgroundColor}
@@ -214,7 +211,6 @@ export default function Embed() {
               yValues={yAxisValues}
               label={label}
               labelStatus={labelStatus}
-              
               fillSingleColor={fillSingleColor}
               fillMultiColor={fillMultiColor}
               backgroundColor={backgroundColor}
@@ -234,22 +230,27 @@ export default function Embed() {
 
   return (
     <>
-      <div className="embed-container">
+      <div className="embed-container" style={{background:backgroundColor}}>
         {/* Refresh button */}
         <button
           className="refresh-button"
           onClick={() => window.location.reload()}
         >
-          <RefreshButton className="h-8 w-"/>
+          <RefreshButton className="h-8 w-" />
+        </button>
+        <button
+          className="mode-button"
+          onClick={() => setBackgroundColor("#2F3438")}
+        >
+          dark mode
         </button>
         <main className="w-screen h-screen">{chartComponent}</main>
       </div>
     </>
-  )
+  );
 }
 
 function getWindowSize() {
   const { innerWidth, innerHeight } = window;
   return { innerWidth, innerHeight };
 }
-

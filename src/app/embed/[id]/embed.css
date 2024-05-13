@@ -12,6 +12,18 @@ main {
   display: none; /* Initially hide the button */
 }
 
+.mode-button{
+  position: absolute;
+  top: 10px;
+  left: 54px;
+  display: none; /* Initially hide the button */
+}
+
+
+
 .embed-container:hover .refresh-button {
+  display: block; /* Show the button on hover */
+}
+.embed-container:hover .mode-button {
   display: block; /* Show the button on hover */
 }

@@ -13,7 +13,7 @@ const DoughnutChart = ({
   yValues,
   label,
   labelStatus,
- 
+
   fillSingleColor,
   fillMultiColor,
   backgroundColor,
@@ -21,9 +21,8 @@ const DoughnutChart = ({
   legend,
   legendPosition,
   yAxisName,
-  xAxisName
+  xAxisName,
 }) => {
-
   const [darkMode, setDarkMode] = useState(false);
   const [lineColor, setLineColor] = useState([]);
   const [fillColor, setFillColor] = useState([]);
@@ -57,76 +56,79 @@ const DoughnutChart = ({
   useEffect(() => {
     const newFillColor = [];
     if (fillColorStatus === "fillSingle") {
-      setLineColor(fillSingleColor)
+      setLineColor(fillSingleColor);
       newFillColor.push(hex2rgb(fillSingleColor));
     } else if (fillColorStatus === "fillMulti") {
-      setLineColor(fillMultiColor)
+      setLineColor(fillMultiColor);
       fillMultiColor.forEach((color) => {
         newFillColor.push(hex2rgb(color));
       });
     }
     setFillColor(newFillColor);
   }, [fillColorStatus, fillSingleColor, fillMultiColor]);
-  console.log("y values ",yValues)
+  console.log("y values ", yValues);
   return (
     // <div style={{ backgroundColor: backgroundColor }}>
-      <Doughnut
-        data={{
-          labels: xValues,
-          datasets: [
-            {
-              label: yAxisName,
-              data: yValues,
-              backgroundColor: fillColor,
-              borderColor: "#FFFFFF",
-              borderWidth: 1,
-            },
-          ],
-        }}
-        options={{
-          responsive: true,
-          maintainAspectRation: true,
-          plugins: {
-            legend: {
-              position: legendPosition,
-              display: legend,
-            },
-
+    <Doughnut
+      data={{
+        labels: xValues,
+        datasets: [
+          {
+            label: yAxisName,
+            data: yValues,
+            backgroundColor: fillColor,
+            borderColor: "#FFFFFF",
+            borderWidth: 1,
+          },
+        ],
+      }}
+      options={{
+        responsive: true,
+        maintainAspectRation: true,
+        plugins: {
+          legend: {
+            position: legendPosition,
+            display: legend,
             title: {
-              display: labelStatus ? false : true,
-              text: !labelStatus && label,
-              align: "center",
-              color: darkMode ? "white" : "black",
-
-              font: {
-                size: 20,
-                weight: 8,
-              },
+              color: darkMode ? "#FFFFFF" : "#000000",
             },
           },
 
-          elements: {
-            line: {
-              borderWidth: 2,
-            },
-            point: {
-              radius: 1,
-              backgroundColor: "transparent",
-              borderWidth: 0,
-              hoverBackgroundColor: "#212027",
-              hoverRadius: 4,
-              hoverBorderWidth: 2,
+          title: {
+            display: labelStatus ? false : true,
+            text: !labelStatus && label,
+            align: "center",
+            color: darkMode ? "white" : "black",
+
+            font: {
+              size: 20,
+              weight: 8,
             },
           },
-          interaction: {
-            intersect: false,
-            mode: "index",
+        },
+
+        elements: {
+          line: {
+            borderWidth: 2,
           },
-          animation: {
-            duration: 1500,
+          point: {
+            radius: 1,
+            backgroundColor: "transparent",
+            borderWidth: 0,
+            hoverBackgroundColor: "#212027",
+            hoverRadius: 4,
+            hoverBorderWidth: 2,
           },
-        }}
-      />
+        },
+        interaction: {
+          intersect: false,
+          mode: "index",
+        },
+        animation: {
+          duration: 1500,
+        },
+      }}
+    />
     // </div>
   );
 };
