@@ -1,72 +1,21 @@
 /* Resetting default margin and padding */
-* {
+/* * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-}
+} */
 body {
 }
+
 /* Style for the header */
 header {
   padding: 20px 40px;
 }
-
-/* Style for the navigation bar */
-nav.head {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-nav.head a.logo {
-  color: #08541c;
-  font-size: 24px;
-  text-decoration: none;
-  font-weight: 800;
-}
-
-nav.head ul {
-  list-style-type: none;
-  display: flex;
-}
-
-nav.head ul li {
-  margin: 0 10px;
-}
-
-nav.head ul li a {
-  text-decoration: none;
+/* #tryforfree {
+  background-color: #cdeacd;
   color: #000000;
-}
-nav.head ul li:first-child a {
-  /* text-decoration: underline; */
-  /* color: #26ac60; */
-  font-weight: 600;
-}
-nav.head ul li a:hover {
-  /* color: #26ac60; */
-  font-weight: 600;
-}
-nav.head div:last-child a {
-  padding: 8px 15px;
-  text-decoration: none;
-  color: #000000;
-}
-nav.head div:last-child a:first-child:hover {
-  color: #26ac60;
-  font-weight: 600;
-}
-nav.head div:last-child a.button {
-  background-color: #26ac60;
-  padding: 8px 15px;
-  border-radius: 5px;
-  text-decoration: none;
-  color: white;
-}
-
-nav.head div:last-child a.button:hover {
-  background-color: #0fd8a9;
-}
+  font-weight: 900;
+} */
 #home {
   padding: 20px 40px;
 }
@@ -75,9 +24,9 @@ nav.head div:last-child a.button:hover {
   margin: 20px 0;
 }
 #home div.header h1 {
-  font-size: 48px;
+  font-size: 50px;
   line-height: 1.3;
-  font-weight: 700;
+  font-weight: 900;
 }
 #home div.header h1.bold {
   font-weight: 1000;
@@ -226,12 +175,12 @@ nav.head div:last-child a.button:hover {
   color: #3a3636;
 }
 #how div.one {
-  margin: 10px 100px 30px 100px;
+  /* margin: 10px 100px 30px 100px; */
   text-align: left;
   display: flex;
   justify-content: space-between;
-  width: 80%;
-  /* background-color: #b8d9ef; */
+  /* width: 80%; */
+  background-color: #b8d9ef;
   border-radius: 16px;
 }
 #how div.one div.left {
@@ -239,27 +188,26 @@ nav.head div:last-child a.button:hover {
   flex-direction: column;
   width: 40%;
   padding: 25px;
-  margin: 40px 0;
+  /* margin: 40px 0; */
 }
 #how div.one div.left h4 {
   font-size: 36px;
   line-height: 3rem;
 }
 #how div.one div.left p {
-  margin: 0;
+  /* margin: 0; */
 }
 #how div.one div.right {
-  width: 40%;
   display: flex;
   justify-content: center;
   flex-direction: column;
 }
-#how div.one div.right img {
-  /* width: 250px;
+/* #how div.one div.right img { */
+/* width: 250px;
     height: 200px; */
-  /* margin: 50px; */
-  /* border-radius: 16px; */
-}
+/* margin: 50px; */
+/* border-radius: 16px; */
+/* } */
 #how div.three {
   background-color: #fbd4fb;
 }

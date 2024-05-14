@@ -2,12 +2,15 @@ import Image from "next/image";
 import "./style.css";
 import { Button } from "@/components/ui/button";
 import { Navbar } from "../LandingPageComponents/Navbar";
+import styles from "./styles/Header.module.css";
+import Link from "next/link";
+import featurestyles from "./styles/Features.module.css";
 
 export default function Test() {
   return (
     <div>
       {/* <header> */}
-      <Navbar />
+      {/* <Navbar /> */}
       {/* <nav className="head">
           <div>
             <a className="logo">
@@ -39,6 +42,31 @@ export default function Test() {
            
           </div>
         </nav> */}
+      {/* <header className={styles.header}>
+        <div className={styles.logo}>SPRING</div>
+        <nav className={styles.nav}>
+          <ul className={styles.navList}>
+            <li className={styles.navItem}>
+              <Link href="/">Home</Link>
+            </li>
+            <li className={styles.navItem}>
+              <Link href="/">Features</Link>
+            </li>
+            <li className={styles.navItem}>
+              <Link href="/">Pricing</Link>
+            </li>
+            <li className={styles.navItem}>
+              <Link href="/">About</Link>
+            </li>
+            <li className={styles.navItem}>
+              <Link href="/">Contact</Link>
+            </li>
+          </ul>
+        </nav>
+        <div className={styles.auth}>
+          <button className={styles.signIn}>Sign In</button>
+        </div>
+      </header> */}
 
       <section id="home">
         <div className="header  text-center">
@@ -115,36 +143,103 @@ export default function Test() {
           </div>
         </div>
       </section> */}
+      <section className="flex container  md:rounded-3xl justify-center items-center self-stretch px-16 md:py-5 mt-10  w-full bg-gradient-to-r from-[#F2FBF2] to-[#F5FFF6]  max-md:px-5  max-md:max-w-full">
+        <div className="md:mt-5 mb-5 w-full max-w-full max-md:max-w-full">
+          <div className="flex gap-5 max-md:flex-col max-md:gap-0">
+            <div className="flex flex-col w-[60%]   max-md:w-full">
+              <div className="flex flex-col self-stretch my-auto text-sm font-semibold tracking-tight leading-5 max-md:mt-10 max-md:max-w-full">
+                <h2 className="text-5xl font-bold tracking-wide leading-[48px] text-indigo-950 max-md:max-w-full max-md:text-4xl max-md:leading-[46px]">
+                  Connect to Notion
+                </h2>
+                <p className="mt-5 leading-6 text-neutral-500 max-md:mt-5 max-md:max-w-full">
+                  Connect your Notion account to access your tables and
+                  databases and turn them into charts.
+                </p>
+              </div>
+            </div>
+            <div className="flex flex-col w-[40%] max-md:w-full">
+              <img
+                src={"/connectdata.png"}
+                alt="Main"
+                className="grow rounded-3xl right-0 w-full aspect-[1.43] max-md:mt-10 max-md:max-w-full"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
 
-      <section id="how">
-        {/* <h3>
-          How Our <b>Analytics</b>
-        </h3>
-        <h3>SaaS Works</h3> */}
-        {/* <p>
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Mollitia
-          ipsam nostrum totam. Dolore consequatur dolorem unde architecto illo
-          earum, quae perferendis voluptas maiores neque sunt culpa, quasi ea
-          modi veritatis?
-        </p> */}
-        {/* #D8F4D6 */}
+      <section className="flex container  md:rounded-3xl justify-center items-center self-stretch px-16 md:py-5 mt-10 mb-0 w-full bg-gradient-to-r from-[#F2FBF2] to-[#F5FFF6]  max-md:px-5  max-md:max-w-full">
+        <div className="md:mt-5 mb-5 w-full max-w-full max-md:max-w-full">
+          <div className="flex gap-5 max-md:flex-col max-md:gap-0">
+            <div className="flex flex-col w-[60%]   max-md:w-full">
+              <div className="flex flex-col self-stretch  my-auto text-sm font-semibold tracking-tight leading-5 max-md:mt-10 max-md:max-w-full">
+                <h2 className="text-5xl font-bold tracking-wide leading-[48px] text-indigo-950 max-md:max-w-full max-md:text-4xl max-md:leading-[46px]">
+                  Connect to Notion
+                </h2>
+                <p className="mt-5 leading-6 text-neutral-500 max-md:mt-5 max-md:max-w-full">
+                  Connect your Notion account to access your tables and
+                  databases and turn them into charts.
+                </p>
+              </div>
+            </div>
+            <div className="flex flex-col w-[40%] max-md:w-full">
+              <img
+                src={"/connectdata.png"}
+                alt="Main"
+                className="grow rounded-3xl right-0 w-full aspect-[1.43] max-md:mt-10 max-md:max-w-full"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="flex container rounded-3xl mx-2 justify-center items-center self-stretch px-16 md:py-5 mt-10  w-full bg-gradient-to-r from-[#F2FBF2] to-[#F5FFF6]  max-md:px-5  max-md:max-w-full">
+        <div className="md:mt-5 mb-5 w-full max-w-full max-md:max-w-full">
+          <div className="flex gap-5 max-md:flex-col max-md:gap-0">
+            <div className="flex flex-col w-[40%] max-md:w-full">
+              <img
+                src={"/connectdata.png"}
+                alt="Main"
+                className="grow rounded-3xl right-0 w-full aspect-[1.43] max-md:mt-10 max-md:max-w-full"
+              />
+            </div>
+            <div className="flex flex-col w-[60%]   max-md:w-full">
+              <div className="flex flex-col md:ml-6 self-stretch my-auto text-sm font-semibold tracking-tight leading-5 max-md:mt-10 max-md:max-w-full">
+                <h2 className="text-5xl font-bold tracking-wide leading-[48px] text-indigo-950 max-md:max-w-full max-md:text-4xl max-md:leading-[46px]">
+                  Connect to Notion
+                </h2>
+                <p className="mt-5 leading-6 text-neutral-500 max-md:mt-5 max-md:max-w-full">
+                  Connect your Notion account to access your tables and
+                  databases and turn them into charts.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <br />
+      <br />
+      {/* <section id="how">
         <div className="">
-          <div className="one grid grid-cols-1 lg:grid-cols-2 bg-gradient-to-r from-[#F5FFF6]  to-[#F2FBF2]">
-            <div className="left">
-              <h4 className="text-6xl">Connect your data from Notion</h4>
-              <p className="text-xl	">
-              Connect to your Notion workspace to select databases to create charts.
+          <div className="one grid grid-cols-1 lg:grid-cols-2 bg-gradient-to-r from-[#F2FBF2] to-[#F5FFF6]  md:mx-24  rounded-3xl">
+            <div className="left flex items-center justify-center">
+              <h4 className="text-6xl">
+                Connect your data <br /> from Notion
+              </h4>
+              <p className="text-xl	m-0">
+                Connect to your Notion workspace to select databases to create
+                charts.
               </p>
             </div>
-            <div className="right">
+            <div className="right mr-10 my-10">
               <div>
                 <Image
                   src="/connectdata.png"
                   alt=""
-                  width="250"
+                  className="w-96 rounded-3xl"
+                  width="200"
                   height="200"
-                  // className="mr-2"
-                  style={{ borderRadius: 16, margin: 50 }}
+                  style={{ borderRadius: 16 }}
                 />
               </div>
             </div>
@@ -188,7 +283,7 @@ export default function Test() {
             <Image width="270" height="170" src="/realtime.jpeg" alt="" />
           </div>
         </div>
-      </section>
+      </section> */}
     </div>
   );
 }
