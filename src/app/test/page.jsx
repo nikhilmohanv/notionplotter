@@ -68,20 +68,28 @@ export default function Test() {
               <img
                 src={"/bluehowto.png"}
                 alt="Main"
-                className="grow rounded-3xl right-0 w-full aspect-[1.43] max-md:mt-10 max-md:max-w-full"
+                className="grow md:block hidden rounded-3xl right-0 w-full aspect-[1.43] max-md:mt-10 max-md:max-w-full"
               />
             </div>
             <div className="flex flex-col w-[60%]   max-md:w-full">
               <div className="flex flex-col md:ml-6 self-stretch my-auto text-sm font-semibold tracking-tight leading-5 max-md:mt-10 max-md:max-w-full">
                 <h2 className="text-5xl font-bold tracking-wide leading-[48px] text-indigo-950 max-md:max-w-full max-md:text-4xl max-md:leading-[46px]">
-                  Create your chart
+                  Visualize data with powerful charts
                 </h2>
                 <p className="mt-5 md:pr-14 text-lg leading-6 text-neutral-500 max-md:mt-5 max-md:max-w-full">
-                  Create unlimited charts from your database with your choice of
-                  chart type, colors, and more. You can filter and sort data as
-                  you do in your notion dashboard.
+                  Visualize your data in a variety of ways thanks to a robust
+                  set of visualizations.
+                  {/* Whether it’s as a table, a chart, or a
+                  single value — you’re in control. */}
                 </p>
               </div>
+            </div>
+            <div className="flex flex-col md:w-0 max-md:w-full">
+              <img
+                src={"/bluehowto.png"}
+                alt="Main"
+                className="grow block md:hidden rounded-3xl right-0 w-full aspect-[1.43] max-md:mt-10 max-md:max-w-full"
+              />
             </div>
           </div>
         </div>
