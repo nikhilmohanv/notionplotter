@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import AreaChart from "@/components/charts/area/area";
-import LoggedInNavBar from "@/components/basic/navbar/loggedin-navbar";
 import BarChart from "@/components/charts/bar/bar";
 import DoughnutChart from "@/components/charts/doughnut/doughnut";
 import PieChart from "@/components/charts/pie/pie";
@@ -12,39 +11,14 @@ import RefreshButton from "@/components/icons/refresh";
 
 export default function Embed() {
   const [chartType, setChartType] = useState();
-  const [windowSize, setWindowSize] = useState(getWindowSize());
-
-  useEffect(() => {
-    function handleWindowResize() {
-      setWindowSize(getWindowSize());
-    }
-
-    window.addEventListener("resize", handleWindowResize);
-
-    return () => {
-      window.removeEventListener("resize", handleWindowResize);
-    };
-  }, []);
 
   const pathname = usePathname();
   const id = pathname.slice(7);
-  const [data, setData] = useState([]);
   //store label of the graph
   const [label, setLabel] = useState();
 
-  //store selected x-axis value
-  const [xAxis, setXAxis] = useState();
-  //store selected y-axis value
-  const [yAxis, setYAxis] = useState();
-  //store row data
-
   // store background color from user
   const [backgroundColor, setBackgroundColor] = useState("#FFFFFF");
-
-  //stroe the userid in provided in the database
-
-  //store line color
-  const [lineSingleColor, setLineSingleColor] = useState("#FF6384");
 
   //store fill single color
   const [fillSingleColor, setFillSingleColor] = useState("#FF6384");
@@ -58,14 +32,8 @@ export default function Embed() {
   //store label status true or false, if true then hide the label from users
   const [labelStatus, setLabelStatus] = useState(false);
 
-  //selecting which coloring is used for line, single or multiple color
-  const [colorStatus, setColorStatus] = useState("lineSingle");
-
   //storing which type for color is used for filling
   const [fillColorStatus, setFillColorStatus] = useState("fillSingle");
-
-  // to store count of multi color input boxes
-  const [lineMultiColor, setLineMultiColor] = useState([""]);
 
   //to store all multi color values
   const [fillMultiColor, setFillMultiColor] = useState([""]);
@@ -106,7 +74,6 @@ export default function Embed() {
           setXAxisValues(xaxis);
           setYAxisValues(yaxis);
         }
-
         //checking if labelStatus is in the firestore
         if ("labelStatus" in data) {
           setLabelStatus(data.labelStatus);
@@ -124,9 +91,7 @@ export default function Embed() {
         setChartComponent(
           <div
             style={{
-              position: "relative",
-              height: `${innerHeight}px`,
-              width: `${innerWidth}px`,
+              height: `100%`,
             }}
           >
             <BarChart
@@ -148,8 +113,7 @@ export default function Embed() {
         setChartComponent(
           <div
             style={{
-              overflow: "hidden",
-              height: `${windowSize.innerHeight}px`,
+              height: `100%`,
             }}
           >
             <AreaChart
@@ -161,8 +125,6 @@ export default function Embed() {
               fillSingleColor={fillSingleColor}
               fillMultiColor={fillMultiColor}
               fillColorStatus={fillColorStatus}
-              height={windowSize.innerHeight}
-              width={windowSize.innerWidth}
               legend={legend}
               legendPosition={legendPosition}
             />
@@ -175,9 +137,8 @@ export default function Embed() {
             style={{
               display: "flex",
               justifyContent: "center",
-              // alignItems: "center",
-              overflow: "hidden",
-              height: `${windowSize.innerHeight}px`,
+
+              height: `100%`,
             }}
           >
             <DoughnutChart
@@ -201,9 +162,10 @@ export default function Embed() {
             style={{
               display: "flex",
               justifyContent: "center",
-              // alignItems: "center",
-              overflow: "hidden",
-              height: `${windowSize.innerHeight}px`,
+
+              // overflow: "hidden",
+
+              height: `100%`,
             }}
           >
             <PieChart
@@ -215,8 +177,6 @@ export default function Embed() {
               fillMultiColor={fillMultiColor}
               backgroundColor={backgroundColor}
               fillColorStatus={fillColorStatus}
-              height={windowSize.innerHeight}
-              width={windowSize.innerWidth}
               legend={legend}
               legendPosition={legendPosition}
             />
@@ -230,8 +190,9 @@ export default function Embed() {
 
   return (
     <>
-      <div className="embed-container" style={{background:backgroundColor}}>
+      <div className="embed-container" style={{ background: backgroundColor }}>
         {/* Refresh button */}
+
         <button
           className="refresh-button"
           onClick={() => window.location.reload()}
@@ -244,13 +205,10 @@ export default function Embed() {
         >
           dark mode
         </button>
-        <main className="w-screen h-screen">{chartComponent}</main>
+        <main style={{ height: "100vh", width: "100vhw" }}>
+          {chartComponent}
+        </main>
       </div>
     </>
   );
-}
-
-function getWindowSize() {
-  const { innerWidth, innerHeight } = window;
-  return { innerWidth, innerHeight };
 }

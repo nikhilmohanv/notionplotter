@@ -14,8 +14,7 @@ export default function PieChart({
   fillSingleColor,
   fillMultiColor,
   fillColorStatus,
-  height,
-  width,
+  
   legend,
   legendPosition,
   yAxisName,

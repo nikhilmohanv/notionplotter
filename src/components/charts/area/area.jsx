@@ -35,8 +35,7 @@ const AreaChart = ({
   fillSingleColor,
   fillMultiColor,
   fillColorStatus,
-  height,
-  width,
+  
   yAxisName,
   xAxisName,
   legend,
@@ -85,7 +84,6 @@ const AreaChart = ({
 // }
 
   return (
-    <div id="chart">
       <Line
         data={{
           labels: xValues,
@@ -194,7 +192,6 @@ const AreaChart = ({
           },
         }}
       />
-    </div>
   );
 };
 export default AreaChart;

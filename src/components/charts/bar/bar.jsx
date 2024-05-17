@@ -95,7 +95,6 @@ const BarChart = ({
   };
 
   return (
-    <div id="chart" style={{ backgroundColor: backgroundColor }}>
       <Bar
         data={{
           labels: xValues,
@@ -131,7 +130,6 @@ const BarChart = ({
           },
         }}
       />
-    </div>
   );
 };
 export default BarChart;

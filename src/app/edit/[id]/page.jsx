@@ -196,7 +196,7 @@ export default function Edit() {
   //store chart type
   const [chartType, setChartType] = useState("");
 
-  const previewurl = "https://nicksnotion.com/embed/" + id;
+  const previewurl = "https://notionplotter.com/embed/" + id;
 
   //fetch data from api api/firebase/getdocument
   useEffect(() => {

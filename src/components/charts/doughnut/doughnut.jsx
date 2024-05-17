@@ -68,67 +68,73 @@ const DoughnutChart = ({
   }, [fillColorStatus, fillSingleColor, fillMultiColor]);
   console.log("y values ", yValues);
   return (
-    // <div style={{ backgroundColor: backgroundColor }}>
-    <Doughnut
-      data={{
-        labels: xValues,
-        datasets: [
-          {
-            label: yAxisName,
-            data: yValues,
-            backgroundColor: fillColor,
-            borderColor: "#FFFFFF",
-            borderWidth: 1,
-          },
-        ],
-      }}
-      options={{
-        responsive: true,
-        maintainAspectRation: true,
-        plugins: {
-          legend: {
-            position: legendPosition,
-            display: legend,
+    // <div
+      // style={{
+      //   position: "relative",
+      //   width: window.innerWidth,
+      //   height: window.innerHeight,
+      // }}
+    // >
+      <Doughnut
+        data={{
+          labels: xValues,
+          datasets: [
+            {
+              label: yAxisName,
+              data: yValues,
+              backgroundColor: fillColor,
+              borderColor: "#FFFFFF",
+              borderWidth: 1,
+            },
+          ],
+        }}
+        options={{
+          responsive: true,
+          maintainAspectRation: true,
+          plugins: {
+            legend: {
+              position: legendPosition,
+              display: legend,
+              title: {
+                color: darkMode ? "#FFFFFF" : "#000000",
+              },
+            },
+
             title: {
-              color: darkMode ? "#FFFFFF" : "#000000",
+              display: labelStatus ? false : true,
+              text: !labelStatus && label,
+              align: "center",
+              color: darkMode ? "white" : "black",
+
+              font: {
+                size: 20,
+                weight: 8,
+              },
             },
           },
 
-          title: {
-            display: labelStatus ? false : true,
-            text: !labelStatus && label,
-            align: "center",
-            color: darkMode ? "white" : "black",
-
-            font: {
-              size: 20,
-              weight: 8,
+          elements: {
+            line: {
+              borderWidth: 2,
+            },
+            point: {
+              radius: 1,
+              backgroundColor: "transparent",
+              borderWidth: 0,
+              hoverBackgroundColor: "#212027",
+              hoverRadius: 4,
+              hoverBorderWidth: 2,
             },
           },
-        },
-
-        elements: {
-          line: {
-            borderWidth: 2,
+          interaction: {
+            intersect: false,
+            mode: "index",
           },
-          point: {
-            radius: 1,
-            backgroundColor: "transparent",
-            borderWidth: 0,
-            hoverBackgroundColor: "#212027",
-            hoverRadius: 4,
-            hoverBorderWidth: 2,
+          animation: {
+            duration: 1500,
           },
-        },
-        interaction: {
-          intersect: false,
-          mode: "index",
-        },
-        animation: {
-          duration: 1500,
-        },
-      }}
-    />
+        }}
+      />
     // </div>
   );
 };
