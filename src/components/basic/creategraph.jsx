@@ -1,9 +1,28 @@
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 import addData from "@/firebase/firestore/adddata";
 import { Loader2 } from "lucide-react";
-
+import {
+  AreaChartIconBlack,
+  AreaChartIconWhite,
+  BarChartIconBlack,
+  BarChartIconWhite,
+  PieChartIconBlack,
+  PieChartIconWhite,
+  PlusIcon,
+  EyeClose,
+  EyeOpen,
+  DoughNutBlack,
+  DoughNutWhite,
+  LeftArrow,
+} from "@/components/icons/edit/icons";
 import {
   Select,
   SelectContent,
@@ -349,109 +368,188 @@ export default function CreateGraph({ loading }) {
                     <Button disabled>Next</Button>
                   )}
                 </DialogTrigger>
-                <DialogContent className="sm:max-w-[600px]">
+                <DialogContent className="sm:max-w-[600px] sm:min-h-[270px]">
                   <DialogHeader>
                     <DialogTitle>Create a graph</DialogTitle>
                     <DialogDescription>Select chart type</DialogDescription>
                   </DialogHeader>
-                  <div className="grid grid-cols-2 gap-4">
-                    <Label
-                      className="flex items-center space-x-2 cursor-pointer"
-                      htmlFor="line"
-                    >
-                      <Input
-                        className="w-4 h-4 border-gray-300"
-                        id="line"
-                        name="chart"
-                        type="radio"
-                        value="Line Chart"
-                        onChange={(e) => setChartType(e.target.value)}
-                      />
-                      <span className="text-sm font-medium peer-disabled:translate-x-1.5 translate-x-1.5">
-                        Line
-                      </span>
-                    </Label>
-                    <Label
-                      className="flex items-center space-x-2 cursor-pointer"
-                      htmlFor="area"
-                    >
-                      <Input
-                        className="w-4 h-4 border-gray-300"
-                        id="area"
-                        name="chart"
-                        type="radio"
-                        value="Area Chart"
-                        onChange={(e) => setChartType(e.target.value)}
-                      />
-                      <span className="text-sm font-medium peer-disabled:translate-x-1.5 translate-x-1.5">
-                        Area
-                      </span>
-                    </Label>
-                    <Label
-                      className="flex items-center space-x-2 cursor-pointer"
-                      htmlFor="bar"
-                    >
-                      <Input
-                        className="w-4 h-4 border-gray-300"
-                        id="bar"
-                        name="chart"
-                        type="radio"
-                        value="Bar Chart"
-                        onChange={(e) => setChartType(e.target.value)}
-                      />
-                      <span className="text-sm font-medium peer-disabled:translate-x-1.5 translate-x-1.5">
-                        Bar
-                      </span>
-                    </Label>
-                    <Label
-                      className="flex items-center space-x-2 cursor-pointer"
-                      htmlFor="column"
-                    >
-                      <Input
-                        className="w-4 h-4 border-gray-300"
-                        id="column"
-                        name="chart"
-                        type="radio"
-                        value="column"
-                        onChange={(e) => setChartType(e.target.value)}
-                      />
-                      <span className="text-sm font-medium peer-disabled:translate-x-1.5 translate-x-1.5">
-                        Column
-                      </span>
-                    </Label>
-                    <Label
-                      className="flex items-center space-x-2 cursor-pointer"
-                      htmlFor="Pie Chart"
-                    >
-                      <Input
-                        className="w-4 h-4 border-gray-300"
-                        id="pie"
-                        name="chart"
-                        type="radio"
-                        value="Pie Chart"
-                        onChange={(e) => setChartType(e.target.value)}
-                      />
-                      <span className="text-sm font-medium peer-disabled:translate-x-1.5 translate-x-1.5">
-                        Pie
-                      </span>
-                    </Label>
-                    <Label
-                      className="flex items-center space-x-2 cursor-pointer"
-                      htmlFor="donut"
-                    >
-                      <Input
-                        className="w-4 h-4 border-gray-300"
-                        id="donut"
-                        name="chart"
-                        type="radio"
-                        value="Donut Chart"
-                        onChange={(e) => setChartType(e.target.value)}
-                      />
-                      <span className="text-sm font-medium peer-disabled:translate-x-1.5 translate-x-1.5">
-                        Donut
-                      </span>
-                    </Label>
-                  </div>
+                  <div className="grid grid-cols-4 gap-4">
+                {/* bar chart */}
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <div className="flex items-center mr-2">
+                        <input
+                          className="mr-2"
+                          id="barChart"
+                          type="radio"
+                          name="chartType"
+                          value="Bar Chart"
+                          onChange={(e) => {
+                            setChartType(e.target.value);
+                          }}
+                          style={{
+                            opacity: 0,
+                            position: "absolute",
+                            height: 1,
+                            width: 1,
+                          }}
+                        />
+
+                        <label htmlFor="barChart">
+                          {chartType != "Bar Chart" ? (
+                            <Button
+                              variant="outline"
+                              onClick={() => setChartType("Bar Chart")}
+                            >
+                              <BarChartIconBlack className="text-indigo-600" />
+                            </Button>
+                          ) : (
+                            <Button>
+                              <BarChartIconWhite className="text-indigo-600" />
+                            </Button>
+                          )}
+                        </label>
+                      </div>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Bar Chart</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+
+                {/* Area Chart */}
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <div className="flex items-center mr-2">
+                        <input
+                          className="mr-2"
+                          id="areaChart"
+                          type="radio"
+                          name="chartType"
+                          value="Area Chart"
+                          onChange={(e) => {
+                            setChartType(e.target.value);
+                          }}
+                          style={{
+                            opacity: 0,
+                            position: "absolute",
+                            height: 1,
+                            width: 1,
+                          }}
+                        />
+
+                        <label htmlFor="areaChart">
+                          {chartType != "Area Chart" ? (
+                            <Button
+                              variant="outline"
+                              onClick={() => setChartType("Area Chart")}
+                            >
+                              <AreaChartIconBlack className="text-indigo-600" />
+                            </Button>
+                          ) : (
+                            <Button>
+                              <AreaChartIconWhite className="text-indigo-600" />
+                            </Button>
+                          )}
+                        </label>
+                      </div>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Area Chart</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+
+                {/* Pie Chart */}
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <div className="flex items-center mr-2">
+                        <input
+                          className="mr-2"
+                          id="pieChart"
+                          type="radio"
+                          name="chartType"
+                          value="Pie Chart"
+                          onChange={(e) => {
+                            setChartType(e.target.value);
+                          }}
+                          style={{
+                            opacity: 0,
+                            position: "absolute",
+                            height: 1,
+                            width: 1,
+                          }}
+                        />
+
+                        <label htmlFor="pieChart">
+                          {chartType != "Pie Chart" ? (
+                            <Button
+                              variant="outline"
+                              onClick={() => setChartType("Pie Chart")}
+                            >
+                              <PieChartIconBlack className="text-indigo-600" />
+                            </Button>
+                          ) : (
+                            <Button>
+                              <PieChartIconWhite className="text-indigo-600" />
+                            </Button>
+                          )}
+                        </label>
+                      </div>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Pie Chart</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+
+                {/* KPI Chart */}
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <div className="flex items-center mr-2">
+                        <input
+                          className="mr-2"
+                          id="doughnutChart"
+                          type="radio"
+                          name="chartType"
+                          value="Doughnut Chart"
+                          onChange={(e) => {
+                            setChartType(e.target.value);
+                          }}
+                          style={{
+                            opacity: 0,
+                            position: "absolute",
+                            height: 1,
+                            width: 1,
+                          }}
+                        />
+
+                        <label htmlFor="doughnutChart">
+                          {chartType != "Doughnut Chart" ? (
+                            <Button
+                              variant="outline"
+                              onClick={() => setChartType("Doughnut Chart")}
+                            >
+                              <DoughNutBlack className="text-indigo-600" />
+                            </Button>
+                          ) : (
+                            <Button>
+                              <DoughNutWhite className="text-indigo-600" />
+                            </Button>
+                          )}
+                        </label>
+                      </div>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Doughnut Chart</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              </div>
 
                   <DialogFooter>
                     <DialogClose asChild>
