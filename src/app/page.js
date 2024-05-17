@@ -394,7 +394,7 @@ export default function Home() {
     //   </main>
     // </div>
     <>
-      <Navbar />
+      <Navbar handleSignIn={handleSignIn}/>
       <Hero handleSignIn={handleSignIn} />
       {/* <Sponsors /> */}
       <HowItWorks />

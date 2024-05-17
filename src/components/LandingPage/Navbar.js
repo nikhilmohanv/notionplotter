@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/sheet";
 
 // import { GitHubLogoIcon } from "@radix-ui/react-icons";
-import { buttonVariants } from "@/components/ui/button";
+import { buttonVariants,Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
 import { ModeToggle } from "./mode-toggle";
 import { LogoIcon } from "./Icons";
@@ -48,7 +48,7 @@ const routeList = [
   },
 ];
 
-export const Navbar = () => {
+export const Navbar = ({handleSignIn}) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <header className="sticky  top-0 z-40 w-full bg-white/85 dark:border-b-slate-700  dark:bg-background">
@@ -120,14 +120,13 @@ export const Navbar = () => {
           </nav>
 
           <div className="hidden md:flex gap-2">
-            <a
-              rel="noreferrer noopener"
-              href="https://github.com/leoMirandaa/shadcn-landing-page.git"
-              target="_blank"
-              className={`border ${buttonVariants({ variant: "outline" })}`}
+            <Button
+              variant="outline"
+              className={`border`}
+              onClick={handleSignIn}
             >
               Sign up
-            </a>
+            </Button>
 
             {/* <ModeToggle /> */}
           </div>
