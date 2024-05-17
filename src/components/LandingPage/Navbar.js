@@ -27,13 +27,17 @@ import LineChartIcon from "@/components/icons/linechart";
 
 const routeList = [
   {
+    href: "#howitworks",
+    label:"How it works"
+  },
+  {
     href: "#features",
     label: "Features",
   },
-  {
-    href: "#testimonials",
-    label: "Testimonials",
-  },
+  // {
+  //   href: "#testimonials",
+  //   label: "Testimonials",
+  // },
   {
     href: "#pricing",
     label: "Pricing",
@@ -64,7 +68,7 @@ export const Navbar = () => {
 
           {/* mobile */}
           <span className="flex md:hidden">
-            <ModeToggle />
+            {/* <ModeToggle /> */}
 
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger className="px-2">
@@ -125,7 +129,7 @@ export const Navbar = () => {
               Sign up
             </a>
 
-            <ModeToggle />
+            {/* <ModeToggle /> */}
           </div>
         </NavigationMenuList>
       </NavigationMenu>

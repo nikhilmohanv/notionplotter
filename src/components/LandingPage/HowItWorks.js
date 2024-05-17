@@ -27,7 +27,7 @@ const features = [
 
 export const HowItWorks = () => {
   return (
-    <section id="howItWorks" className="container text-center pt-24 pb-4">
+    <section id="howitworks" className="container text-center pt-24 pb-4">
       <h2 className="text-3xl md:text-4xl font-bold ">
         How It{" "}
         {/* <span className="bg-gradient-to-b from-primary/60 to-primary text-transparent bg-clip-text"> */}
@@ -50,6 +50,7 @@ export const HowItWorks = () => {
                       alt="image"
                       loading="lazy"
                       width=""
+                      className="rounded-xl lg:rounded-[3rem]"
                       height=""
                     />
                   </div>

@@ -918,7 +918,7 @@ export default function Edit() {
 
   return (
     <>
-      <div className="h-screen">
+      <div className="md:h-screen">
         <LoggedInNavBar />
 
         <div className="flex flex-col h-full md:flex-row">
