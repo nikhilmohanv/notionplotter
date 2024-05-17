@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Navbar } from "../LandingPageComponents/Navbar";
+import { Navbar } from "../../components/LandingPage/Navbar";
 import { Star } from "./icons";
 export default function Landing() {
   return (
@@ -70,7 +70,7 @@ export default function Landing() {
           <h2 className="pt-16 pb-2 pl-4 text-3xl md:text-6xl font-semibold tracking-tight ">
             Give your audience <br /> an easy way to say thanks.
           </h2>
-          <h3 style={{}} className="scroll-m-20  md:px-32 mt-8 text-xl font-base">
+          <h3 style={{}} className="scroll-m-20  md:px-32 px-10 mt-8 text-xl font-base">
             Buy Me a Coffee makes supporting fun and easy. In just a couple of
             taps, your fans
             <br />

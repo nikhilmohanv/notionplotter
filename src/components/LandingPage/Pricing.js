@@ -43,7 +43,7 @@ const pricingList = [
 
 export const Pricing = ({ handleSignIn }) => {
   return (
-    <section id="pricing" className="container pt-20 sm:pt-5">
+    <section id="pricing" className="container sm:pt-20 mt-10 sm:pt-5">
       <h2 className="text-3xl md:text-4xl font-bold text-center">
         Get
         <span className="bg-gradient-to-b from-primary/60 to-primary text-transparent bg-clip-text">

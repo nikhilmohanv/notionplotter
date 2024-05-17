@@ -1,7 +1,7 @@
 import Image from "next/image";
 import "./style.css";
 import { Button } from "@/components/ui/button";
-import { Navbar } from "../LandingPageComponents/Navbar";
+import { Navbar } from "../../components/LandingPage/Navbar";
 
 export default function Test() {
   return (

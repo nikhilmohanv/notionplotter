@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { setCookie } from "cookies-next";
 import getTokenWithUId from "../firebase/firestore/getaccesstoken";
 import { onAuthStateChanged } from "firebase/auth";
@@ -8,20 +8,20 @@ import { Card } from "@/components/ui/card";
 import LineChartIcon from "@/components/icons/linechart";
 import addData from "@/firebase/firestore/adddata";
 import addDataWithId from "@/firebase/firestore/adddatawithid";
-import { useState,useEffect } from "react";
-import { FAQ } from "./LandingPageComponents/FAQ";
-import { Features } from "./LandingPageComponents/Features";
+import { useState, useEffect } from "react";
+import { FAQ } from "../components/LandingPage/FAQ";
+import { Features } from "../components/LandingPage/Features";
 // import { Footer } from "./Footer";
-import { Hero } from "./LandingPageComponents/Hero";
-import { HowItWorks } from "./LandingPageComponents/HowItWorks";
-import { Navbar } from "./LandingPageComponents/Navbar";
+import { Hero } from "../components/LandingPage/Hero";
+import { HowItWorks } from "../components/LandingPage/HowItWorks";
+import { Navbar } from "../components/LandingPage/Navbar";
 // import { Newsletter } from "./Newsletter";
-import { Pricing } from "./LandingPageComponents/Pricing";
-import { ScrollToTop } from "./LandingPageComponents/ScrollToTop";
+import { Pricing } from "../components/LandingPage/Pricing";
+import { ScrollToTop } from "../components/LandingPage/ScrollToTop";
 // import { Services } from "./Services";
 // import { Sponsors } from "./Sponsors";
 // import { Team } from "./Team";
-import { Testimonials } from "./LandingPageComponents/Testimonials";
+import { Testimonials } from "../components/LandingPage/Testimonials";
 import LoginButton from "@/components/basic/loginbutton";
 import { UserAuth } from "./context/firebaseauth/authcontext";
 
@@ -401,7 +401,7 @@ export default function Home() {
       <Features />
       {/* <Services /> */}
       {/* <Cta /> */}
-      <Testimonials />
+      {/* <Testimonials /> */}
       {/* <Team /> */}
       <Pricing handleSignIn={handleSignIn} />
       {/* <Newsletter /> */}
