@@ -73,7 +73,6 @@ export async function POST(req) {
         // stroring subscription history
         const resp = await addData("subscription_history", data);
       }
-
       case "subscription_updated": {
         const data = {
           variantId: body.data.attributes.variant_id,
@@ -87,12 +86,69 @@ export async function POST(req) {
           data
         );
       }
+      case "subscription_cancelled": {
+        const data = {
+          status: body.data.attributes.status,
+          statusFormatted: body.data.attributes.status_formatted,
+          renews_at: body.data.attributes.renews_at,
+        };
+        const { result, error } = await addDataWithId(
+          "subscription",
+          userId,
+          data
+        );
+      }
+      case "subscription_paused": {
+        const data = {
+          status: body.data.attributes.status,
+          statusFormatted: body.data.attributes.status_formatted,
+          renews_at: body.data.attributes.ends_at,
+          isPaused: body.data.attributes.pause !== null,
+        };
+        const { result, error } = await addDataWithId(
+          "subscription",
+          userId,
+          data
+        );
+      }
+      case "subscription_expired": {
+        const data = {
+          status: body.data.attributes.status,
+          statusFormatted: body.data.attributes.status_formatted,
+        };
+        const { result, error } = await addDataWithId(
+          "subscription",
+          userId,
+          data
+        );
+      }
+      case "subscription_unpaused": {
+        const data = {
+          status: body.data.attributes.status,
+          statusFormatted: body.data.attributes.status_formatted,
+        };
+        const { result, error } = await addDataWithId(
+          "subscription",
+          userId,
+          data
+        );
+      }
+      case "subscription_resumed": {
+        const data = {
+          status: body.data.attributes.status,
+          statusFormatted: body.data.attributes.status_formatted,
+        };
+        const { result, error } = await addDataWithId(
+          "subscription",
+          userId,
+          data
+        );
+      }
     }
 
     // Logic according to event
     return Response.json({ message: "Webhook received" }, { status: 200 });
   } catch (err) {
-    console.error(err);
-    return Response.json({ message: "Server error" }, { status: 500 });
+    return Response.json({ message: `Server error ${err}` }, { status: 500 });
   }
 }

@@ -138,7 +138,7 @@ export default function ManageSubscription({
           </div>
         </CardContent>
       </Card>
-      <div className="flex flex-col justify-between items-center gap-4">
+      {/* <div className="flex flex-col justify-between items-center gap-4">
         <p>You are subscribed to our product. Congratulations</p>
         <Button
           className="bg-red-300 hover:bg-red-500 w-full"
@@ -146,7 +146,7 @@ export default function ManageSubscription({
         >
           Cancel
         </Button>
-      </div>
+      </div> */}
     </>
   );
 }

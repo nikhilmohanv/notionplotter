@@ -25,7 +25,6 @@ export async function POST(request) {
         { message: "You are not subscribed" },
         { status: 402 }
       );
-    console.log("subscription id and cancelled ", subscriptionId);
     lemonSqueezySetup({
       apiKey: process.env.LEMON_SQUEEZY_API_KEY,
       onError: (error) => {
@@ -36,6 +35,7 @@ export async function POST(request) {
     if (cancelledSub.error) {
       throw new Error(cancelledSub.error.message);
     }
+    
     const data = {
       status: cancelledSub.data?.data.attributes.status,
       statusFormatted: cancelledSub.data?.data.attributes.status_formatted,
