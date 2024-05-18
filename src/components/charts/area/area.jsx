@@ -30,16 +30,16 @@ const AreaChart = ({
   yValues,
   label,
   labelStatus,
- 
+
   backgroundColor,
   fillSingleColor,
   fillMultiColor,
   fillColorStatus,
-  
+
   yAxisName,
   xAxisName,
   legend,
-  legendPosition
+  legendPosition,
 }) => {
   const [darkMode, setDarkMode] = useState(false);
   const [lineColor, setLineColor] = useState([]);
@@ -66,10 +66,10 @@ const AreaChart = ({
   useEffect(() => {
     const newFillColor = [];
     if (fillColorStatus === "fillSingle") {
-      setLineColor(fillSingleColor)
+      setLineColor(fillSingleColor);
       newFillColor.push(hex2rgb(fillSingleColor));
     } else if (fillColorStatus === "fillMulti") {
-      setLineColor(fillMultiColor)
+      setLineColor(fillMultiColor);
       fillMultiColor.forEach((color) => {
         newFillColor.push(hex2rgb(color));
       });
@@ -77,121 +77,124 @@ const AreaChart = ({
     setFillColor(newFillColor);
   }, [fillColorStatus, fillSingleColor, fillMultiColor]);
 
-// creating datasets
+  // creating datasets
 
-// function createDatasets(xValues,yValues){
+  // function createDatasets(xValues,yValues){
 
-// }
+  // }
 
   return (
-      <Line
-        data={{
-          labels: xValues,
-          datasets: [
-            {
-              tension: 0.5,
-              label: yAxisName,
-              data: yValues,
+    <Line
+      data={{
+        labels: xValues,
+        datasets: [
+          {
+            tension: 0.5,
+            label: yAxisName,
+            data: yValues,
 
-              borderColor: lineColor, //it is the color of line in the cahrt
-              pointBorderColor: lineColor,
-              pointRadius: 3,
-              pointStyle: "circle",
+            borderColor: lineColor, //it is the color of line in the cahrt
+            pointBorderColor: lineColor,
+            pointRadius: 3,
+            pointStyle: "circle",
 
-              pointHoverBorderColor: lineColor,
-              // pointBackgroundColor: lineColor,
-              pointHoverBackgroundColor: lineColor,
-              pointBorderWidth: 2,
-              fill: {
-                target: "origin",
-                above: fillColor, //it is the area fill under the line
-              },
+            pointHoverBorderColor: lineColor,
+            // pointBackgroundColor: lineColor,
+            pointHoverBackgroundColor: lineColor,
+            pointBorderWidth: 2,
+            fill: {
+              target: "origin",
+              above: fillColor, //it is the area fill under the line
             },
-          ],
-        }}
-        options={{
-          responsive: true,
-          maintainAspectRation: true,
-          plugins: {
-            legend: {
-              display: legend,
-              position: legendPosition,
-              // labels: {
-              //   usePointStyle: true,
-              // },
-            },
-
-            title: {
-              display: labelStatus ? false : true,
-              text: !labelStatus && label,
-              align: "center",
+          },
+        ],
+      }}
+      options={{
+        responsive: true,
+        maintainAspectRation: true,
+        plugins: {
+          legend: {
+            display: legend,
+            position: legendPosition,
+            labels: {
               color: darkMode ? "white" : "black",
+            },
+            // labels: {
+            //   usePointStyle: true,
+            // },
+          },
 
+          title: {
+            display: labelStatus ? false : true,
+            text: !labelStatus && label,
+            align: "center",
+            color: darkMode ? "white" : "black",
+
+            font: {
+              size: 20,
+              weight: 8,
+            },
+          },
+        },
+        scales: {
+          x: {
+            grid: {
+              drawTicks: false,
+              drawBorder: true,
+              borderDash: [4, 4],
+              color: darkMode
+                ? "rgba(255, 255, 255, 0.2)"
+                : "rgba(0, 0, 0, 0.1)",
+            },
+            ticks: {
+              align: "inner",
+
+              autoSkipPadding: 3,
+
+              color: darkMode ? "rgba(255, 255, 255, 0.9)" : "#43424D", //"#9494A4" : "#D3D3D6"
+              padding: 16,
               font: {
-                size: 20,
-                weight: 8,
+                size: 13,
               },
             },
           },
-          scales: {
-            x: {
-              grid: {
-                drawTicks: false,
-                drawBorder: true,
-                borderDash: [4, 4],
-                color: darkMode
-                  ? "rgba(255, 255, 255, 0.2)"
-                  : "rgba(0, 0, 0, 0.1)",
-              },
-              ticks: {
-                align: "inner",
+          y: {
+            // if want to remove the y axis values then make display false
+            display: true,
 
-                autoSkipPadding: 3,
-
-                color: darkMode ? "rgba(255, 255, 255, 0.9)" : "#43424D", //"#9494A4" : "#D3D3D6"
-                padding: 16,
-                font: {
-                  size: 13,
-                },
-              },
+            beginAtZero: !0,
+            ticks: {
+              color: darkMode ? "rgba(255, 255, 255, 0.9)" : "#43424D",
             },
-            y: {
-              // if want to remove the y axis values then make display false
-              display: true,
-
-              beginAtZero: !0,
-              ticks: {
-                color: darkMode ? "rgba(255, 255, 255, 0.9)" : "#43424D",
-              },
-              grid: {
-                color: darkMode
-                  ? "rgba(255, 255, 255, 0.2)"
-                  : "rgba(0, 0, 0, 0.1)",
-              },
+            grid: {
+              color: darkMode
+                ? "rgba(255, 255, 255, 0.2)"
+                : "rgba(0, 0, 0, 0.1)",
             },
           },
-          elements: {
-            line: {
-              borderWidth: 2,
-            },
-            point: {
-              radius: 1,
-              backgroundColor: "transparent", // #29D
-              borderWidth: 0,
-              hoverBackgroundColor: "#212027",
-              hoverRadius: 4,
-              hoverBorderWidth: 2,
-            },
+        },
+        elements: {
+          line: {
+            borderWidth: 2,
           },
-          interaction: {
-            intersect: false,
-            mode: "index",
+          point: {
+            radius: 1,
+            backgroundColor: "transparent", // #29D
+            borderWidth: 0,
+            hoverBackgroundColor: "#212027",
+            hoverRadius: 4,
+            hoverBorderWidth: 2,
           },
-          animation: {
-            duration: 1500,
-          },
-        }}
-      />
+        },
+        interaction: {
+          intersect: false,
+          mode: "index",
+        },
+        animation: {
+          duration: 1500,
+        },
+      }}
+    />
   );
 };
 export default AreaChart;

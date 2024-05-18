@@ -1,5 +1,5 @@
 import React from "react";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend, Chart } from "chart.js";
 import { Pie } from "react-chartjs-2";
 import { useState, useEffect } from "react";
 
@@ -14,13 +14,13 @@ export default function PieChart({
   fillSingleColor,
   fillMultiColor,
   fillColorStatus,
-  
+
   legend,
   legendPosition,
   yAxisName,
   xAxisName,
 }) {
-  console.log(fillMultiColor)
+  console.log(fillMultiColor);
   const [darkMode, setDarkMode] = useState(false);
   const [lineColor, setLineColor] = useState([]);
   const [fillColor, setFillColor] = useState([]);
@@ -32,9 +32,9 @@ export default function PieChart({
   //     setLineColor(lineMultiColor);
   //   }
   // }, [colorStatus, lineSingleColor, lineMultiColor]);
-
+console.log("bg color ",backgroundColor.substring(0, 6))
   useEffect(() => {
-    if (backgroundColor.trim().toLowerCase() == "#ffffff") {
+    if (backgroundColor.substring(0, 7).toLowerCase() == "#ffffff") {
       setDarkMode(false);
     } else {
       setDarkMode(true);
@@ -64,67 +64,75 @@ export default function PieChart({
     }
     setFillColor(newFillColor);
   }, [fillColorStatus, fillSingleColor, fillMultiColor]);
-
+Chart.defaults.font.family
   return (
-    <Pie
-      data={{
-        labels: xValues,
-        datasets: [
-          {
-            label: yAxisName,
+    <>
 
-            data: yValues,
-            backgroundColor: fillColor,
-            borderColor: "#FFFFFF",
-            borderWidth: 1,
-            hoverOffset:3
-            // borderRadius: 10,
-          },
-        ],
-      }}
-      options={{
-        responsive: true,
-        maintainAspectRation: true,
-        plugins: {
-          legend: {
-            position: legendPosition,
-            display: legend,
-          },
+      <Pie
+        data={{
+          labels: xValues,
+          datasets: [
+            {
+              label: yAxisName,
+              data: yValues,
+              backgroundColor: fillColor,
+              borderColor: "#FFFFFF",
+              borderWidth: 1,
+              hoverOffset: 3,
+              // borderRadius: 10,
+            },
+          ],
+        }}
+        options={{
+          responsive: true,
+          maintainAspectRation: true,
+          plugins: {
+            legend: {
+              position: legendPosition,
+              display: legend,
+              labels: {
+                color: darkMode ? "white" : "black",
+                font: {
+                  family: "Arial",
+                },
+              },
+            },
 
-          title: {
-            display: labelStatus ? false : true,
-            text: !labelStatus && label,
-            align: "center",
-            color: darkMode ? "white" : "black",
+            title: {
+              display: labelStatus ? false : true,
+              text: !labelStatus && label,
+              align: "center",
+              color: darkMode ? "white" : "black",
 
-            font: {
-              size: 20,
-              weight: 8,
+              font: {
+                size: 18,
+                weight: "bolder",
+              },
             },
           },
-        },
 
-        elements: {
-          line: {
-            borderWidth: 2,
+          elements: {
+            line: {
+              borderWidth: 2,
+            },
+            point: {
+              radius: 1,
+              backgroundColor: "transparent",
+              borderWidth: 0,
+              hoverBackgroundColor: "#212027",
+              hoverRadius: 4,
+              hoverBorderWidth: 2,
+            },
           },
-          point: {
-            radius: 1,
-            backgroundColor: "transparent",
-            borderWidth: 0,
-            hoverBackgroundColor: "#212027",
-            hoverRadius: 4,
-            hoverBorderWidth: 2,
+          interaction: {
+            intersect: false,
+            mode: "index",
           },
-        },
-        interaction: {
-          intersect: false,
-          mode: "index",
-        },
-        animation: {
-          duration: 1500,
-        },
-      }}
-    />
+          animation: {
+            duration: 1500,
+          },
+        }}
+      />
+    </>
   );
 }

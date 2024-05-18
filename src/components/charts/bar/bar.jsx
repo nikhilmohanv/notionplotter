@@ -29,7 +29,7 @@ const BarChart = ({
   yValues,
   label,
   labelStatus,
- 
+
   fillSingleColor,
   fillMultiColor,
   backgroundColor,
@@ -38,9 +38,9 @@ const BarChart = ({
   legendPosition,
   yAxisName,
   xAxisName,
-  aggregation
+  aggregation,
 }) => {
-  console.log("aggregation ",aggregation)
+  console.log("aggregation ", aggregation);
   const [darkMode, setDarkMode] = useState(false);
   const [lineColor, setLineColor] = useState([]);
   const [fillColor, setFillColor] = useState([]);
@@ -74,10 +74,10 @@ const BarChart = ({
   useEffect(() => {
     const newFillColor = [];
     if (fillColorStatus === "fillSingle") {
-      setLineColor(fillSingleColor)
+      setLineColor(fillSingleColor);
       newFillColor.push(hex2rgb(fillSingleColor));
     } else if (fillColorStatus === "fillMulti") {
-      setLineColor(fillMultiColor)
+      setLineColor(fillMultiColor);
       fillMultiColor.forEach((color) => {
         newFillColor.push(hex2rgb(color));
       });
@@ -95,41 +95,43 @@ const BarChart = ({
   };
 
   return (
-      <Bar
-        data={{
-          labels: xValues,
-          datasets: [
-            {
-              label: yAxisName,
-              backgroundColor: fillColor, //["#c41c1c","#11a248","#ec5555","#11a248"],
-              borderColor: lineColor,
-              borderWidth: 1,
-              data: yValues,
-              borderRadius: 5,
-            },
-          ],
-        }}
-        options={{
-          responsive: true,
-          maintainAspectRation: true,
-          legend: {
-            // display false makes the dataset label hide
-            display: legend,
-            position: legendPosition,
-            
+    <Bar
+      data={{
+        labels: xValues,
+        datasets: [
+          {
+            label: yAxisName,
+            backgroundColor: fillColor, //["#c41c1c","#11a248","#ec5555","#11a248"],
+            borderColor: lineColor,
+            borderWidth: 1,
+            data: yValues,
+            borderRadius: 5,
           },
+        ],
+      }}
+      options={{
+        responsive: true,
+        maintainAspectRation: true,
+        legend: {
+          // display false makes the dataset label hide
+          display: legend,
+          position: legendPosition,
+          labels: {
+            color: darkMode ? "white" : "black",
+          },
+        },
 
-          title: {
-            display: true,
-            text: "Bar Chart",
+        title: {
+          display: true,
+          text: "Bar Chart",
+        },
+        plugins: {
+          legend: {
+            display: false,
           },
-          plugins: {
-            legend: {
-              display: false,
-            },
-          },
-        }}
-      />
+        },
+      }}
+    />
   );
 };
 export default BarChart;
