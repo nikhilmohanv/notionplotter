@@ -35,7 +35,6 @@ import { useCookies } from "next-client-cookies";
 
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
-import { redirect } from "next/navigation";
 import { usePathname } from "next/navigation";
 import addDataWithId from "@/firebase/firestore/adddatawithid";
 import AreaChart from "@/components/charts/area/area";
@@ -61,6 +60,8 @@ import {
 import { Loader2 } from "lucide-react";
 
 import { Label } from "@/components/ui/label";
+
+import { ColorPicker } from "antd";
 
 export default function Edit() {
   const cookies = useCookies();
@@ -180,10 +181,10 @@ export default function Edit() {
   };
 
   //adding new value to fill color variable
-  const addNewFillColor = (event, index) => {
-    let { name, value } = event.target;
+  const addNewFillColor = (color, index) => {
+    // let { name, value } = event.target;
     let onChangeValue = [...fillMultiColor];
-    onChangeValue[index] = value;
+    onChangeValue[index] = color;
     setFillMultiColor(onChangeValue);
   };
 
@@ -431,7 +432,6 @@ export default function Edit() {
             }
             propertyType = property.type;
           } else if (property.type == "date") {
-
             propertyType = property.type;
             if (property.date == null) {
               value = "No date";
@@ -1269,29 +1269,46 @@ export default function Edit() {
                     </TabsTrigger>
                   </TabsList>
                   <TabsContent value="fillSingle">
-                    <div className="w-full bg-neutral-50 rounded">
-                      <input
-                        type="color"
+                    <div className="w-full  ">
+                      <ColorPicker
+                        disabledAlpha
+                        size="large"
+                        format="hex"
+                        defaultValue={fillSingleColor}
                         value={fillSingleColor}
-                        onChange={(e) => setFillSingleColor(e.target.value)}
-                        className="w-12 h-12 p-0 m-2"
+                        onChange={(value, hex) => {
+                          setFillSingleColor(hex);
+                        }}
                       />
                     </div>
                   </TabsContent>
                   <TabsContent value="fillMulti">
-                    <div className="w-full bg-neutral-50 rounded">
+                    <div className="w-full ">
                       {fillMultiColor.map((item, index) => (
                         <>
-                          <input
+                          {/* <input
                             name="color"
                             type="color"
                             value={item}
                             onChange={(event) => addNewFillColor(event, index)}
                             className="w-12 h-12 p-0 m-2"
+                          /> */}
+                          <ColorPicker
+                            // disabledAlpha
+                            size="large"
+                            format="rgb"
+                            defaultValue={item}
+                            value={item}
+                            onChange={(value, hex) => {
+                              addNewFillColor(hex, index);
+                              console.log(value)
+                            }}
+                            className="ml-1"
                           />
+
                           {index === fillMultiColor.length - 1 && (
                             <button onClick={() => handleAddFillColor()}>
-                              <PlusIcon className="w-12 h-12 p-0 " />
+                              <PlusIcon className="w-8 h-8 p-0 " />
                             </button>
                           )}
                         </>
@@ -1308,14 +1325,26 @@ export default function Edit() {
             <div className="mb-6">
               <h3 className="text-sm font-medium mb-2">Background Color</h3>
               {dbId ? (
-                <div className="w-full bg-neutral-50 rounded">
+                <div className="w-full ">
                   <label htmlFor="bgcolor">
-                    <input
+                    {/* <input
                       type="color"
                       name="bgcolor"
                       value={backgroundColor}
                       onChange={(e) => setBackgroundColor(e.target.value)}
                       className="w-12 h-12 p-0 m-2"
+                    /> */}
+
+                    <ColorPicker
+                      
+                      size="large"
+                      format="hex"
+                      defaultValue={backgroundColor}
+                      value={backgroundColor}
+                      onChange={(value, hex) => {
+                        setBackgroundColor(hex);
+                      }}
+                      className="ml-1"
                     />
                   </label>
                 </div>

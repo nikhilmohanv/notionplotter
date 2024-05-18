@@ -20,6 +20,7 @@ export default function PieChart({
   yAxisName,
   xAxisName,
 }) {
+  console.log(fillMultiColor)
   const [darkMode, setDarkMode] = useState(false);
   const [lineColor, setLineColor] = useState([]);
   const [fillColor, setFillColor] = useState([]);
