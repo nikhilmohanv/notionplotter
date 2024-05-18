@@ -1,5 +1,3 @@
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -9,20 +7,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Check } from "lucide-react";
-
-// enum PopularPlanType {
-//   NO = 0,
-//   YES = 1,
-// }
-
-// interface PricingProps {
-//   title: string;
-//   popular: PopularPlanType;
-//   price: number;
-//   description: string;
-//   buttonText: string;
-//   benefitList: string[];
-// }
+import LoginButton from "../basic/loginbutton";
 
 const pricingList = [
   {
@@ -41,7 +26,7 @@ const pricingList = [
   },
 ];
 
-export const Pricing = ({ handleSignIn }) => {
+export const Pricing = () => {
   return (
     <section id="pricing" className="container sm:pt-20 mt-10 sm:pt-5">
       <h2 className="text-3xl md:text-4xl font-bold text-center">
@@ -52,11 +37,8 @@ export const Pricing = ({ handleSignIn }) => {
         </span>
         Access
       </h2>
-      <h3 className="text-xl text-center text-muted-foreground pt-6">
-        {/* Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias
-        reiciendis. */}
-      </h3>
-      <div className="grid flex justify-center justify-items-center  gap-8">
+
+      <div className="grid pt-6 flex justify-center justify-items-center  gap-8">
         {pricingList.map((pricing) => (
           <Card key={pricing.title} className="w-80">
             <CardHeader>
@@ -71,8 +53,8 @@ export const Pricing = ({ handleSignIn }) => {
               <CardDescription>{pricing.description}</CardDescription>
             </CardHeader>
             <CardContent>
-              <Button onClick={handleSignIn}>Start 7 days trial</Button>
-            </CardContent>  
+              <LoginButton text={"Start 7 days trial"} variant={""} />
+            </CardContent>
 
             <hr className="w-4/5 m-auto mb-4" />
 

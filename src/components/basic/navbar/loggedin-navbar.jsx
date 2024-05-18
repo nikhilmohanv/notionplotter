@@ -10,7 +10,7 @@ import {
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { UserAuth } from "@/app/context/firebaseauth/authcontext";
-import { deleteCookie } from "cookies-next";
+import { deleteCookie,setCookie } from "cookies-next";
 import { redirect } from "next/navigation";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
@@ -25,6 +25,7 @@ export default function LoggedInNavBar() {
     try {
       deleteCookie("access_token");
       deleteCookie("uid");
+      deleteCookie("isPro")
       await logout();
       redirect("/");
     } catch (error) {
@@ -32,6 +33,18 @@ export default function LoggedInNavBar() {
     }
   };
   useEffect(() => {
+    if(user){
+      if(cookies.get("uid") == null){
+        const expires = new Date(Date.now() + 365 * 24 * 60 * 60 * 1000);
+          setCookie("uid", user.uid, {
+            expires: expires,
+            priority: "high",
+            sameSite: "strict",
+          });
+       
+      }
+      
+    }
     if (!cookies.get("uid")) {
       //redirect to /login page when not logged in.
       redirect("/");
@@ -60,24 +73,7 @@ export default function LoggedInNavBar() {
           >
             Settings
           </Link>
-          {/* <Link
-            href="#"
-            className="text-muted-foreground transition-colors hover:text-foreground"
-          >
-            Products
-          </Link>
-          <Link
-            href="#"
-            className="text-muted-foreground transition-colors hover:text-foreground"
-          >
-            Customers
-          </Link>
-          <Link
-            href="#"
-            className="text-muted-foreground transition-colors hover:text-foreground"
-          >
-            Analytics
-          </Link> */}
+          
         </nav>
         <Sheet>
           <SheetTrigger asChild>

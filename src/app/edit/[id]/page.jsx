@@ -309,19 +309,19 @@ export default function Edit() {
     setSavingStatus(true);
     e.preventDefault();
     let name;
-    let yAxisName;
-    let xAxisName;
+    // let yAxisName;
+    // let xAxisName;
 
-    colNameAndId.forEach((col) => {
-      if (col.id === xAxis) {
-        xAxisName = col.name;
-        return; // Exit the loop early
-      }
-      if (col.id === yAxis) {
-        yAxisName = col.name;
-        return;
-      }
-    });
+    // colNameAndId.forEach((col) => {
+    //   if (col.id === xAxis) {
+    //     xAxisName = col.name;
+    //     return; // Exit the loop early
+    //   }
+    //   if (col.id === yAxis) {
+    //     yAxisName = col.name;
+    //     return;
+    //   }
+    // });
     if (labelStatus) {
       name = "";
     } else {
@@ -431,6 +431,7 @@ export default function Edit() {
             }
             propertyType = property.type;
           } else if (property.type == "date") {
+
             propertyType = property.type;
             if (property.date == null) {
               value = "No date";
@@ -851,6 +852,17 @@ export default function Edit() {
         console.log("x axis values before insering ", xAxisValues);
         setXAxisValues(extractedXValues);
         console.log("x axis values after insering ", xAxisValues);
+
+        colNameAndId.forEach((col) => {
+          if (col.id === xAxis) {
+            setXAxisName(col.name);
+            return; // Exit the loop early
+          }
+          if (col.id === yAxis) {
+            setYAxisName(col.name);
+            return;
+          }
+        });
       }
       // setXAxisValues()
     }
@@ -898,6 +910,16 @@ export default function Edit() {
         console.log("extracted y", extractedYValues);
         setYAxisValues(extractedYValues);
         console.log("permentant ", yAxisValues);
+        colNameAndId.forEach((col) => {
+          if (col.id === xAxis) {
+            setXAxisName(col.name);
+            return; // Exit the loop early
+          }
+          if (col.id === yAxis) {
+            setYAxisName(col.name);
+            return;
+          }
+        });
       }
       // setXAxisValues()
     }

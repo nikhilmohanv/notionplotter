@@ -10,7 +10,11 @@ export default function StoreCookies() {
   useEffect(() => {
     const value = pathname.slice(14);
     // Set the value of the 'my-cookie' cookie
-    cookies.set("access_token", value);
+    cookies.set("access_token", value, {
+      expires: "365",
+      sameSite: "Strict",
+      priority: "high",
+    });
     redirect("/");
   }, []);
 }

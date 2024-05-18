@@ -19,11 +19,9 @@ import { Menu } from "lucide-react";
 import { ModeToggle } from "./mode-toggle";
 import { LogoIcon } from "./Icons";
 import LineChartIcon from "@/components/icons/linechart";
+import LoginButton from "../basic/loginbutton";
 
-// interface RouteProps {
-//   href: string;
-//   label: string;
-// }
+
 
 const routeList = [
   {
@@ -60,7 +58,6 @@ export const Navbar = ({handleSignIn}) => {
               href="/"
               className="ml-2 gap-2 font-bold text-xl flex"
             >
-              {/* <LogoIcon /> */}
               <LineChartIcon />
               NotionPlotter
             </a>
@@ -120,13 +117,8 @@ export const Navbar = ({handleSignIn}) => {
           </nav>
 
           <div className="hidden md:flex gap-2">
-            <Button
-              variant="outline"
-              className={`border`}
-              onClick={handleSignIn}
-            >
-              Sign up
-            </Button>
+          <LoginButton text={"Sign up"} variant={"outline"}/>
+
 
             {/* <ModeToggle /> */}
           </div>

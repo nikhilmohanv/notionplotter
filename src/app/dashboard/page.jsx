@@ -1,4 +1,15 @@
 "use client";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import Link from "next/link";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
@@ -75,9 +86,15 @@ export default function Dashboard() {
     fetch("/api/payment/getusersubscriptionplan")
       .then((data) => data.json())
       .then((data) => {
+        const expires = new Date(Date.now() + 365 * 24 * 60 * 60 * 1000);
+
         console.log(data.isPro);
         data.isPro !== undefined && setIsPro(data.isPro);
-        cookies.set("isPro", data.isPro);
+        cookies.set("isPro", data.isPro, {
+          expires: expires,
+          priority: "high",
+          sameSite: "strict",
+        });
         data.onTrial !== undefined && setOnTrial(data.onTrial);
       });
   }, []);
@@ -88,13 +105,13 @@ export default function Dashboard() {
       setAddToNotion(false);
     }
   }, [cookies.get("access_token")]);
-  useEffect(() => {
-    console.log("user ", user);
-    if (!cookies.get("uid")) {
-      //redirect to /login page when not logged in.
-      redirect("/");
-    }
-  }, [user]);
+  // useEffect(() => {
+  //   console.log("user ", user);
+  //   if (!cookies.get("uid")) {
+  //     //redirect to /login page when not logged in.
+  //     redirect("/");
+  //   }
+  // }, [user]);
 
   const db = getFirestore(app);
   const [name, setName] = useState("");
@@ -227,78 +244,7 @@ export default function Dashboard() {
                       </h2>
                     </div>
                     <div className="ml-auto flex-initial space-x-2">
-                      {!isPro && (
-                        // <div className="flex flex-col items-center justify-center gap-4 rounded-lg border border-dashed shadow-sm">
-                        //   Upgrade to premium
-                        // </div>
-                        // <Dialog>
-                        //   <DialogTrigger asChild>
-                        //     {/* <button id="subscribeButton">Upgrade to Pro</button> */}
-                        //     <Button id="subscribeButton" variant="outline">
-                        //       Upgrade
-                        //     </Button>
-                        //   </DialogTrigger>
-                        //   <DialogContent className="sm:max-w-md">
-                        //     <DialogHeader>
-                        //       {/* <DialogTitle>Share link</DialogTitle> */}
-                        //     </DialogHeader>
-                        //     <div id="pricing" className="w-full">
-                        //       <div className="grid items-center justify-center gap-1 text-center md:px-6">
-                        //         <div className="space-y-1">
-                        //           <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
-                        //             Pricing
-                        //           </h2>
-                        //           {/* <p className="mx-auto max-w-[600px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
-                        //             Choose the plan that fits your needs and
-                        //             budget.
-                        //           </p> */}
-                        //         </div>
-                        //         <div className="flex justify-center">
-                        //           <Card className="space-y-4 rounded-lg border-none bg-white">
-                        //             <div className="space-y-1">
-                        //               <h3 className="text-2xl font-bold">
-                        //                 Pro
-                        //               </h3>
-                        //             </div>
-                        //             <div className="space-y-2">
-                        //               <div className="text-4xl font-bold">
-                        //                 $3.99
-                        //               </div>
-                        //               <div className="text-sm text-gray-500 dark:text-gray-400">
-                        //                 per month
-                        //               </div>
-                        //             </div>
-                        //             <ul className="space-y-2 text-sm">
-                        //               <li>
-                        //                 <CheckIcon className="mr-2 inline-block h-4 w-4" />
-                        //                 AI-powered image generation
-                        //               </li>
-                        //               <li>
-                        //                 <CheckIcon className="mr-2 inline-block h-4 w-4" />
-                        //                 Access to template library
-                        //               </li>
-                        //               <li>
-                        //                 <CheckIcon className="mr-2 inline-block h-4 w-4" />
-                        //                 Basic customization tools
-                        //               </li>
-                        //               <li>
-                        //                 <CheckIcon className="mr-2 inline-block h-4 w-4" />
-                        //                 5 GB storage
-                        //               </li>
-                        //             </ul>
-                        //             <Button className="w-full">
-                        //               <Link href={checkoutUrl} target="_blank">
-                        //                 Start Free Trial
-                        //               </Link>
-                        //             </Button>
-                        //           </Card>
-                        //         </div>
-                        //       </div>
-                        //     </div>
-                        //   </DialogContent>
-                        // </Dialog>
-                        <UpgradeButton isPro={isPro} />
-                      )}
+                      {!isPro && <UpgradeButton isPro={isPro} />}
                     </div>
                   </div>
                 </div>
@@ -306,7 +252,9 @@ export default function Dashboard() {
 
               <div className="grid gap-4 sm:grid-col-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 flex mt-3">
                 <div className="grid place-items-center border-dashed border-2 min-h-20 rounded-lg">
-                  {isPro ? (
+                  {cookies.get("access_token") == null ? (
+                    "Cookies are reset please login again"
+                  ) : isPro ? (
                     <CreateGraph loading={loading} />
                   ) : (
                     <UpgradeButton isPro={isPro} />
@@ -315,33 +263,66 @@ export default function Dashboard() {
                 {docs.length !== 0
                   ? docs.map((doc) => (
                       <div key={doc.id}>
-                        <Link href={`/edit/${doc.id}`}>
-                          <Card x-chunk="dashboard-01-chunk-0">
-                            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                        <Card x-chunk="dashboard-01-chunk-0">
+                          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                            <Link href={`/edit/${doc.id}`}>
                               <CardTitle className="text-sm font-medium">
                                 {doc.data.type}
                               </CardTitle>
-
-                              <DropdownMenu className="h-4 w-4 text-muted-foreground">
-                                <DropdownMenuTrigger asChild>
-                                  <Button
-                                    className="h-5 w-5"
-                                    size="icon"
-                                    variant="ghost"
-                                  >
-                                    <DotIcon />
-                                  </Button>
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent>
-                                  <DropdownMenuItem
-                                    onClick={() => handleDelete(doc.id)}
-                                  >
-                                    Delete
-                                  </DropdownMenuItem>
-                                </DropdownMenuContent>
-                              </DropdownMenu>
-                            </CardHeader>
-
+                            </Link>
+                            <DropdownMenu className="h-4 w-4 text-muted-foreground">
+                              <DropdownMenuTrigger asChild>
+                                <Button
+                                  className="h-5 w-5"
+                                  size="icon"
+                                  variant="ghost"
+                                >
+                                  <DotIcon />
+                                </Button>
+                              </DropdownMenuTrigger>
+                              <DropdownMenuContent>
+                                <DropdownMenuItem
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    e.preventDefault();
+                                  }}
+                                >
+                                  <AlertDialog>
+                                    <AlertDialogTrigger asChild>
+                                      <Button variant="ghost" className="h-1">
+                                        Delete
+                                      </Button>
+                                    </AlertDialogTrigger>
+                                    <AlertDialogContent>
+                                      <AlertDialogHeader>
+                                        <AlertDialogTitle>
+                                          Are you absolutely sure?
+                                        </AlertDialogTitle>
+                                        <AlertDialogDescription>
+                                          This action cannot be undone. This
+                                          will permanently delete this chart and
+                                          associated data from our servers.
+                                        </AlertDialogDescription>
+                                      </AlertDialogHeader>
+                                      <AlertDialogFooter>
+                                        <AlertDialogCancel>
+                                          Cancel
+                                        </AlertDialogCancel>
+                                        <AlertDialogAction>
+                                          <Button
+                                            onClick={() => handleDelete(doc.id)}
+                                          >
+                                            Continue
+                                          </Button>
+                                        </AlertDialogAction>
+                                      </AlertDialogFooter>
+                                    </AlertDialogContent>
+                                  </AlertDialog>
+                                </DropdownMenuItem>
+                              </DropdownMenuContent>
+                            </DropdownMenu>
+                          </CardHeader>
+                          <Link href={`/edit/${doc.id}`}>
                             <CardContent>
                               <div className="text-xl font-bold">
                                 {doc.data.name}
@@ -350,8 +331,8 @@ export default function Dashboard() {
                                 +20.1% from last month
                               </p> */}
                             </CardContent>
-                          </Card>
-                        </Link>
+                          </Link>
+                        </Card>
                       </div>
                     ))
                   : null}

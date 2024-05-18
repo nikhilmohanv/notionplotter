@@ -307,73 +307,105 @@ export default function CreateGraph({ loading }) {
       return console.log(error);
     }
   };
-
+  function closeFirstModel(e, open, close) {
+    e.preventDefault();
+    console.log("indi close");
+    console.log("open" + open);
+    document.getElementById("open" + open).click();
+    document.getElementById("close" + close).click();
+  }
   return (
     <>
       {databases.length > 0 ? (
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button size="sm">Add new chart</Button>
-          </DialogTrigger>
-          <DialogContent className="sm:max-w-[600px]">
-            <DialogHeader>
-              <DialogTitle>Create a graph</DialogTitle>
-              {/* <DialogDescription>
+        <>
+          <Dialog className="">
+            <DialogTrigger asChild>
+              <Button size="sm">Add new chart</Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[600px]">
+              <DialogHeader>
+                <DialogTitle>Create a graph</DialogTitle>
+                {/* <DialogDescription>
             Make changes to your profile here. Click save when you're done.
           </DialogDescription> */}
-            </DialogHeader>
-            <div className="grid gap-4 py-4">
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="name" className="text-right">
-                  Database
-                </Label>
-                <Select onValueChange={handleSelect}>
-                  <SelectTrigger className="w-[300px]">
-                    <SelectValue placeholder="Select the database" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      {databases.map((db) => (
-                        <SelectItem key={db.id} value={db.id}>
-                          {db.name}
-                        </SelectItem>
-                      ))}
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-              </div>
+              </DialogHeader>
+              <div className="grid gap-4 py-4">
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="name" className="text-right">
+                    Database
+                  </Label>
+                  <Select
+                    defaultValue={databaseID}
+                    onValueChange={handleSelect}
+                  >
+                    <SelectTrigger className="w-[300px]">
+                      <SelectValue placeholder="Select the database" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        {databases.map((db) => (
+                          <SelectItem key={db.id} value={db.id}>
+                            {db.name}
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                </div>
 
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="username" className="text-right">
-                  Name
-                </Label>
-                <Input
-                  id="name"
-                  onChange={(e) => setName(e.target.value)}
-                  className="col-span-3 w-[300px]"
-                />
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="username" className="text-right">
+                    Name
+                  </Label>
+                  <Input
+                    id="name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    className="col-span-3 w-[300px]"
+                  />
+                </div>
               </div>
-            </div>
-            <DialogFooter>
-              <DialogClose asChild>
-                <Button type="button" variant="secondary">
-                  Close
-                </Button>
-              </DialogClose>
-              <Dialog>
-                <DialogTrigger asChild>
-                  {databaseID && name ? (
-                    <Button type="submit">Next</Button>
-                  ) : (
-                    <Button disabled>Next</Button>
-                  )}
-                </DialogTrigger>
-                <DialogContent className="sm:max-w-[600px] sm:min-h-[270px]">
-                  <DialogHeader>
-                    <DialogTitle>Create a graph</DialogTitle>
-                    <DialogDescription>Select chart type</DialogDescription>
-                  </DialogHeader>
-                  <div className="grid grid-cols-4 gap-4">
+              <DialogFooter>
+                <DialogClose asChild>
+                  <Button
+                    type="button"
+                    id="close1"
+                    onClick={console.log("closing")}
+                    variant="ghost"
+                  >
+                    Close
+                  </Button>
+                </DialogClose>
+                {databaseID && name ? (
+                  <Button
+                    type="submit"
+                    onClick={(e) => {
+                      closeFirstModel(e, "2", "1");
+                    }}
+                  >
+                    Next
+                  </Button>
+                ) : (
+                  <Button disabled>Next</Button>
+                )}
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+
+          {/* chart type */}
+
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button className="hidden" id="open2">
+                Next trigger
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[600px] min-h-[270px]">
+              <DialogHeader>
+                <DialogTitle>Create a graph</DialogTitle>
+                <DialogDescription>Select chart type</DialogDescription>
+              </DialogHeader>
+              <div className="w-full grid grid-cols-4  gap-4 px-5">
                 {/* bar chart */}
                 <TooltipProvider>
                   <Tooltip>
@@ -549,102 +581,119 @@ export default function CreateGraph({ loading }) {
                     </TooltipContent>
                   </Tooltip>
                 </TooltipProvider>
+
+               
               </div>
 
-                  <DialogFooter>
-                    <DialogClose asChild>
-                      <Button type="button" variant="secondary">
-                        Close
-                      </Button>
-                    </DialogClose>
-                    <Dialog>
-                      <DialogTrigger asChild>
-                        {chartType ? (
-                          <Button type="submit">Next</Button>
-                        ) : (
-                          <Button disabled>Next</Button>
-                        )}
-                        {/* <Button type="submit">Next</Button> */}
-                      </DialogTrigger>
+              <DialogFooter>
+                <DialogClose asChild>
+                  <Button type="button" id="close2" variant="ghost">
+                    Close
+                  </Button>
+                </DialogClose>
+                {chartType ? (
+                  <Button
+                    type="submit"
+                    onClick={(e) => {
+                      closeFirstModel(e, "3", "2");
+                    }}
+                  >
+                    Next
+                  </Button>
+                ) : (
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Button disabled>Next</Button>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Select Chart type to continue</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                )}
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
 
-                      <DialogContent className="sm:max-w-[600px]">
-                        <DialogHeader>
-                          <DialogTitle>Create a graph</DialogTitle>
-                          {/* <DialogDescription>
-            Make changes to your profile here. Click save when you're done.
-          </DialogDescription> */}
-                        </DialogHeader>
-                        <div className="grid gap-4 py-4">
-                          <div className="grid grid-cols-4 items-center gap-4">
-                            <Label htmlFor="name" className="text-right">
-                              X-axis
-                            </Label>
-                            <Select onValueChange={handleXSelect}>
-                              <SelectTrigger className="w-[280px]">
-                                <SelectValue placeholder="Select x axis column" />
-                              </SelectTrigger>
-                              <SelectContent>
-                                <SelectGroup>
-                                  {colNameAndId.map((col) => (
-                                    <SelectItem key={col.id} value={col.id}>
-                                      {col.name}
-                                    </SelectItem>
-                                  ))}
-                                </SelectGroup>
-                              </SelectContent>
-                            </Select>
-                          </div>
-                          <div className="grid grid-cols-4 items-center gap-4">
-                            <Label htmlFor="name" className="text-right">
-                              Y-axis
-                            </Label>
-                            <Select onValueChange={handleYSelect}>
-                              <SelectTrigger className="w-[280px]">
-                                <SelectValue placeholder="Select x axis column" />
-                              </SelectTrigger>
-                              <SelectContent>
-                                <SelectGroup>
-                                  {colNameAndId.map((col) => (
-                                    <SelectItem key={col.id} value={col.id}>
-                                      {col.name}
-                                    </SelectItem>
-                                  ))}
-                                </SelectGroup>
-                              </SelectContent>
-                            </Select>
-                          </div>
-                        </div>
-                        <DialogFooter>
-                          <DialogClose asChild>
-                            <Button type="button" variant="secondary">
-                              Close
-                            </Button>
-                          </DialogClose>
-                          <DialogTrigger asChild>
-                            {yAxis && xAxis ? (
-                              chartCreation ? (
-                                <Button disabled size="sm">
-                                  <Loader2 className="mr-2 h-4 w-4  animate-spin" />
-                                  Creating Chart
-                                </Button>
-                              ) : (
-                                <Button type="submit" onClick={createGraph}>
-                                  Create
-                                </Button>
-                              )
-                            ) : (
-                              <Button disabled>Create</Button>
-                            )}
-                          </DialogTrigger>
-                        </DialogFooter>
-                      </DialogContent>
-                    </Dialog>
-                  </DialogFooter>
-                </DialogContent>
-              </Dialog>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
+          {/* selecting axes */}
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button className="hidden" id="open3" type="submit">
+                Next
+              </Button>
+            </DialogTrigger>
+
+            <DialogContent className="sm:max-w-[600px]">
+              <DialogHeader>
+                <DialogTitle>Create a Chart</DialogTitle>
+              </DialogHeader>
+              <div className="grid gap-4 py-4">
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="name" className="text-right">
+                    X-axis
+                  </Label>
+                  <Select defaultValue={xAxis} onValueChange={handleXSelect}>
+                    <SelectTrigger className="w-[280px]">
+                      <SelectValue placeholder="Select x axis column" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        {colNameAndId.map((col) => (
+                          <SelectItem key={col.id} value={col.id}>
+                            {col.name}
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="name" className="text-right">
+                    Y-axis
+                  </Label>
+                  <Select defaultValue={yAxis} onValueChange={handleYSelect}>
+                    <SelectTrigger className="w-[280px]">
+                      <SelectValue placeholder="Select x axis column" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        {colNameAndId.map((col) => (
+                          <SelectItem key={col.id} value={col.id}>
+                            {col.name}
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+              <DialogFooter>
+                <DialogClose asChild>
+                  <Button type="button" variant="ghost">
+                    Close
+                  </Button>
+                </DialogClose>
+                <DialogTrigger asChild>
+                  {yAxis && xAxis ? (
+                    chartCreation ? (
+                      <Button disabled size="sm">
+                        <Loader2 className="mr-2 h-4 w-4  animate-spin" />
+                        Creating Chart
+                      </Button>
+                    ) : (
+                      <Button type="submit" onClick={createGraph}>
+                        Create
+                      </Button>
+                    )
+                  ) : (
+                    <Button disabled>Create</Button>
+                  )}
+                </DialogTrigger>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+        </>
       ) : (
         <Button disabled size="sm">
           <Loader2 className="mr-2 h-4 w-4  animate-spin" />

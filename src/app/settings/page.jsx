@@ -43,9 +43,14 @@ export default function Dashboard() {
     fetch("/api/payment/getusersubscriptionplan")
       .then((data) => data.json())
       .then((data) => {
-        console.log(data.isPro);
+        const expires = new Date(Date.now() + 365 * 24 * 60 * 60 * 1000);
+
         data.isPro !== undefined && setIsPro(data.isPro);
-        cookies.set("isPro", data.isPro);
+        cookies.set("isPro", data.isPro, {
+          expires: expires,
+          priority: "high",
+          sameSite: "strict",
+        });
         data.onTrial !== undefined && setOnTrial(data.onTrial);
         data.isCanceled !== undefined && setIsCanceled(data.isCanceled);
         data.renews_at !== undefined && setRenewsAt(data.renews_at);

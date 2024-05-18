@@ -31,7 +31,7 @@ export default function Test() {
             src="/notion2charts-hero-image.png"
             width={"1500"}
             height="550"
-            alt=""
+            alt="notion-plotter-hero"
           />
         </div>
       </section>
