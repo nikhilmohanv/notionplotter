@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { buttonVariants } from "@/components/ui/button";
 import { HeroCards } from "./HeroCards";
-import LoginButton from "@/components/basic/loginbutton";
+import LoginButton from "@/components/LandingPage/loginbutton";
 import Image from "next/image";
 
 export const Hero = () => {

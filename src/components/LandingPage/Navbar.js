@@ -19,7 +19,7 @@ import { Menu } from "lucide-react";
 import { ModeToggle } from "./mode-toggle";
 import { LogoIcon } from "./Icons";
 import LineChartIcon from "@/components/icons/linechart";
-import LoginButton from "../basic/loginbutton";
+import LoginButton from "./loginbutton";
 
 
 

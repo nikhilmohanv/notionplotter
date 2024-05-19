@@ -1,4 +1,4 @@
-import getUserSubscriptionPlan from "@/libs/subscription/subscription";
+import getUserSubscriptionPlan from "@/lib/subscription/subscription";
 import { NextResponse, NextRequest } from "next/server";
 
 export const GET = async (req) => {

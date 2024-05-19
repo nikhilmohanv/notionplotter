@@ -3,7 +3,7 @@ import {
   updateSubscription,
 } from "@lemonsqueezy/lemonsqueezy.js";
 import { cookies } from "next/headers";
-import getDocument from "@/firebase/firestore/getdata";
+import getDocument from "@/lib/firebase/firestore/getdata";
 import { NextResponse } from "next/server";
 
 export async function POST(request) {

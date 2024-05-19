@@ -1,4 +1,4 @@
-import completequerydb from "@/libs/notion/completequerydb/completequerydb";
+import completequerydb from "@/lib/notion/completequerydb/completequerydb";
 import { NextResponse, NextRequest } from "next/server";
 
 export const POST = async (req) => {

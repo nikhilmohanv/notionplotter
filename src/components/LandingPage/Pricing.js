@@ -7,7 +7,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Check } from "lucide-react";
-import LoginButton from "../basic/loginbutton";
+import LoginButton from "./loginbutton";
 
 const pricingList = [
   {

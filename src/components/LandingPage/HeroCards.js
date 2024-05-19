@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/card";
 import { Check, Linkedin } from "lucide-react";
 import { LightBulbIcon } from "./Icons";
-import LoginButton from "@/components/basic/loginbutton";
+import LoginButton from "@/components/LandingPage/loginbutton";
 // import { GitHubLogoIcon } from "@radix-ui/react-icons";
 
 export const HeroCards = ({ handleSignIn }) => {

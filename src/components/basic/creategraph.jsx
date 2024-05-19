@@ -7,7 +7,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-import addData from "@/firebase/firestore/adddata";
+import addData from "@/lib/firebase/firestore/adddata";
 import { Loader2 } from "lucide-react";
 import {
   AreaChartIconBlack,

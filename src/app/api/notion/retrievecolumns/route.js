@@ -1,4 +1,4 @@
-import retrieveDb from "@/libs/notion/retrieveDb/retrivedb";
+import retrieveDb from "@/lib/notion/retrieveDb/retrivedb";
 import { NextResponse, NextRequest } from "next/server";
 
 export const POST = async (req) => {

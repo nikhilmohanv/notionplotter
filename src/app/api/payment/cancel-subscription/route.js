@@ -1,13 +1,13 @@
 import { NextResponse } from "next/server";
 import axios from "axios";
-import getUserSubscriptionPlan from "@/libs/subscription/subscription";
-import getDocument from "@/firebase/firestore/getdata";
+import getUserSubscriptionPlan from "@/lib/subscription/subscription";
+import getDocument from "@/lib/firebase/firestore/getdata";
 import { cookies } from "next/headers";
 import {
   cancelSubscription,
   lemonSqueezySetup,
 } from "@lemonsqueezy/lemonsqueezy.js";
-import addDataWithId from "@/firebase/firestore/adddatawithid";
+import addDataWithId from "@/lib/firebase/firestore/adddatawithid";
 
 export async function POST(request) {
   try {

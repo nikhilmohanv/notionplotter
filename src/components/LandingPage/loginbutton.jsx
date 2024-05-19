@@ -4,10 +4,10 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { redirect } from "next/navigation";
 import { setCookie } from "cookies-next";
-import getTokenWithUId from "@/firebase/firestore/getaccesstoken";
+import getTokenWithUId from "@/lib/firebase/firestore/getaccesstoken";
 import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "@/firebase/config";
-import addDataWithId from "@/firebase/firestore/adddatawithid";
+import { auth } from "@/lib/firebase/config";
+import addDataWithId from "@/lib/firebase/firestore/adddatawithid";
 export default function LoginButton({ text, variant }) {
   const { user, GoogleSignIn } = UserAuth();
   const [loading, setLoading] = useState(false);

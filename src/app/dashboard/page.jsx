@@ -59,9 +59,9 @@ import {
   deleteDoc,
   doc,
 } from "firebase/firestore";
-import app from "@/firebase/config";
+import app from "@/lib/firebase/config";
 import CreateGraph from "@/components/basic/creategraph";
-import LoggedInNavBar from "@/components/basic/navbar/loggedin-navbar";
+import LoggedInNavBar from "@/components/navbar/loggedin-navbar";
 import UpgradeButton from "@/components/basic/upgradebutton";
 
 export default function Dashboard() {

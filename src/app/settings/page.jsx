@@ -22,12 +22,12 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import LoggedInNavBar from "@/components/basic/navbar/loggedin-navbar";
+import LoggedInNavBar from "@/components/navbar/loggedin-navbar";
 import { UserAuth } from "../context/firebaseauth/authcontext";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useEffect, useState } from "react";
-import ManageSubscription from "@/libs/subscription/manageSubscription";
+import ManageSubscription from "@/lib/subscription/manageSubscription";
 import { useCookies } from "next-client-cookies";
 
 export default function Dashboard() {

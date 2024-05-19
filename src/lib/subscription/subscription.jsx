@@ -1,8 +1,8 @@
 "use server";
 import { cookies } from "next/headers";
-import getDocument from "@/firebase/firestore/getdata";
+import getDocument from "@/lib/firebase/firestore/getdata";
 import { LemonsqueezyClient } from "lemonsqueezy.ts";
-import addDataWithId from "@/firebase/firestore/adddatawithid";
+import addDataWithId from "@/lib/firebase/firestore/adddatawithid";
 
 export default async function getUserSubscriptionPlan() {
   const cookieStore = cookies();

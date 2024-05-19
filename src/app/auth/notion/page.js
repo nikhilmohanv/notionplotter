@@ -1,4 +1,4 @@
-import addData from "@/firebase/firestore/access_token";
+import addData from "@/lib/firebase/firestore/access_token";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 

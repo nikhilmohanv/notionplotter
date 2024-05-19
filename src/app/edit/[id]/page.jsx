@@ -36,9 +36,9 @@ import { useCookies } from "next-client-cookies";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import addDataWithId from "@/firebase/firestore/adddatawithid";
+import addDataWithId from "@/lib/firebase/firestore/adddatawithid";
 import AreaChart from "@/components/charts/area/area";
-import LoggedInNavBar from "@/components/basic/navbar/loggedin-navbar";
+import LoggedInNavBar from "@/components/navbar/loggedin-navbar";
 import BarChart from "@/components/charts/bar/bar";
 import DoughnutChart from "@/components/charts/doughnut/doughnut";
 import PieChart from "@/components/charts/pie/pie";
@@ -1271,13 +1271,13 @@ export default function Edit() {
                   <TabsContent value="fillSingle">
                     <div className="w-full  ">
                       <ColorPicker
-                        disabledAlpha
+                        // disabledAlpha
                         size="large"
                         format="hex"
                         defaultValue={fillSingleColor}
                         value={fillSingleColor}
                         onChange={(value, hex) => {
-                          setFillSingleColor(hex);
+                          setFillSingleColor(value.toRgbString());
                         }}
                       />
                     </div>
@@ -1286,13 +1286,7 @@ export default function Edit() {
                     <div className="w-full ">
                       {fillMultiColor.map((item, index) => (
                         <>
-                          {/* <input
-                            name="color"
-                            type="color"
-                            value={item}
-                            onChange={(event) => addNewFillColor(event, index)}
-                            className="w-12 h-12 p-0 m-2"
-                          /> */}
+
                           <ColorPicker
                             // disabledAlpha
                             size="large"
@@ -1301,7 +1295,7 @@ export default function Edit() {
                             value={item}
                             onChange={(value, hex) => {
                               addNewFillColor(hex, index);
-                              console.log(value)
+                              console.log(value);
                             }}
                             className="ml-1"
                           />
@@ -1336,7 +1330,6 @@ export default function Edit() {
                     /> */}
 
                     <ColorPicker
-                      
                       size="large"
                       format="hex"
                       defaultValue={backgroundColor}

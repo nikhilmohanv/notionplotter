@@ -1,5 +1,5 @@
 import crypto from "crypto";
-import app from "@/firebase/config";
+import app from "@/lib/firebase/config";
 import {
   getFirestore,
   doc,
@@ -7,8 +7,8 @@ import {
   addDoc,
   collection,
 } from "firebase/firestore";
-import addDataWithId from "@/firebase/firestore/adddatawithid";
-import addData from "@/firebase/firestore/adddata";
+import addDataWithId from "@/lib/firebase/firestore/adddatawithid";
+import addData from "@/lib/firebase/firestore/adddata";
 
 const db = getFirestore(app);
 

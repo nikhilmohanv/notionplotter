@@ -52,27 +52,45 @@ const AreaChart = ({
       setDarkMode(true);
     }
   }, [backgroundColor]);
-
+  console.log(backgroundColor);
   const hex2rgb = (hex) => {
     const r = parseInt(hex.slice(1, 3), 16);
     const g = parseInt(hex.slice(3, 5), 16);
     const b = parseInt(hex.slice(5, 7), 16);
+    const a = parseInt(hex.slice(8, 9), 16);
 
     // return {r, g, b}
-    const rgba = `rgba(${r}, ${g}, ${b}, 0.1)`;
+    const rgba = `rgba(${r}, ${g}, ${b}, ${a})`;
     return rgba;
   };
+  console.log(fillSingleColor);
 
   useEffect(() => {
     const newFillColor = [];
     if (fillColorStatus === "fillSingle") {
-      setLineColor(fillSingleColor);
-      newFillColor.push(hex2rgb(fillSingleColor));
+      const rgbaValues = fillSingleColor
+        .substring(5)
+        .split(",")
+        .map((v) => parseFloat(v));
+      console.log(rgbaValues);
+
+      // Set the alpha value to 1
+      if (rgbaValues.length == 3) {
+        //if 3 values in the array then not 100% alpha so
+        setLineColor(fillSingleColor);
+      } else {
+        rgbaValues[3] = 1;
+
+        // Rebuild the rgba string with the new alpha
+        setLineColor(`rgba(${rgbaValues.join(",")})`);
+      }
+      newFillColor.push(fillSingleColor);
     } else if (fillColorStatus === "fillMulti") {
       setLineColor(fillMultiColor);
-      fillMultiColor.forEach((color) => {
-        newFillColor.push(hex2rgb(color));
-      });
+      newFillColor.push(fillMultiColor);
+      // fillMultiColor.forEach((color) => {
+      //   newFillColor.push(hex2rgb(color));
+      // });
     }
     setFillColor(newFillColor);
   }, [fillColorStatus, fillSingleColor, fillMultiColor]);

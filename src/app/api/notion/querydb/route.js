@@ -1,4 +1,4 @@
-import querydb from "@/libs/notion/queryDb/querydb";
+import querydb from "@/lib/notion/queryDb/querydb";
 import { NextResponse, NextRequest } from "next/server";
 
 export const POST = async (req) => {

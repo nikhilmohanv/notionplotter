@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import getDoument from "@/firebase/firestore/getdata";
+import getDoument from "@/lib/firebase/firestore/getdata";
 import { NextResponse } from "next/server";
 
 export const POST = async (req) => {

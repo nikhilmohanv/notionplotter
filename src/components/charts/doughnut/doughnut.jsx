@@ -56,16 +56,33 @@ const DoughnutChart = ({
   useEffect(() => {
     const newFillColor = [];
     if (fillColorStatus === "fillSingle") {
-      setLineColor(fillSingleColor);
-      newFillColor.push(hex2rgb(fillSingleColor));
+      const rgbaValues = fillSingleColor
+        .substring(5)
+        .split(",")
+        .map((v) => parseFloat(v));
+      console.log(rgbaValues);
+
+      // Set the alpha value to 1
+      if (rgbaValues.length == 3) {
+        //if 3 values in the array then not 100% alpha so
+        setLineColor(fillSingleColor);
+      } else {
+        rgbaValues[3] = 1;
+
+        // Rebuild the rgba string with the new alpha
+        setLineColor(`rgba(${rgbaValues.join(",")})`);
+      }
+      newFillColor.push(fillSingleColor);
     } else if (fillColorStatus === "fillMulti") {
       setLineColor(fillMultiColor);
-      fillMultiColor.forEach((color) => {
-        newFillColor.push(hex2rgb(color));
-      });
+      newFillColor.push(fillMultiColor);
+      // fillMultiColor.forEach((color) => {
+      //   newFillColor.push(hex2rgb(color));
+      // });
     }
     setFillColor(newFillColor);
   }, [fillColorStatus, fillSingleColor, fillMultiColor]);
+
   console.log("y values ", yValues);
   return (
     // <div

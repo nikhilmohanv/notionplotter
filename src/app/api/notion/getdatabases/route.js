@@ -1,4 +1,4 @@
-import getDbs from "@/libs/notion/getdbs/getDbs";
+import getDbs from "@/lib/notion/getdbs/getDbs";
 import { NextResponse, NextRequest } from "next/server";
 
 export const POST = async (req) => {
