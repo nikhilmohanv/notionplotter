@@ -107,7 +107,6 @@ const AreaChart = ({
       // fillMultiColor.forEach((color) => {
       //   newFillColor.push(convertForLineColor(color));
       // });
-
     }
     setFillColor(newFillColor);
   }, [fillColorStatus, fillSingleColor, fillMultiColor]);
@@ -200,6 +199,9 @@ const AreaChart = ({
             beginAtZero: !0,
             ticks: {
               color: darkMode ? "rgba(255, 255, 255, 0.9)" : "#43424D",
+              callback: function (value, index, values) {
+                return "$" + value; // Add your desired symbol here
+              },
             },
             grid: {
               color: darkMode

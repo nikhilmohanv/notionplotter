@@ -16,6 +16,7 @@ export default function Embed() {
   const id = pathname.slice(7);
   //store label of the graph
   const [label, setLabel] = useState();
+  const [yAxis,setYAxis]=useState()
 
   // store background color from user
   const [backgroundColor, setBackgroundColor] = useState("#FFFFFF");
@@ -52,18 +53,18 @@ export default function Embed() {
     })
       .then((response) => response.json())
       .then((data) => {
-        data.yaxisId && setYAxis(data.yaxisId);
+        // data.yaxisId && setYAxis(data.yaxisId);
 
         data.type && setChartType(data.type);
         console.log(data.type);
-        data.xaxisId && setXAxis(data.xaxisId);
+        // data.xaxisId && setXAxis(data.xaxisId);
         data.label && setLabel(data.label);
         data.fillSingleColor && setFillSingleColor(data.fillSingleColor);
         data.fillMultiColor && setFillMultiColor(data.fillMultiColor);
-        data.lineSingleColor && setLineSingleColor(data.lineSingleColor);
+        // data.lineSingleColor && setLineSingleColor(data.lineSingleColor);
         data.backgroundColor && setBackgroundColor(data.backgroundColor);
-        data.lineMultiColor && setLineMultiColor(data.lineMultiColor);
-        data.colorStatus && setColorStatus(data.colorStatus);
+        // data.lineMultiColor && setLineMultiColor(data.lineMultiColor);
+        // data.colorStatus && setColorStatus(data.colorStatus);
         data.fillColorStatus && setFillColorStatus(data.fillColorStatus);
         data.legend != undefined && setLegend(data.legend);
         data.legendPosition && setLegendPosition(data.legendPosition);

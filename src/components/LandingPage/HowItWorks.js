@@ -7,21 +7,21 @@ const features = [
     id: "1",
     title: "Connect to Notion",
     desc: "Connect to your Notion workspace to select databases to create charts.",
-    image: "/user.png",
+    image: "/connectdata.png",
   },
   {
     // icon: <MapIcon />,4
     id: "2",
     title: "Create Chart",
     desc: "Create unlimited charts from your database with your choice of chart type, colors, and more. You can filter and sort data as you do in your notion dashboard.",
-    image: "/user.png",
+    image: "/bluehowto.png",
   },
   {
     // icon: <PlaneIcon />,
     id: "3",
     title: "Embed chart",
     desc: "Embed your charts direclty to your Notion dashboard. Copy the link and paste it to your pages.",
-    image: "/user.png",
+    image: "/purplehowto.png",
   },
 ];
 
@@ -39,14 +39,14 @@ export const HowItWorks = () => {
       </p>
 
       <div className="">
-        {features.map(({ title, desc, id }) =>
+        {features.map(({ title, desc, id, image }) =>
           id == "2" ? (
             <div key={id} class="py-16">
               <div class="xl:container m-auto px-6 text-gray-600 md:px-12 xl:px-16">
-                <div class="lg:bg-gray-50 dark:lg:bg-darker lg:p-16 rounded-[3rem] space-y-6 md:flex md:gap-6 justify-center md:space-y-0 lg:items-center">
+                <div class="bg-gray-50 dark:lg:bg-darker lg:p-16 rounded-[3rem] space-y-6 md:flex md:gap-6 justify-center md:space-y-0 lg:items-center">
                   <div class="md:5/12 lg:w-1/2">
                     <img
-                      src="/connectdata.png"
+                      src={image}
                       alt="image"
                       loading="lazy"
                       width=""
