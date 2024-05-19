@@ -200,7 +200,7 @@ const AreaChart = ({
             ticks: {
               color: darkMode ? "rgba(255, 255, 255, 0.9)" : "#43424D",
               callback: function (value, index, values) {
-                return "$" + value; // Add your desired symbol here
+                return "$" + value.toLocaleString(); // Add your desired symbol here
               },
             },
             grid: {

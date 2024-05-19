@@ -87,6 +87,7 @@ export default function Dashboard() {
       .then((data) => data.json())
       .then((data) => {
         const expires = new Date(Date.now() + 365 * 24 * 60 * 60 * 1000);
+        
 
         console.log(data.isPro);
         data.isPro !== undefined && setIsPro(data.isPro);

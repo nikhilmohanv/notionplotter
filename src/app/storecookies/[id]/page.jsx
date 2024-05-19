@@ -9,12 +9,15 @@ export default function StoreCookies() {
   const pathname = usePathname();
   useEffect(() => {
     const value = pathname.slice(14);
+    const expires = new Date(Date.now() + 365 * 24 * 60 * 60 * 1000);
     // Set the value of the 'my-cookie' cookie
-    cookies.set("access_token", value, {
-      expires: "365",
-      sameSite: "Strict",
-      priority: "high",
-    });
+    if (value != undefined || value != null) {
+      cookies.set("access_token", value, {
+        expires: expires,
+        priority: "high",
+        sameSite: "strict",
+      });
+    }
     redirect("/");
   }, []);
 }
