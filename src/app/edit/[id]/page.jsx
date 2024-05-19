@@ -43,7 +43,7 @@ import BarChart from "@/components/charts/bar/bar";
 import DoughnutChart from "@/components/charts/doughnut/doughnut";
 import PieChart from "@/components/charts/pie/pie";
 import { Skeleton } from "@/components/ui/skeleton";
-import Filter from "@/app/filters/filter";
+import Filter from "@/components/edit/filters/filter";
 import { Copy } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 
@@ -123,7 +123,7 @@ export default function Edit() {
   const [lineMultiColor, setLineMultiColor] = useState([""]);
 
   //to store all multi color values
-  const [fillMultiColor, setFillMultiColor] = useState([""]);
+  const [fillMultiColor, setFillMultiColor] = useState(["rgba(0, 0, 0,0.1)"]);
 
   // aggregation for sum and count
   const [aggregation, setAggregation] = useState("count");
@@ -170,29 +170,22 @@ export default function Edit() {
 
   //adding new empty string to the state fillMultiColor
   const handleAddFillColor = () => {
-    setFillMultiColor([...fillMultiColor, "#000000"]);
+    setFillMultiColor([...fillMultiColor, "rgba(0, 0, 0,0.1)"]);
   };
   //adding the value to the state
-  const addNewColor = (event, index) => {
-    let { name, value } = event.target;
-    let onChangeValue = [...lineMultiColor];
-    onChangeValue[index] = value;
-    setLineMultiColor(onChangeValue);
-  };
+ 
 
   //adding new value to fill color variable
   const addNewFillColor = (color, index) => {
     // let { name, value } = event.target;
+    console.log(color)
     let onChangeValue = [...fillMultiColor];
     onChangeValue[index] = color;
     setFillMultiColor(onChangeValue);
   };
 
   // manage filters from child <Filter> component
-  const getFilters = (filter, orAnd) => {
-    setFilters(filter);
-    setAndOr(orAnd);
-  };
+
   const [extractedProperties, setExtractedProperties] = useState([]);
   //store chart type
   const [chartType, setChartType] = useState("");
@@ -282,6 +275,11 @@ export default function Edit() {
     }
   }, [dbId]);
 
+  const getFilters = (filter, orAnd) => {
+    setFilters(filter);
+    setAndOr(orAnd);
+  };
+
   //fetch data from api api/notion/querydb?id={id} this have all the row information
   useEffect(() => {
     if (dbId !== null && dbId !== undefined) {
@@ -303,7 +301,7 @@ export default function Edit() {
           console.log(error);
         });
     }
-  }, [dbId, filters]);
+  }, [dbId, filters, andOr]);
 
   //store datas to the firestore
   const saveToDb = async (e) => {
@@ -375,6 +373,8 @@ export default function Edit() {
   //it stores extracted data from the api
   useEffect(() => {
     setExtractedProperties([]);
+    console.log("reextracing data");
+    console.log("rows data ", rows);
     rows.forEach((page) => {
       // setCount(prevCount => prevCount + 1);
       // Extract properties from the 'properties' object
@@ -755,12 +755,12 @@ export default function Edit() {
         }
       }
     });
-  }, [rows, filters, xAxis, yAxis]);
+  }, [rows, xAxis, yAxis]);
 
   console.log(extractedProperties);
 
   useEffect(() => {
-    console.log("x called");
+    console.log("changing x ");
 
     if (xAxis != null && xAxis != undefined) {
       console.log(extractedProperties);
@@ -769,6 +769,8 @@ export default function Edit() {
       let extractedXValues;
       if (extractedProperties.length > 0) {
         XAxisData = extractedProperties.filter((obj) => obj.id == xAxis);
+      } else {
+        setXAxisValues([]);
       }
       if (XAxisData) {
         extractedXValues = XAxisData.map((obj) => {
@@ -869,8 +871,7 @@ export default function Edit() {
   }, [xAxis, extractedProperties]);
 
   useEffect(() => {
-    console.log("y called");
-    console.log("y axis", yAxis);
+    console.log("chaing y");
     if (yAxis != null && yAxis != undefined) {
       console.log("inside if");
       let YAxisData;
@@ -878,6 +879,8 @@ export default function Edit() {
       if (extractedProperties.length > 0) {
         console.log("inside 2 if");
         YAxisData = extractedProperties.filter((obj) => obj.id == yAxis);
+      } else {
+        setYAxisValues([]);
       }
       if (YAxisData) {
         console.log("inside 3 if");
@@ -1271,7 +1274,6 @@ export default function Edit() {
                   <TabsContent value="fillSingle">
                     <div className="w-full  ">
                       <ColorPicker
-                        // disabledAlpha
                         size="large"
                         format="hex"
                         defaultValue={fillSingleColor}
@@ -1286,17 +1288,14 @@ export default function Edit() {
                     <div className="w-full ">
                       {fillMultiColor.map((item, index) => (
                         <>
-
                           <ColorPicker
-                            // disabledAlpha
                             size="large"
-                            format="rgb"
+                            format="hex"
                             defaultValue={item}
                             value={item}
-                            onChange={(value, hex) => {
-                              addNewFillColor(hex, index);
-                              console.log(value);
-                            }}
+                            onChange={(value, hex) =>
+                              addNewFillColor(value.toRgbString(), index)
+                            }
                             className="ml-1"
                           />
 

@@ -2,11 +2,6 @@ import addData from "@/lib/firebase/firestore/access_token";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
-// const encryptId = (uid) => {
-// 	const ciphertext = AES.encrypt(uid, 'secretPassphrase');
-// 	return encodeURIComponent(ciphertext.toString());
-// }
-
 async function getAccessToken(code) {
   try {
     const uri = process.env.REDIRECT_URI;

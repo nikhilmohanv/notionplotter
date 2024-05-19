@@ -7,7 +7,6 @@ export default async function querydb(id, filter, andOr) {
   const tokenCookie = cookieStore.get("access_token")?.value;
 
   if (!tokenCookie) throw new Error("No Token Cookie Found");
-
   const notion = new Client({ auth: tokenCookie });
   const filtered = filter.map((fil) => {
     const property = fil.property.label;
@@ -50,7 +49,8 @@ export default async function querydb(id, filter, andOr) {
       fil.rollupType == "number" ||
       fil.rollupType == "phone_number" ||
       fil.formulaType == "number" ||
-      fil.formulaType == "phone_number"
+      fil.formulaType == "phone_number" ||
+      fil.property.type == "number"
     ) {
       if (operator == "is_not_empty" || operator == "is_empty") {
         value = true;
@@ -151,7 +151,7 @@ export default async function querydb(id, filter, andOr) {
       },
     };
   });
-  console.log("authenticated")
+  console.log("authenticated");
   try {
     const response = await notion.databases.query({
       database_id: id,
@@ -170,6 +170,6 @@ export default async function querydb(id, filter, andOr) {
   } catch (err) {
     console.log(err);
     // throw err;
-    return err
+    return err;
   }
 }

@@ -7,7 +7,6 @@ import {
   GoogleAuthProvider,
 } from "firebase/auth";
 import { auth } from "@/lib/firebase/config";
-import getTokenWithUId from "@/lib/firebase/firestore/getaccesstoken";
 
 export const AuthContext = createContext();
 
