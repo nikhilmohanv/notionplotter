@@ -40,6 +40,15 @@ export default function PieChart({
   //     setDarkMode(true);
   //   }
   // }, [backgroundColor]);
+  const hex2rgb = (hex) => {
+    const r = parseInt(hex.slice(1, 3), 16);
+    const g = parseInt(hex.slice(3, 5), 16);
+    const b = parseInt(hex.slice(5, 7), 16);
+
+    // return {r, g, b}
+    const rgba = `rgba(${r}, ${g}, ${b})`;
+    return rgba;
+  };
   const convertForLineColor = (rgba) => {
     const rgbaValues = rgba
       .substring(5)
@@ -55,16 +64,6 @@ export default function PieChart({
       return `rgba(${rgbaValues.join(",")})`;
     }
   };
-  const hex2rgb = (hex) => {
-    const r = parseInt(hex.slice(1, 3), 16);
-    const g = parseInt(hex.slice(3, 5), 16);
-    const b = parseInt(hex.slice(5, 7), 16);
-
-    // return {r, g, b}
-    const rgba = `rgba(${r}, ${g}, ${b})`;
-    return rgba;
-  };
-
   useEffect(() => {
     if (backgroundColor.trim().toLowerCase() == "#ffffff") {
       setDarkMode(false);
@@ -91,15 +90,15 @@ export default function PieChart({
       // Rebuild the rgba string with the new alpha
       setLineColor(convertForLineColor(fillSingleColor));
 
-      newFillColor.push(fillSingleColor);
+      setFillColor(fillSingleColor);
     } else if (fillColorStatus === "fillMulti") {
       setLineColor(convertForLineColor(fillMultiColor[0]));
-      newFillColor.push(fillMultiColor);
+      setFillColor(fillMultiColor);
       // fillMultiColor.forEach((color) => {
       //   newFillColor.push(convertForLineColor(color));
       // });
     }
-    setFillColor(newFillColor);
+    // setFillColor(newFillColor);
   }, [fillColorStatus, fillSingleColor, fillMultiColor]);
   return (
     <>

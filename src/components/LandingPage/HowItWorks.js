@@ -7,21 +7,21 @@ const features = [
     id: "1",
     title: "Connect to Notion",
     desc: "Connect to your Notion workspace to select databases to create charts.",
-    image: "/connectdata.png",
+    image: "/connect.png",
   },
   {
     // icon: <MapIcon />,4
     id: "2",
     title: "Create Chart",
     desc: "Create unlimited charts from your database with your choice of chart type, colors, and more. You can filter and sort data as you do in your notion dashboard.",
-    image: "/bluehowto.png",
+    image: "/edit-chart.png",
   },
   {
     // icon: <PlaneIcon />,
     id: "3",
     title: "Embed chart",
     desc: "Embed your charts direclty to your Notion dashboard. Copy the link and paste it to your pages.",
-    image: "/purplehowto.png",
+    image: "/embed.png",
   },
 ];
 
@@ -69,7 +69,7 @@ export const HowItWorks = () => {
                 <div className="lg:bg-gray-50 dark:lg:bg-darker lg:p-16 rounded-[3rem] space-y-6 md:flex flex-row-reverse md:gap-6 justify-center md:space-y-0 lg:items-center">
                   <div className="md:5/12 lg:w-1/2">
                     <img
-                      src="/connectdata.png"
+                      src={image}
                       alt="image"
                       loading="lazy"
                       width=""

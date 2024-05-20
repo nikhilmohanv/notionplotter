@@ -8,6 +8,8 @@ import getTokenWithUId from "@/lib/firebase/firestore/getaccesstoken";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "@/lib/firebase/config";
 import addDataWithId from "@/lib/firebase/firestore/adddatawithid";
+import { Loader2 } from "lucide-react";
+
 export default function LoginButton({ text, variant }) {
   const { user, GoogleSignIn } = UserAuth();
   const [loading, setLoading] = useState(false);
@@ -83,10 +85,8 @@ export default function LoginButton({ text, variant }) {
                   sameSite: "strict",
                 });
                 console.log("old account with access token");
-                // redirect("/dashboard");
               } else {
                 console.log("old account with no access token");
-                // redirect("/dashboard?n=t");
               }
             }
             await storeAccessToken();
@@ -99,8 +99,20 @@ export default function LoginButton({ text, variant }) {
     }
   }
   return (
-    <Button variant={variant} onClick={handleSignIn}>
-      {text}
-    </Button>
+    <>
+      {isAuthNeeded ? (
+        <Button disabled variant={variant}>
+          <Loader2 className="w-full mr-2 h-4 w-4  animate-spin" />
+          Loading
+        </Button>
+      ) : (
+        <Button variant={variant} onClick={handleSignIn}>
+          {text}
+        </Button>
+      )}
+      {/* <Button variant={variant} onClick={handleSignIn}>
+        {text}
+      </Button> */}
+    </>
   );
 }

@@ -324,7 +324,7 @@ export default function CreateGraph({ loading }) {
             </DialogTrigger>
             <DialogContent className="sm:max-w-[600px]">
               <DialogHeader>
-                <DialogTitle>Create a graph</DialogTitle>
+                <DialogTitle>New Chart</DialogTitle>
                 {/* <DialogDescription>
             Make changes to your profile here. Click save when you're done.
           </DialogDescription> */}
@@ -403,16 +403,18 @@ export default function CreateGraph({ loading }) {
             <DialogContent className="sm:max-w-[600px] min-h-[270px]">
               <DialogHeader>
                 <DialogTitle>Create a graph</DialogTitle>
-                <DialogDescription>Select chart type</DialogDescription>
+                <DialogDescription className="pt-2">
+                  Select chart type
+                </DialogDescription>
               </DialogHeader>
-              <div className="w-full grid grid-cols-4  gap-4 px-5">
+              <div className="w-full  grid grid-cols-4  gap-4 px-5">
                 {/* bar chart */}
                 <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <div className="flex items-center mr-2">
+                      <div className="flex items-center ">
                         <input
-                          className="mr-2"
+                          // className="mr-1"
                           id="barChart"
                           type="radio"
                           name="chartType"
@@ -454,9 +456,9 @@ export default function CreateGraph({ loading }) {
                 <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <div className="flex items-center mr-2">
+                      <div className="flex items-center ">
                         <input
-                          className="mr-2"
+                          className=""
                           id="areaChart"
                           type="radio"
                           name="chartType"
@@ -498,9 +500,9 @@ export default function CreateGraph({ loading }) {
                 <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <div className="flex items-center mr-2">
+                      <div className="flex items-center ">
                         <input
-                          className="mr-2"
+                          // className="mr-2"
                           id="pieChart"
                           type="radio"
                           name="chartType"
@@ -542,9 +544,9 @@ export default function CreateGraph({ loading }) {
                 <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <div className="flex items-center mr-2">
+                      <div className="flex items-center ">
                         <input
-                          className="mr-2"
+                          // className="mr-2"
                           id="doughnutChart"
                           type="radio"
                           name="chartType"
@@ -555,8 +557,8 @@ export default function CreateGraph({ loading }) {
                           style={{
                             opacity: 0,
                             position: "absolute",
-                            height: 1,
-                            width: 1,
+                            // height: 1,
+                            // width: 1,
                           }}
                         />
 
@@ -581,8 +583,6 @@ export default function CreateGraph({ loading }) {
                     </TooltipContent>
                   </Tooltip>
                 </TooltipProvider>
-
-               
               </div>
 
               <DialogFooter>

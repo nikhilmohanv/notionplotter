@@ -7,6 +7,7 @@ import { Hero } from "../components/LandingPage/Hero";
 import { HowItWorks } from "../components/LandingPage/HowItWorks";
 import { Navbar } from "../components/LandingPage/Navbar";
 import { Pricing } from "../components/LandingPage/Pricing";
+import { Footer } from "@/components/LandingPage/Footer";
 import { ScrollToTop } from "../components/LandingPage/ScrollToTop";
 // import { UserAuth } from "./context/firebaseauth/authcontext"
 
@@ -25,7 +26,7 @@ export default async function Home() {
       <Pricing/>
       {/* <Newsletter /> */}
       <FAQ />
-      {/* <Footer /> */}
+      <Footer />
       <ScrollToTop />
     </>
   );

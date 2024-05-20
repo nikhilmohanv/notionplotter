@@ -156,7 +156,7 @@ export default function LoggedInNavBar() {
                 <DropdownMenuItem>
                   <Button
                     variant="ghost"
-                    className="w-full h-3"
+                    className="w-full h-7"
                     onClick={handleSignOut}
                   >
                     Logout

@@ -249,7 +249,7 @@ export default function Dashboard() {
               <div className="grid gap-4 sm:grid-col-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 flex mt-3">
                 <div className="grid place-items-center border-dashed border-2 min-h-20 rounded-lg">
                   {cookies.get("access_token") == null ? (
-                    "Cookies are reset please login again"
+                    "something went wrong login again"
                   ) : isPro ? (
                     <CreateGraph loading={loading} />
                   ) : (
