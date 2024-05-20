@@ -32,7 +32,7 @@ export const Hero = () => {
       </div>
       <div className="px-2 mt-4">
         <Image
-          src={"/image.png"}
+          src={"/notion-plotter-hero.webp"}
           width={"1500"}
           alt="notion-plotter-hero"
           height="550"
