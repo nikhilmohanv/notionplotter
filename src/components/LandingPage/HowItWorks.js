@@ -27,7 +27,7 @@ const features = [
 
 export const HowItWorks = () => {
   return (
-    <section id="howitworks" className="container text-center pt-24 pb-4">
+    <section id="howitworks" className="container text-center pt-10 md:pt-24 pb-4">
       <h2 className="text-3xl md:text-4xl font-bold ">
         How It{" "}
         {/* <span className="bg-gradient-to-b from-primary/60 to-primary text-transparent bg-clip-text"> */}
@@ -41,10 +41,10 @@ export const HowItWorks = () => {
       <div className="">
         {features.map(({ title, desc, id, image }) =>
           id == "2" ? (
-            <div key={id} class="py-16">
-              <div class="xl:container m-auto px-6 text-gray-600 md:px-12 xl:px-16">
-                <div class="bg-gray-50 dark:lg:bg-darker lg:p-16 rounded-[3rem] space-y-6 md:flex md:gap-6 justify-center md:space-y-0 lg:items-center">
-                  <div class="md:5/12 lg:w-1/2">
+            <div key={id} className=" md:py-16">
+              <div className="xl:container m-auto px-6 text-gray-600 md:px-12 xl:px-16">
+                <div className=" dark:lg:bg-darker lg:p-16 rounded-[3rem] space-y-6 md:flex md:gap-6 justify-center md:space-y-0 lg:items-center">
+                  <div className="md:5/12 lg:w-1/2">
                     <img
                       src={image}
                       alt="image"
@@ -54,11 +54,11 @@ export const HowItWorks = () => {
                       height=""
                     />
                   </div>
-                  <div class="md:7/12 lg:w-1/2">
-                    <h2 class="text-3xl font-bold text-gray-900 md:text-4xl dark:text-white">
+                  <div className="md:7/12 lg:w-1/2">
+                    <h2 className="text-3xl font-bold text-gray-900 md:text-4xl dark:text-white">
                       {title}
                     </h2>
-                    <p class="my-8 text-gray-600 dark:text-gray-300">{desc} </p>
+                    <p className="my-8 text-gray-600 dark:text-gray-300">{desc} </p>
                   </div>
                 </div>
               </div>

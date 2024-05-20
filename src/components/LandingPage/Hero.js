@@ -26,15 +26,17 @@ export const Hero = () => {
         </p>
 
         <div className="space-y-4 md:space-y-0 md:space-x-4">
-          <LoginButton  text={"Start 7 days trial"} variant={""}/>
+          <LoginButton text={"Start 7 days trial"} variant={""} />
         </div>
       </div>
-      <Image
-        src={"/notion2charts-hero-image.png"}
-        width={"1500"}
-        height="550"
-      />
-
+      <div className="px-2 mt-4">
+        <Image
+          src={"/image.png"}
+          width={"1500"}
+          height="550"
+          className="rounded-sm md:rounded-xl shadow-lg "
+        />
+      </div>
       {/* Shadow effect */}
       {/* <div className="shadow"></div> */}
     </section>

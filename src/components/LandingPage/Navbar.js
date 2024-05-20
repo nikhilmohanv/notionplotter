@@ -58,7 +58,7 @@ export const Navbar = ({handleSignIn}) => {
               href="/"
               className="ml-2 gap-2 font-bold text-xl flex"
             >
-              <LineChartIcon />
+              <LineChartIcon className="h-6 w-6" />
               NotionPlotter
             </a>
           </NavigationMenuItem>
