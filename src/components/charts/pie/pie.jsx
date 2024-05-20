@@ -33,14 +33,28 @@ export default function PieChart({
   //   }
   // }, [colorStatus, lineSingleColor, lineMultiColor]);
   console.log("bg color ", backgroundColor.substring(0, 6));
-  useEffect(() => {
-    if (backgroundColor.substring(0, 7).toLowerCase() == "#ffffff") {
-      setDarkMode(false);
+  // useEffect(() => {
+  //   if (backgroundColor.substring(0, 7).toLowerCase() == "#ffffff") {
+  //     setDarkMode(false);
+  //   } else {
+  //     setDarkMode(true);
+  //   }
+  // }, [backgroundColor]);
+  const convertForLineColor = (rgba) => {
+    const rgbaValues = rgba
+      .substring(5)
+      .split(",")
+      .map((v) => parseFloat(v));
+    if (rgbaValues.length == 3) {
+      //if 3 values in the array then not 100% alpha so
+      return rgba;
     } else {
-      setDarkMode(true);
-    }
-  }, [backgroundColor]);
+      rgbaValues[3] = 1;
 
+      // Rebuild the rgba string with the new alpha
+      return `rgba(${rgbaValues.join(",")})`;
+    }
+  };
   const hex2rgb = (hex) => {
     const r = parseInt(hex.slice(1, 3), 16);
     const g = parseInt(hex.slice(3, 5), 16);
@@ -52,35 +66,41 @@ export default function PieChart({
   };
 
   useEffect(() => {
+    if (backgroundColor.trim().toLowerCase() == "#ffffff") {
+      setDarkMode(false);
+    } else {
+      setDarkMode(true);
+    }
+  }, [backgroundColor]);
+  useEffect(() => {
     const newFillColor = [];
     if (fillColorStatus === "fillSingle") {
-      const rgbaValues = fillSingleColor
-        .substring(5)
-        .split(",")
-        .map((v) => parseFloat(v));
-      console.log(rgbaValues);
+      // const rgbaValues = fillSingleColor
+      //   .substring(5)
+      //   .split(",")
+      //   .map((v) => parseFloat(v));
+      // console.log(rgbaValues);
 
       // Set the alpha value to 1
-      if (rgbaValues.length == 3) {
-        //if 3 values in the array then not 100% alpha so
-        setLineColor(fillSingleColor);
-      } else {
-        rgbaValues[3] = 1;
+      // if (rgbaValues.length == 3) {
+      //if 3 values in the array then not 100% alpha so
+      //   setLineColor(fillSingleColor);
+      // } else {
+      //   rgbaValues[3] = 1;
 
-        // Rebuild the rgba string with the new alpha
-        setLineColor(`rgba(${rgbaValues.join(",")})`);
-      }
+      // Rebuild the rgba string with the new alpha
+      setLineColor(convertForLineColor(fillSingleColor));
+
       newFillColor.push(fillSingleColor);
     } else if (fillColorStatus === "fillMulti") {
-      setLineColor(fillMultiColor);
+      setLineColor(convertForLineColor(fillMultiColor[0]));
       newFillColor.push(fillMultiColor);
       // fillMultiColor.forEach((color) => {
-      //   newFillColor.push(hex2rgb(color));
+      //   newFillColor.push(convertForLineColor(color));
       // });
     }
     setFillColor(newFillColor);
   }, [fillColorStatus, fillSingleColor, fillMultiColor]);
-
   return (
     <>
       <Pie

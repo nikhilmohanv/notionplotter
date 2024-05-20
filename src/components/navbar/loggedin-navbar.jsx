@@ -10,11 +10,11 @@ import {
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { UserAuth } from "@/app/context/firebaseauth/authcontext";
-import { deleteCookie,setCookie } from "cookies-next";
+import { deleteCookie, setCookie } from "cookies-next";
 import { redirect } from "next/navigation";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
-import LineChartIcon from "@/components/icons/linechart";
+import LineChartIcon from "@/components/icons/logo";
 import { useEffect } from "react";
 import { useCookies } from "next-client-cookies";
 
@@ -25,7 +25,7 @@ export default function LoggedInNavBar() {
     try {
       deleteCookie("access_token");
       deleteCookie("uid");
-      deleteCookie("isPro")
+      deleteCookie("isPro");
       await logout();
       redirect("/");
     } catch (error) {
@@ -33,17 +33,15 @@ export default function LoggedInNavBar() {
     }
   };
   useEffect(() => {
-    if(user){
-      if(cookies.get("uid") == null){
+    if (user) {
+      if (cookies.get("uid") == null) {
         const expires = new Date(Date.now() + 365 * 24 * 60 * 60 * 1000);
-          setCookie("uid", user.uid, {
-            expires: expires,
-            priority: "high",
-            sameSite: "strict",
-          });
-       
+        setCookie("uid", user.uid, {
+          expires: expires,
+          priority: "high",
+          sameSite: "strict",
+        });
       }
-      
     }
     if (!cookies.get("uid")) {
       //redirect to /login page when not logged in.
@@ -73,7 +71,6 @@ export default function LoggedInNavBar() {
           >
             Settings
           </Link>
-          
         </nav>
         <Sheet>
           <SheetTrigger asChild>
@@ -130,17 +127,11 @@ export default function LoggedInNavBar() {
             </nav>
           </SheetContent>
         </Sheet>
+        
+        <Link  href="/dashboard">
+          <LineChartIcon className="h-10 w-10 flex  items-center md:hidden gap-4 md:ml-auto md:gap-2 lg:gap-4" />
+        </Link>
         <div className="flex w-full items-center gap-4 md:ml-auto md:gap-2 lg:gap-4">
-          {/* <form >
-            <div className="relative">
-              <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-              <Input
-                type="search"
-                placeholder="Search products..."
-                className="pl-8 sm:w-[300px] md:w-[200px] lg:w-[300px]"
-              />
-            </div>
-          </form> */}
           <div className="ml-auto flex-initial">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -162,18 +153,10 @@ export default function LoggedInNavBar() {
               <DropdownMenuContent align="end">
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                {/* <DropdownMenuItem>
-                    <Link href="/billing">Billing</Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <Link href="/pricing">pricing</Link>
-                  </DropdownMenuItem>
-
-                  <DropdownMenuSeparator /> */}
                 <DropdownMenuItem>
                   <Button
                     variant="ghost"
-                    className="w-full"
+                    className="w-full h-3"
                     onClick={handleSignOut}
                   >
                     Logout

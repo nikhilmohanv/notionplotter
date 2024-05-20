@@ -71,6 +71,7 @@ export default function Dashboard() {
   const [isPro, setIsPro] = useState();
   const [onTrial, setOnTrial] = useState(true);
   const { user } = UserAuth();
+  const uid=cookies.get("uid")
 
   //get user subscription plan
   useEffect(() => {
@@ -106,19 +107,12 @@ export default function Dashboard() {
       setAddToNotion(false);
     }
   }, [cookies.get("access_token")]);
-  // useEffect(() => {
-  //   console.log("user ", user);
-  //   if (!cookies.get("uid")) {
-  //     //redirect to /login page when not logged in.
-  //     redirect("/");
-  //   }
-  // }, [user]);
 
   const db = getFirestore(app);
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(true);
 
-  const notionAuthUrl = `https://api.notion.com/v1/oauth/authorize?owner=user&client_id=34d5c9a9-5b7d-4b77-be4b-6a5521f6560c&response_type=code`;
+  const notionAuthUrl = `https://api.notion.com/v1/oauth/authorize?owner=user&client_id=34d5c9a9-5b7d-4b77-be4b-6a5521f6560c&response_type=code&state=${uid}`;
 
   const [docs, setDocs] = useState([]);
 
@@ -212,6 +206,7 @@ export default function Dashboard() {
       key="1"
       className="grid min-h-screen w-full container mx-auto px-1 sm:px-1 lg:px-20"
     >
+
       <div className="flex flex-col">
         <div className="mt-5">
           <LoggedInNavBar />

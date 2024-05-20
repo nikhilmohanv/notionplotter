@@ -93,10 +93,9 @@ export default function Edit() {
   const [dbUid, setDbUid] = useState();
 
   //store line color
-  const [lineSingleColor, setLineSingleColor] = useState("#FF6384");
 
   //store fill single color
-  const [fillSingleColor, setFillSingleColor] = useState("#FF6384");
+  const [fillSingleColor, setFillSingleColor] = useState("rgba(0,0,0,0.1)");
 
   //store x axis datas
   const [xAxisValues, setXAxisValues] = useState([]);
@@ -215,7 +214,6 @@ export default function Edit() {
         data.label && setLabel(data.label);
         data.fillSingleColor && setFillSingleColor(data.fillSingleColor);
         data.fillMultiColor && setFillMultiColor(data.fillMultiColor);
-        data.lineSingleColor && setLineSingleColor(data.lineSingleColor);
         data.backgroundColor && setBackgroundColor(data.backgroundColor);
         data.lineMultiColor && setLineMultiColor(data.lineMultiColor);
         data.colorStatus && setColorStatus(data.colorStatus);
@@ -343,7 +341,6 @@ export default function Edit() {
       yaxisId: yAxis,
       xAxisName: xAxisName,
       yAxisName: yAxisName,
-      lineSingleColor: lineSingleColor,
       fillSingleColor: fillSingleColor,
       fillMultiColor: fillMultiColor,
       backgroundColor: backgroundColor,
@@ -1187,65 +1184,7 @@ export default function Edit() {
               {/* </div> */}
             </div>
 
-            {/* graph line color */}
-            {/* <div className="mb-6">
-              <h3 className="text-sm font-medium mb-2">Line Color</h3>
-              {dbId ? (
-                <Tabs defaultValue={colorStatus} className="w-full">
-                  <TabsList className="grid w-full grid-cols-2">
-                    <TabsTrigger
-                      value="lineSingle"
-                      onClick={() => {
-                        setColorStatus("lineSingle");
-                      }}
-                    >
-                      Single Color
-                    </TabsTrigger>
-                    <TabsTrigger
-                      value="lineMulti"
-                      onClick={() => {
-                        setColorStatus("lineMulti");
-                      }}
-                    >
-                      Multi Color
-                    </TabsTrigger>
-                  </TabsList>
-                  <TabsContent value="lineSingle">
-                    <div className="w-full bg-neutral-50 rounded">
-                      <input
-                        type="color"
-                        value={lineSingleColor}
-                        onChange={(e) => setLineSingleColor(e.target.value)}
-                        className="w-12 h-12 p-0 m-2"
-                      />
-                    </div>
-                  </TabsContent>
-                  <TabsContent value="lineMulti">
-                    <div className="w-full bg-neutral-50 rounded">
-                      {lineMultiColor.map((item, index) => (
-                        <>
-                          <input
-                            name="color"
-                            type="color"
-                            key={index}
-                            value={item}
-                            onChange={(event) => addNewColor(event, index)}
-                            className="w-12 h-12 p-0 m-2"
-                          />
-                          {index === lineMultiColor.length - 1 && (
-                            <button onClick={() => handleAddColor()}>
-                              <PlusIcon className="w-12 h-12 p-0 " />
-                            </button>
-                          )}
-                        </>
-                      ))}
-                    </div>
-                  </TabsContent>
-                </Tabs>
-              ) : (
-                <Skeleton className="bg-white h-12 w-full" />
-              )}
-            </div> */}
+            
 
             {/* area filling color selection */}
 

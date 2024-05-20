@@ -1,6 +1,9 @@
+import { NextResponse } from "next/server";
+
 import addData from "@/lib/firebase/firestore/access_token";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import addDataWithId from "@/lib/firebase/firestore/adddatawithid";
 
 async function getAccessToken(code) {
   try {
@@ -34,19 +37,26 @@ async function getAccessToken(code) {
 }
 
 export default async function NotoionCallback({ searchParams }) {
+  console.log(searchParams);
+  const uid = searchParams.state;
   const response = await getAccessToken(searchParams.code);
-  const cookieStore = cookies();
-  const uid = cookieStore.get("uid");
+  console.log(uid);
+  const accessToken = response.access_token;
 
-  const data = {
-    access_token: response.access_token,
-    uid: uid?.value,
-  };
-  const { result, error } = await addData(
-    "access_tokens",
-    response.bot_id,
-    data
-  );
+  // Set the cookie
+  const expires = new Date(Date.now() + 365 * 24 * 60 * 60 * 1000);
+  const cookieHeader = `access_token=${accessToken}; Expires=${expires.toUTCString()}; HttpOnly; Path=/; SameSite=Strict`;
 
-  redirect(`/storecookies/${response.access_token}`);
+  // Save to Firestore
+  const data = { access_token: accessToken, uid: uid };
+  const { error } = await addDataWithId("access_tokens", uid, data);
+  if (error) {
+    throw new Error(error);
+  }
+  redirect(`/callback/${accessToken}`);
+
+  // Redirect to the dashboard with the cookie set
+  // const res = NextResponse.redirect("dashboard");
+  // res.headers.set("Set-Cookie", cookieHeader);
+  // return res;
 }

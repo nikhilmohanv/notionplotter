@@ -35,14 +35,7 @@ const DoughnutChart = ({
   //   }
   // }, [colorStatus, lineSingleColor, lineMultiColor]);
 
-  useEffect(() => {
-    if (backgroundColor != "#ffffff") {
-      setDarkMode(true);
-    } else {
-      setDarkMode(false);
-    }
-  }, [backgroundColor]);
-
+ 
   const hex2rgb = (hex) => {
     const r = parseInt(hex.slice(1, 3), 16);
     const g = parseInt(hex.slice(3, 5), 16);
@@ -52,37 +45,57 @@ const DoughnutChart = ({
     const rgba = `rgba(${r}, ${g}, ${b})`;
     return rgba;
   };
+  const convertForLineColor = (rgba) => {
+    const rgbaValues = rgba
+      .substring(5)
+      .split(",")
+      .map((v) => parseFloat(v));
+    if (rgbaValues.length == 3) {
+      //if 3 values in the array then not 100% alpha so
+      return rgba;
+    } else {
+      rgbaValues[3] = 1;
 
+      // Rebuild the rgba string with the new alpha
+      return `rgba(${rgbaValues.join(",")})`;
+    }
+  };
+  useEffect(() => {
+    if (backgroundColor.trim().toLowerCase() == "#ffffff") {
+      setDarkMode(false);
+    } else {
+      setDarkMode(true);
+    }
+  }, [backgroundColor]);
   useEffect(() => {
     const newFillColor = [];
     if (fillColorStatus === "fillSingle") {
-      const rgbaValues = fillSingleColor
-        .substring(5)
-        .split(",")
-        .map((v) => parseFloat(v));
-      console.log(rgbaValues);
+      // const rgbaValues = fillSingleColor
+      //   .substring(5)
+      //   .split(",")
+      //   .map((v) => parseFloat(v));
+      // console.log(rgbaValues);
 
       // Set the alpha value to 1
-      if (rgbaValues.length == 3) {
-        //if 3 values in the array then not 100% alpha so
-        setLineColor(fillSingleColor);
-      } else {
-        rgbaValues[3] = 1;
+      // if (rgbaValues.length == 3) {
+      //if 3 values in the array then not 100% alpha so
+      //   setLineColor(fillSingleColor);
+      // } else {
+      //   rgbaValues[3] = 1;
 
-        // Rebuild the rgba string with the new alpha
-        setLineColor(`rgba(${rgbaValues.join(",")})`);
-      }
-      newFillColor.push(fillSingleColor);
+      // Rebuild the rgba string with the new alpha
+      setLineColor(convertForLineColor(fillSingleColor));
+
+      setFillColor(fillSingleColor);
     } else if (fillColorStatus === "fillMulti") {
-      setLineColor(fillMultiColor);
-      newFillColor.push(fillMultiColor);
+      setLineColor(convertForLineColor(fillMultiColor[0]));
+      setFillColor(fillMultiColor);
       // fillMultiColor.forEach((color) => {
-      //   newFillColor.push(hex2rgb(color));
+      //   newFillColor.push(convertForLineColor(color));
       // });
     }
-    setFillColor(newFillColor);
+    // setFillColor(newFillColor);
   }, [fillColorStatus, fillSingleColor, fillMultiColor]);
-
   console.log("y values ", yValues);
   return (
     // <div

@@ -18,7 +18,7 @@ import { buttonVariants,Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
 import { ModeToggle } from "./mode-toggle";
 import { LogoIcon } from "./Icons";
-import LineChartIcon from "@/components/icons/linechart";
+import LineChartIcon from "@/components/icons/logo";
 import LoginButton from "./loginbutton";
 
 

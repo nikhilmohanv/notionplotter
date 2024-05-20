@@ -53,13 +53,21 @@ const BarChart = ({
   //   }
   // }, [colorStatus, lineSingleColor, lineMultiColor]);
 
-  useEffect(() => {
-    if (backgroundColor != "#ffffff") {
-      setDarkMode(true);
+  const convertForLineColor = (rgba) => {
+    const rgbaValues = rgba
+      .substring(5)
+      .split(",")
+      .map((v) => parseFloat(v));
+    if (rgbaValues.length == 3) {
+      //if 3 values in the array then not 100% alpha so
+      return rgba;
     } else {
-      setDarkMode(false);
+      rgbaValues[3] = 1;
+
+      // Rebuild the rgba string with the new alpha
+      return `rgba(${rgbaValues.join(",")})`;
     }
-  }, [backgroundColor]);
+  };
 
   const hex2rgb = (hex) => {
     const r = parseInt(hex.slice(1, 3), 16);
@@ -72,35 +80,42 @@ const BarChart = ({
   };
 
   useEffect(() => {
-    const newFillColor = [];
+    if (backgroundColor.trim().toLowerCase() == "#ffffff") {
+      setDarkMode(false);
+    } else {
+      setDarkMode(true);
+    }
+  }, [backgroundColor]);
+  useEffect(() => {
     if (fillColorStatus === "fillSingle") {
-      const rgbaValues = fillSingleColor
-        .substring(5)
-        .split(",")
-        .map((v) => parseFloat(v));
-      console.log(rgbaValues);
+      // const rgbaValues = fillSingleColor
+      //   .substring(5)
+      //   .split(",")
+      //   .map((v) => parseFloat(v));
+      // console.log(rgbaValues);
 
       // Set the alpha value to 1
-      if (rgbaValues.length == 3) {
-        //if 3 values in the array then not 100% alpha so
-        setLineColor(fillSingleColor);
-      } else {
-        rgbaValues[3] = 1;
+      // if (rgbaValues.length == 3) {
+      //if 3 values in the array then not 100% alpha so
+      //   setLineColor(fillSingleColor);
+      // } else {
+      //   rgbaValues[3] = 1;
 
-        // Rebuild the rgba string with the new alpha
-        setLineColor(`rgba(${rgbaValues.join(",")})`);
-      }
-      newFillColor.push(fillSingleColor);
+      // Rebuild the rgba string with the new alpha
+      setLineColor(convertForLineColor(fillSingleColor));
+
+      setFillColor(fillSingleColor);
     } else if (fillColorStatus === "fillMulti") {
-      setLineColor(fillMultiColor);
-      newFillColor.push(fillMultiColor);
-      // fillMultiColor.forEach((color) => {
-      //   newFillColor.push(hex2rgb(color));
-      // });
+      // setLineColor(convertForLineColor(fillMultiColor[0]));
+      let newFillColor=[]
+      setFillColor(fillMultiColor);
+      fillMultiColor.forEach((color) => {
+        newFillColor.push(convertForLineColor(color));
+      });
+      setLineColor(newFillColor)
     }
-    setFillColor(newFillColor);
+    // setFillColor(newFillColor);
   }, [fillColorStatus, fillSingleColor, fillMultiColor]);
-
   var chartColors = {
     red: "rgb(255, 99, 132,0.5)",
     orange: "rgb(255, 159, 64,0.5)",

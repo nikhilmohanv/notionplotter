@@ -39,6 +39,7 @@ export default function Dashboard() {
   const cookies = useCookies();
   const [userId, setUserId] = useState(cookies.get("uid"));
   const [updatePaymentMethod, setUpdatePaymentMethod] = useState();
+  
   useEffect(() => {
     fetch("/api/payment/getusersubscriptionplan")
       .then((data) => data.json())
@@ -60,74 +61,80 @@ export default function Dashboard() {
       });
   }, []);
 
-  const notionAuthUrl = `https://api.notion.com/v1/oauth/authorize?owner=user&client_id=34d5c9a9-5b7d-4b77-be4b-6a5521f6560c&response_type=code`;
+  const notionAuthUrl = `https://api.notion.com/v1/oauth/authorize?owner=user&client_id=34d5c9a9-5b7d-4b77-be4b-6a5521f6560c&response_type=code&state=${userId}`;
   return (
-    <div className="flex min-h-screen w-full flex-col">
-      <LoggedInNavBar />
-      <main className="flex min-h-[calc(100vh_-_theme(spacing.16))] flex-1 flex-col gap-4 bg-muted/40 p-4 md:gap-8 md:p-10">
-        <div className="mx-auto grid w-full max-w-6xl gap-2">
-          <h1 className="text-3xl font-semibold">Settings</h1>
+    <div
+      key="1"
+      className="grid min-h-screen w-full container mx-auto px-1 sm:px-1 lg:px-20"
+    >
+      <div className="flex flex-col">
+        <div className="mt-5">
+          <LoggedInNavBar />
         </div>
-        <div className="mx-auto grid w-full max-w-6xl items-start ">
-          <Tabs defaultValue="account" className="w-full">
-            <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="account">Account</TabsTrigger>
-              <TabsTrigger value="notion">Notion</TabsTrigger>
-            </TabsList>
-            <TabsContent value="account">
-              <div className="grid gap-6">
-                {/* email and password */}
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Account</CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-2">
-                    <div className="space-y-1">
-                      <Label htmlFor="name">Name</Label>
-                      {user && (
-                        <Input id="name" defaultValue={user.displayName} />
-                      )}
-                    </div>
-                    <div className="space-y-1">
-                      <Label htmlFor="email">Username</Label>
-                      {user && <Input id="email" defaultValue={user.email} />}
-                    </div>
-                  </CardContent>
-                </Card>
-                {/* subscription */}
-                {onTrial ? (
-                  <>
-                    <Card>
-                      <CardHeader>
-                        <CardTitle>Subscription</CardTitle>
-                      </CardHeader>
-                      <CardContent className="space-y-2 b-0">
-                        <div className=" md:px-6">
-                          <div className="grid grid-cols-1 gap-8 md:grid-cols-1">
-                            <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-950">
-                              <h2 className="text-2xl font-bold">
-                                Billing Details
-                              </h2>
-                              <div className="mt-6 space-y-4">
-                                <div className="flex items-center justify-between">
-                                  <span className="text-gray-500 dark:text-gray-400">
-                                    Subscription Mode
-                                  </span>
-                                  <span className="font-medium">
-                                    Free trial
-                                  </span>
-                                </div>
-                                <div className="flex items-center justify-between">
-                                  <span className="text-gray-500 dark:text-gray-400">
-                                    Trial End Date
-                                  </span>
-                                  <span className="font-medium">
-                                    {new Date(renewsAt).toDateString()}
-                                  </span>
+        <main className="flex min-h-[calc(100vh_-_theme(spacing.16))] flex-1 flex-col gap-4 bg-muted/40 p-4 md:gap-8 md:p-10">
+          <div className="mx-auto grid w-full max-w-6xl gap-2">
+            <h1 className="text-3xl font-semibold">Settings</h1>
+          </div>
+          <div className="mx-auto grid w-full max-w-6xl items-start ">
+            <Tabs defaultValue="account" className="w-full">
+              <TabsList className="grid w-full grid-cols-2">
+                <TabsTrigger value="account">Account</TabsTrigger>
+                <TabsTrigger value="notion">Notion</TabsTrigger>
+              </TabsList>
+              <TabsContent value="account">
+                <div className="grid gap-6">
+                  {/* email and password */}
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>Account</CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-2">
+                      <div className="space-y-1">
+                        <Label htmlFor="name">Name</Label>
+                        {user && (
+                          <Input id="name" defaultValue={user.displayName} />
+                        )}
+                      </div>
+                      <div className="space-y-1">
+                        <Label htmlFor="email">Username</Label>
+                        {user && <Input id="email" defaultValue={user.email} />}
+                      </div>
+                    </CardContent>
+                  </Card>
+                  {/* subscription */}
+                  {onTrial ? (
+                    <>
+                      <Card>
+                        <CardHeader>
+                          <CardTitle>Subscription</CardTitle>
+                        </CardHeader>
+                        <CardContent className="space-y-2 b-0">
+                          <div className=" md:px-6">
+                            <div className="grid grid-cols-1 gap-8 md:grid-cols-1">
+                              <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-950">
+                                <h2 className="text-2xl font-bold">
+                                  Billing Details
+                                </h2>
+                                <div className="mt-6 space-y-4">
+                                  <div className="flex items-center justify-between">
+                                    <span className="text-gray-500 dark:text-gray-400">
+                                      Subscription Mode
+                                    </span>
+                                    <span className="font-medium">
+                                      Free trial
+                                    </span>
+                                  </div>
+                                  <div className="flex items-center justify-between">
+                                    <span className="text-gray-500 dark:text-gray-400">
+                                      Trial End Date
+                                    </span>
+                                    <span className="font-medium">
+                                      {new Date(renewsAt).toDateString()}
+                                    </span>
+                                  </div>
                                 </div>
                               </div>
-                            </div>
-                            {/* <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-950">
+                              {/* <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-950">
                               <h2 className="text-2xl font-bold">
                                 Manage Subscription
                               </h2>
@@ -147,32 +154,32 @@ export default function Dashboard() {
                                 </Button>
                               </div>
                             </div> */}
+                            </div>
                           </div>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </>
-                ) : isPro ? (
-                  <ManageSubscription
-                    userId={userId}
-                    isCanceled={isCanceled}
-                    currentPeriodEnd={renewsAt}
-                    updatePaymentMethod={updatePaymentMethod}
-                  />
-                ) : (
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>Subscription</CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-2 b-0">
-                      <div className="">
-                        <div className="grid grid-cols-1 gap-8">
-                          <div className="rounded-lg bg-white  shadow-sm dark:border-gray-800 dark:bg-gray-950">
-                            Your subscription expired <br />
-                            <br />
-                            <Button className="w-full">Subscrible</Button>
-                            {/* <div className="mt-6 space-y-4"> */}
-                            {/* <div className="flex items-center justify-between">
+                        </CardContent>
+                      </Card>
+                    </>
+                  ) : isPro ? (
+                    <ManageSubscription
+                      userId={userId}
+                      isCanceled={isCanceled}
+                      currentPeriodEnd={renewsAt}
+                      updatePaymentMethod={updatePaymentMethod}
+                    />
+                  ) : (
+                    <Card>
+                      <CardHeader>
+                        <CardTitle>Subscription</CardTitle>
+                      </CardHeader>
+                      <CardContent className="space-y-2 b-0">
+                        <div className="">
+                          <div className="grid grid-cols-1 gap-8">
+                            <div className="rounded-lg bg-white  shadow-sm dark:border-gray-800 dark:bg-gray-950">
+                              Your subscription expired <br />
+                              <br />
+                              <Button className="w-full">Subscrible</Button>
+                              {/* <div className="mt-6 space-y-4"> */}
+                              {/* <div className="flex items-center justify-between">
                                 <span className="text-gray-500 dark:text-gray-400">
                                   Subscription Mode
                                 </span>
@@ -186,14 +193,14 @@ export default function Dashboard() {
                                   {new Date(renewsAt).toDateString()}
                                 </span>
                               </div> */}
-                            {/* </div> */}
+                              {/* </div> */}
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                )}
-                {/* {isPro ? (
+                      </CardContent>
+                    </Card>
+                  )}
+                  {/* {isPro ? (
                   <ManageSubscription
                     userId={userId}
                     isCanceled={isCanceled}
@@ -202,26 +209,26 @@ export default function Dashboard() {
                 ) : (
                   "subscribe"
                 )} */}
-              </div>
-            </TabsContent>
-            <TabsContent value="notion">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Notion</CardTitle>
-                  <CardDescription>
-                    Edit access to notion pages and databases.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-2">
-                  <Button>
-                    <Link href={notionAuthUrl}>Edit access</Link>
-                  </Button>
-                </CardContent>
-              </Card>
-            </TabsContent>
-          </Tabs>
+                </div>
+              </TabsContent>
+              <TabsContent value="notion">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Notion</CardTitle>
+                    <CardDescription>
+                      Edit access to notion pages and databases.
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-2">
+                    <Button>
+                      <Link href={notionAuthUrl}>Edit access</Link>
+                    </Button>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+            </Tabs>
 
-          {/* <div className="grid gap-6">
+            {/* <div className="grid gap-6">
             <Card x-chunk="dashboard-04-chunk-1">
               <CardHeader>
                 <CardTitle>Name</CardTitle>
@@ -251,8 +258,9 @@ export default function Dashboard() {
               </CardContent>
             </Card>
           </div> */}
-        </div>
-      </main>
+          </div>
+        </main>
+      </div>
     </div>
   );
 }

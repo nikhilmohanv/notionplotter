@@ -45,13 +45,7 @@ const AreaChart = ({
   const [lineColor, setLineColor] = useState([]);
   const [fillColor, setFillColor] = useState([]);
 
-  useEffect(() => {
-    if (backgroundColor.trim().toLowerCase() == "#ffffff") {
-      setDarkMode(false);
-    } else {
-      setDarkMode(true);
-    }
-  }, [backgroundColor]);
+  
   console.log(backgroundColor);
   const hex2rgb = (hex) => {
     const r = parseInt(hex.slice(1, 3), 16);
@@ -80,7 +74,13 @@ const AreaChart = ({
       return `rgba(${rgbaValues.join(",")})`;
     }
   };
-
+  useEffect(() => {
+    if (backgroundColor.trim().toLowerCase() == "#ffffff") {
+      setDarkMode(false);
+    } else {
+      setDarkMode(true);
+    }
+  }, [backgroundColor]);
   useEffect(() => {
     const newFillColor = [];
     if (fillColorStatus === "fillSingle") {
