@@ -48,7 +48,7 @@ export const HowItWorks = () => {
                     <img
                       src={image}
                       alt="image"
-                      loading="lazy"
+                      loading="eager"
                       width=""
                       className="rounded-xl lg:rounded-[3rem]"
                       height=""

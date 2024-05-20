@@ -12,9 +12,9 @@ import { Analytics } from "@vercel/analytics/react";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "NotionPlotter",
+  title: "NotionPlotter - create charts from Notion",
   description:
-    "Create aesthetically beautiful custom embeddable charts from Notion easily with Notion plotter. You can create bar, pie, area, donut charts from Notion with ease.",
+    "Create aesthetic, custom and embeddable charts from Notion easily with Notion plotter. You can create bar, pie, area, donut charts and more from Notion.",
   keywords: [],
   alternates: {
     canonical: "https://notionplotter.com",

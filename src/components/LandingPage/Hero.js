@@ -9,17 +9,17 @@ export const Hero = () => {
     <section className="sm:container grid  place-items-center pt-9 sm:pt-20 ">
       <div className="text-center mx-2 sm:mx-10 lg:mx-40 md:mx-18 space-y-6 mt-1">
         <main className="text-4xl sm:text-6xl  md:text-7xl font-black">
-          {/* <h1 className="inline"> */}
-          {/* <span className="inline bg-gradient-to-r from-[#F596D3]  to-[#D247BF] text-transparent bg-clip-text"> */}
-          Design
-          {/* </span> */} charts {/* </h1>{" "} */}
-          from{" "}
-          <br className="lg:visible md:hidden hidden" />
-          {/* <span className="inline bg-gradient-to-r from-[#61DAFB] via-[#1fc0f1] to-[#03a3d7] text-transparent bg-clip-text"> */}
-          <span style={{color:"#F4A261"}}> 
-            Notion</span>{" "}
-          {/* </span>{" "} */}
-          quickly.
+          <h1>
+            {/* <h1 className="inline"> */}
+            {/* <span className="inline bg-gradient-to-r from-[#F596D3]  to-[#D247BF] text-transparent bg-clip-text"> */}
+            Design
+            {/* </span> */} charts {/* </h1>{" "} */}
+            from <br className="lg:visible md:hidden hidden" />
+            {/* <span className="inline bg-gradient-to-r from-[#61DAFB] via-[#1fc0f1] to-[#03a3d7] text-transparent bg-clip-text"> */}
+            <span style={{ color: "#F4A261" }}>Notion</span>{" "}
+            {/* </span>{" "} */}
+            quickly.
+          </h1>
         </main>
 
         <p className="text-lg text-muted-foreground ">
@@ -36,6 +36,7 @@ export const Hero = () => {
           width={"1500"}
           alt="notion-plotter-hero"
           height="550"
+          loading="eager"
           className="rounded-sm md:rounded-xl shadow-lg "
         />
       </div>

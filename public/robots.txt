@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /cgi-bin/
+Disallow: /dashboard
+Disallow: /settings
+Disallow: /auth/notion
+Disallow: /callback
+Sitemap: https://notionplotter.com/sitemap.xml
