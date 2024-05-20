@@ -10,7 +10,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
 
 const inter = Inter({ subsets: ["latin"] });
-
+{/* <meta name="google-site-verification" content="VHfRBRG9El_CMvJo5ZfcDGxfC8T_22hsEAS99iSDMyQ" /> */}
 export const metadata = {
   title: "NotionPlotter - create charts from Notion",
   description:
@@ -19,7 +19,11 @@ export const metadata = {
   alternates: {
     canonical: "https://notionplotter.com",
   },
-};
+  other: {
+   "google-site-verification": "VHfRBRG9El_CMvJo5ZfcDGxfC8T_22hsEAS99iSDMyQ"
+    }
+ 
+}
 
 export default function RootLayout({ children }) {
   return (
