@@ -20,7 +20,6 @@ export default function PieChart({
   yAxisName,
   xAxisName,
 }) {
-  console.log(fillMultiColor);
   const [darkMode, setDarkMode] = useState(false);
   const [lineColor, setLineColor] = useState([]);
   const [fillColor, setFillColor] = useState([]);
@@ -32,7 +31,6 @@ export default function PieChart({
   //     setLineColor(lineMultiColor);
   //   }
   // }, [colorStatus, lineSingleColor, lineMultiColor]);
-  console.log("bg color ", backgroundColor.substring(0, 6));
   // useEffect(() => {
   //   if (backgroundColor.substring(0, 7).toLowerCase() == "#ffffff") {
   //     setDarkMode(false);
@@ -78,8 +76,6 @@ export default function PieChart({
       //   .substring(5)
       //   .split(",")
       //   .map((v) => parseFloat(v));
-      // console.log(rgbaValues);
-
       // Set the alpha value to 1
       // if (rgbaValues.length == 3) {
       //if 3 values in the array then not 100% alpha so

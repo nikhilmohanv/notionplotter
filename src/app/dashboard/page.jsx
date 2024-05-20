@@ -71,7 +71,7 @@ export default function Dashboard() {
   const [isPro, setIsPro] = useState();
   const [onTrial, setOnTrial] = useState(true);
   const { user } = UserAuth();
-  const uid=cookies.get("uid")
+  const uid = cookies.get("uid");
 
   //get user subscription plan
   useEffect(() => {
@@ -88,9 +88,7 @@ export default function Dashboard() {
       .then((data) => data.json())
       .then((data) => {
         const expires = new Date(Date.now() + 365 * 24 * 60 * 60 * 1000);
-        
 
-        console.log(data.isPro);
         data.isPro !== undefined && setIsPro(data.isPro);
         cookies.set("isPro", data.isPro, {
           expires: expires,
@@ -191,7 +189,6 @@ export default function Dashboard() {
           productId: "357049",
         });
 
-        console.log(response.data);
         setCheckoutUrl(response.data.checkoutUrl);
       } catch (error) {
         console.error(error);
@@ -206,7 +203,6 @@ export default function Dashboard() {
       key="1"
       className="grid min-h-screen w-full container mx-auto px-1 sm:px-1 lg:px-20"
     >
-
       <div className="flex flex-col">
         <div className="mt-5">
           <LoggedInNavBar />

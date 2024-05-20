@@ -265,7 +265,6 @@ export default function CreateGraph({ loading }) {
     //     const date = utcDate.toLocaleString("en-US", {
     //       timeZone: "America/Los_Angeles",
     //     });
-    // console.log(currentTimeStamp)
 
     // const currentDate = new Date();
     // const losAngelesTime = currentDate.toLocaleString("en-US", {timeZone:"America/Los_Angeles"});
@@ -309,8 +308,6 @@ export default function CreateGraph({ loading }) {
   };
   function closeFirstModel(e, open, close) {
     e.preventDefault();
-    console.log("indi close");
-    console.log("open" + open);
     document.getElementById("open" + open).click();
     document.getElementById("close" + close).click();
   }
@@ -370,7 +367,7 @@ export default function CreateGraph({ loading }) {
                   <Button
                     type="button"
                     id="close1"
-                    onClick={console.log("closing")}
+                   
                     variant="ghost"
                   >
                     Close

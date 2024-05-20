@@ -177,7 +177,6 @@ export default function Edit() {
   //adding new value to fill color variable
   const addNewFillColor = (color, index) => {
     // let { name, value } = event.target;
-    console.log(color)
     let onChangeValue = [...fillMultiColor];
     onChangeValue[index] = color;
     setFillMultiColor(onChangeValue);
@@ -370,8 +369,7 @@ export default function Edit() {
   //it stores extracted data from the api
   useEffect(() => {
     setExtractedProperties([]);
-    console.log("reextracing data");
-    console.log("rows data ", rows);
+   
     rows.forEach((page) => {
       // setCount(prevCount => prevCount + 1);
       // Extract properties from the 'properties' object
@@ -754,13 +752,10 @@ export default function Edit() {
     });
   }, [rows, xAxis, yAxis]);
 
-  console.log(extractedProperties);
 
   useEffect(() => {
-    console.log("changing x ");
 
     if (xAxis != null && xAxis != undefined) {
-      console.log(extractedProperties);
 
       let XAxisData;
       let extractedXValues;
@@ -820,7 +815,6 @@ export default function Edit() {
             obj.rollupType === "email"
           ) {
             if (Array.isArray(obj.value)) {
-              console.log("it is a string array");
               return obj.value[0];
             }
           } else if (
@@ -845,13 +839,8 @@ export default function Edit() {
           return obj.value;
         });
 
-        console.log("Extracted x values ", extractedXValues);
-
-        // Store the result in the state variable
-        console.log("x axis values before insering ", xAxisValues);
+       
         setXAxisValues(extractedXValues);
-        console.log("x axis values after insering ", xAxisValues);
-
         colNameAndId.forEach((col) => {
           if (col.id === xAxis) {
             setXAxisName(col.name);
@@ -868,32 +857,22 @@ export default function Edit() {
   }, [xAxis, extractedProperties]);
 
   useEffect(() => {
-    console.log("chaing y");
     if (yAxis != null && yAxis != undefined) {
-      console.log("inside if");
       let YAxisData;
-      console.log("extracted properties ", extractedProperties.length);
       if (extractedProperties.length > 0) {
-        console.log("inside 2 if");
         YAxisData = extractedProperties.filter((obj) => obj.id == yAxis);
       } else {
         setYAxisValues([]);
       }
       if (YAxisData) {
-        console.log("inside 3 if");
-
         const extractedYValues = YAxisData.map((obj) => {
           if (aggregation == "count") {
-            console.log("inside count if");
-
             if (Array.isArray(obj.value)) {
               return obj.value.length;
             } else {
               return 1;
             }
           } else if (aggregation == "sum") {
-            console.log("inside sum if");
-
             if (Array.isArray(obj.value)) {
               let sum = 0;
               obj.value.forEach((element) => {
@@ -907,9 +886,7 @@ export default function Edit() {
           return obj.value;
         });
         // Store the result in the state variable
-        console.log("extracted y", extractedYValues);
         setYAxisValues(extractedYValues);
-        console.log("permentant ", yAxisValues);
         colNameAndId.forEach((col) => {
           if (col.id === xAxis) {
             setXAxisName(col.name);

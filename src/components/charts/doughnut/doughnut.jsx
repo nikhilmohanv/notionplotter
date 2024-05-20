@@ -74,7 +74,6 @@ const DoughnutChart = ({
       //   .substring(5)
       //   .split(",")
       //   .map((v) => parseFloat(v));
-      // console.log(rgbaValues);
 
       // Set the alpha value to 1
       // if (rgbaValues.length == 3) {
@@ -96,7 +95,6 @@ const DoughnutChart = ({
     }
     // setFillColor(newFillColor);
   }, [fillColorStatus, fillSingleColor, fillMultiColor]);
-  console.log("y values ", yValues);
   return (
     // <div
     // style={{

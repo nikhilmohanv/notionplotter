@@ -37,10 +37,8 @@ async function getAccessToken(code) {
 }
 
 export default async function NotoionCallback({ searchParams }) {
-  console.log(searchParams);
   const uid = searchParams.state;
   const response = await getAccessToken(searchParams.code);
-  console.log(uid);
   const accessToken = response.access_token;
 
   // Set the cookie

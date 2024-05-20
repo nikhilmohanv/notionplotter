@@ -1269,10 +1269,10 @@ function CalenderIcon() {
       viewBox="0 0 24 24"
       fill="none"
       stroke="#000000"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      class="lucide lucide-calendar"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="lucide lucide-calendar"
     >
       <path d="M8 2v4" />
       <path d="M16 2v4" />

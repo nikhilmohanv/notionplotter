@@ -18,7 +18,6 @@ export default function LoginButton({ text, variant }) {
 
   // Handle user sign-in with Google and store access token
   useEffect(() => {
-    console.log(user);
     if (user) {
       if (authLoading) {
         if (loading) {
@@ -64,7 +63,6 @@ export default function LoginButton({ text, variant }) {
             updatedUser.uid,
             data
           );
-          console.log("New doc adding error ", error);
         }
         const { result, error } = await getTokenWithUId(updatedUser.uid);
         if (result) {
@@ -84,10 +82,7 @@ export default function LoginButton({ text, variant }) {
                   priority: "high",
                   sameSite: "strict",
                 });
-                console.log("old account with access token");
-              } else {
-                console.log("old account with no access token");
-              }
+              } 
             }
             await storeAccessToken();
           });
@@ -103,7 +98,7 @@ export default function LoginButton({ text, variant }) {
       {isAuthNeeded ? (
         <Button disabled variant={variant}>
           <Loader2 className="w-full mr-2 h-4 w-4  animate-spin" />
-          Loading
+          Validating
         </Button>
       ) : (
         <Button variant={variant} onClick={handleSignIn}>

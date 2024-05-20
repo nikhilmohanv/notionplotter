@@ -40,7 +40,6 @@ const BarChart = ({
   xAxisName,
   aggregation,
 }) => {
-  console.log("aggregation ", aggregation);
   const [darkMode, setDarkMode] = useState(false);
   const [lineColor, setLineColor] = useState([]);
   const [fillColor, setFillColor] = useState([]);
@@ -92,7 +91,6 @@ const BarChart = ({
       //   .substring(5)
       //   .split(",")
       //   .map((v) => parseFloat(v));
-      // console.log(rgbaValues);
 
       // Set the alpha value to 1
       // if (rgbaValues.length == 3) {

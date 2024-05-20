@@ -56,7 +56,6 @@ export default function Embed() {
         // data.yaxisId && setYAxis(data.yaxisId);
 
         data.type && setChartType(data.type);
-        console.log(data.type);
         // data.xaxisId && setXAxis(data.xaxisId);
         data.label && setLabel(data.label);
         data.fillSingleColor && setFillSingleColor(data.fillSingleColor);

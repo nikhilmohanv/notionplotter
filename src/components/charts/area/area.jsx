@@ -46,7 +46,6 @@ const AreaChart = ({
   const [fillColor, setFillColor] = useState([]);
 
   
-  console.log(backgroundColor);
   const hex2rgb = (hex) => {
     const r = parseInt(hex.slice(1, 3), 16);
     const g = parseInt(hex.slice(3, 5), 16);
@@ -57,7 +56,6 @@ const AreaChart = ({
     const rgba = `rgba(${r}, ${g}, ${b}, ${a})`;
     return rgba;
   };
-  console.log(fillMultiColor);
 
   const convertForLineColor = (rgba) => {
     const rgbaValues = rgba
@@ -88,7 +86,6 @@ const AreaChart = ({
       //   .substring(5)
       //   .split(",")
       //   .map((v) => parseFloat(v));
-      // console.log(rgbaValues);
 
       // Set the alpha value to 1
       // if (rgbaValues.length == 3) {

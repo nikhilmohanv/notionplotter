@@ -9,7 +9,6 @@ export default function StoreCookies() {
   const cookies = useCookies();
   const pathname = usePathname();
   const uid = cookies.get("uid");
-  console.log(uid);
   useEffect(() => {
     const value = pathname.slice(14);
     const expires = new Date(Date.now() + 365 * 24 * 60 * 60 * 1000);

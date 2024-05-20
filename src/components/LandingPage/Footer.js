@@ -1,6 +1,5 @@
 import LineChartIcon from "../icons/logo";
-import { LogoIcon } from "./Icons";
-
+import Link from "next/link";
 export const Footer = () => {
   return (
     <footer id="footer">
@@ -131,8 +130,46 @@ export const Footer = () => {
           </div>
         </div> */}
       </section>
+      <section className=" dark:bg-gray-800 w-full py-8 md:py-12">
+        <div className="container mx-auto px-4 md:px-6 flex flex-col md:flex-row justify-between items-center">
+          <div className="mb-4 md:mb-0">
+            <p className="text-gray-600 dark:text-gray-400 text-sm">
+              © 2024{" "}
+              <a
+                rel="noreferrer noopener"
+                target="_blank"
+                href="https://x.com/nicks_notion"
+                className="text-primary transition-all border-primary hover:border-b-2"
+              >
+                Nicks Notion
+              </a>
+              . All rights reserved.
+            </p>
+          </div>
+          {/* <nav className="flex space-x-4 md:space-x-6">
+            <Link
+              className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-50 text-sm"
+              href="#"
+            >
+              Pricing
+            </Link>
+            <Link
+              className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-50 text-sm"
+              href="#"
+            >
+              Documentation
+            </Link>
+            <Link
+              className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-50 text-sm"
+              href="#"
+            >
+              Contact
+            </Link>
+          </nav> */}
+        </div>
+      </section>
 
-      <section className="container pb-14 text-center">
+      {/* <section className="container pb-14 text-center">
         <h3>
           &copy; 2024{" "}
           <a
@@ -144,7 +181,7 @@ export const Footer = () => {
             Nicks Notion
           </a>
         </h3>
-      </section>
+      </section> */}
     </footer>
   );
 };
