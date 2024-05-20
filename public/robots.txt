@@ -1,8 +1,9 @@
+# *
 User-agent: *
 Allow: /
-Disallow: /cgi-bin/
-Disallow: /dashboard
-Disallow: /settings
-Disallow: /auth/notion
-Disallow: /callback
-Sitemap: https://notionplotter.com/sitemap.xml
+
+# Host
+Host: <https://example.com>
+
+# Sitemaps
+Sitemap: <https://example.com>/sitemap.xml
