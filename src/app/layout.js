@@ -13,14 +13,12 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: "NotionPlotter",
-  description: "Create aesthetically beautiful custom embeddable charts from Notion easily with Notion plotter. ",
-  keywords:[],
-  alternates:{
-    canonical:"https://notionplotter.com",
-    languages:{
-      'en-US': '/en-US',
-    }
-  }
+  description:
+    "Create aesthetically beautiful custom embeddable charts from Notion easily with Notion plotter. You can create bar, pie, area, donut charts from Notion with ease.",
+  keywords: [],
+  alternates: {
+    canonical: "https://notionplotter.com",
+  },
 };
 
 export default function RootLayout({ children }) {

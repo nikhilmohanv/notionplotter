@@ -1,17 +1,18 @@
 export default function LineChartIcon(props) {
   return (
     <svg
-    {...props}
+      {...props}
       fill="#ffffff"
       width="138px"
       height="138px"
       viewBox="-4.8 -4.8 41.60 41.60"
-      style={{fillRule:"evenodd",clipRule:"evenodd",strokeLinejoin:"round",strokeMiterlimit:2}}
+      style={{
+        fillRule: "evenodd",
+        clipRule: "evenodd",
+        strokeLinejoin: "round",
+        strokeMiterlimit: 2,
+      }}
       version="1.1"
-      // xml:space="preserve"
-      // xmlns="http://www.w3.org/2000/svg"
-      // xmlns:serif="http://www.serif.com/"
-      // xmlns:xlink="http://www.w3.org/1999/xlink"
       stroke="#ffffff"
       strokeWidth="0.41600000000000004"
     >

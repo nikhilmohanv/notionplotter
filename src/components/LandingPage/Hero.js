@@ -34,6 +34,7 @@ export const Hero = () => {
         <Image
           src={"/image.png"}
           width={"1500"}
+          alt="notion-plotter-hero"
           height="550"
           className="rounded-sm md:rounded-xl shadow-lg "
         />

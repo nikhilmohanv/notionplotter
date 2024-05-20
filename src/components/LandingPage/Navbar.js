@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { useState } from "react";
 import {
   NavigationMenu,
@@ -12,21 +12,17 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-
-// import { GitHubLogoIcon } from "@radix-ui/react-icons";
-import { buttonVariants,Button } from "@/components/ui/button";
+import { buttonVariants, Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
 import { ModeToggle } from "./mode-toggle";
 import { LogoIcon } from "./Icons";
 import LineChartIcon from "@/components/icons/logo";
 import LoginButton from "./loginbutton";
 
-
-
 const routeList = [
   {
     href: "#howitworks",
-    label:"How it works"
+    label: "How it works",
   },
   {
     href: "#features",
@@ -46,8 +42,9 @@ const routeList = [
   },
 ];
 
-export const Navbar = ({handleSignIn}) => {
+export const Navbar = ({}) => {
   const [isOpen, setIsOpen] = useState(false);
+
   return (
     <header className="sticky  top-0 z-40 w-full bg-white/85 dark:border-b-slate-700  dark:bg-background">
       <NavigationMenu className="mx-auto">
@@ -72,9 +69,7 @@ export const Navbar = ({handleSignIn}) => {
                 <Menu
                   className="flex md:hidden h-5 w-5"
                   onClick={() => setIsOpen(true)}
-                >
-                  <span className="sr-only">Menu Icon</span>
-                </Menu>
+                ></Menu>
               </SheetTrigger>
 
               <SheetContent side={"left"}>
@@ -117,8 +112,7 @@ export const Navbar = ({handleSignIn}) => {
           </nav>
 
           <div className="hidden md:flex gap-2">
-          <LoginButton text={"Sign up"} variant={"outline"}/>
-
+            <LoginButton text={"Sign up"} variant={"outline"} />
 
             {/* <ModeToggle /> */}
           </div>
