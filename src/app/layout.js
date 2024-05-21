@@ -8,6 +8,7 @@ import {
 import { CookiesProvider } from "next-client-cookies/server";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
+import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
 
 const inter = Inter({ subsets: ["latin"] });
 {
@@ -30,6 +31,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <GoogleAnalytics />
       <body className={inter.className}>
         <CookiesProvider>
           <AuthContextProvider>
