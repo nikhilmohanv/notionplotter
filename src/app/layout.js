@@ -8,7 +8,7 @@ import {
 import { CookiesProvider } from "next-client-cookies/server";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
-import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
+import GoogleAnalytics from "@/lib/analytics/GoogleAnalytics";
 
 const inter = Inter({ subsets: ["latin"] });
 {

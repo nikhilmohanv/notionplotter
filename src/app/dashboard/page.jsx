@@ -63,6 +63,7 @@ import app from "@/lib/firebase/config";
 import CreateGraph from "@/components/basic/creategraph";
 import LoggedInNavBar from "@/components/navbar/loggedin-navbar";
 import UpgradeButton from "@/components/basic/upgradebutton";
+import ChartDisplay from "@/components/dashboard/chartsdisplay";
 
 export default function Dashboard() {
   const cookies = useCookies();
@@ -98,16 +99,30 @@ export default function Dashboard() {
         data.onTrial !== undefined && setOnTrial(data.onTrial);
       });
   }, []);
+
+  const searchParams = useSearchParams();
+
   useEffect(() => {
-    if (cookies.get("access_token") == undefined) {
+    if (searchParams.has("n")) {
       setAddToNotion(true);
     } else {
       setAddToNotion(false);
     }
-  }, [cookies.get("access_token")]);
+  }, []);
+  useEffect(() => {
+    if (
+      cookies.get("access_token") == undefined ||
+      cookies.get("access_token") == null
+    ) {
+      setAddToNotion(true);
+      console.log("add true");
+    } else {
+      setAddToNotion(false);
+      console.log("add false");
+    }
+  }, []);
 
   const db = getFirestore(app);
-  const [name, setName] = useState("");
   const [loading, setLoading] = useState(true);
 
   const notionAuthUrl = `https://api.notion.com/v1/oauth/authorize?owner=user&client_id=34d5c9a9-5b7d-4b77-be4b-6a5521f6560c&response_type=code&state=${uid}`;
@@ -120,15 +135,6 @@ export default function Dashboard() {
   const router = useRouter();
 
   //getting the notion status that is, is it new account or not if n is t then new account else already notion secret token associated with it
-  const searchParams = useSearchParams();
-
-  useEffect(() => {
-    if (searchParams.has("n")) {
-      setAddToNotion(true);
-    } else {
-      setAddToNotion(false);
-    }
-  }, []);
 
   //getting the notion token
 
@@ -167,20 +173,6 @@ export default function Dashboard() {
     getDocuments();
   }, [user]);
 
-  const handleDelete = (id) => {
-    try {
-      const ref = doc(db, "graphs", id);
-      deleteDoc(ref)
-        .then(() => {
-          router.push("/");
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    } catch (err) {
-      console.log(err);
-    }
-  };
   const [checkoutUrl, setCheckoutUrl] = useState("");
   useEffect(() => {
     const getCheckoutUrl = async () => {
@@ -198,6 +190,8 @@ export default function Dashboard() {
       getCheckoutUrl();
     }
   }, [isPro]);
+
+  console.log(addToNotion);
   return (
     <div
       key="1"
@@ -252,82 +246,7 @@ export default function Dashboard() {
                     <UpgradeButton isPro={isPro} />
                   )}
                 </div>
-                {docs.length !== 0
-                  ? docs.map((doc) => (
-                      <div key={doc.id}>
-                        <Card x-chunk="dashboard-01-chunk-0">
-                          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                            <Link href={`/edit/${doc.id}`}>
-                              <CardTitle className="text-sm font-medium">
-                                {doc.data.type}
-                              </CardTitle>
-                            </Link>
-                            <DropdownMenu className="h-4 w-4 text-muted-foreground">
-                              <DropdownMenuTrigger asChild>
-                                <Button
-                                  className="h-5 w-5"
-                                  size="icon"
-                                  variant="ghost"
-                                >
-                                  <DotIcon />
-                                </Button>
-                              </DropdownMenuTrigger>
-                              <DropdownMenuContent>
-                                <DropdownMenuItem
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    e.preventDefault();
-                                  }}
-                                >
-                                  <AlertDialog>
-                                    <AlertDialogTrigger asChild>
-                                      <Button variant="ghost" className="h-1">
-                                        Delete
-                                      </Button>
-                                    </AlertDialogTrigger>
-                                    <AlertDialogContent>
-                                      <AlertDialogHeader>
-                                        <AlertDialogTitle>
-                                          Are you absolutely sure?
-                                        </AlertDialogTitle>
-                                        <AlertDialogDescription>
-                                          This action cannot be undone. This
-                                          will permanently delete this chart and
-                                          associated data from our servers.
-                                        </AlertDialogDescription>
-                                      </AlertDialogHeader>
-                                      <AlertDialogFooter>
-                                        <AlertDialogCancel>
-                                          Cancel
-                                        </AlertDialogCancel>
-                                        <AlertDialogAction>
-                                          <Button
-                                            onClick={() => handleDelete(doc.id)}
-                                          >
-                                            Continue
-                                          </Button>
-                                        </AlertDialogAction>
-                                      </AlertDialogFooter>
-                                    </AlertDialogContent>
-                                  </AlertDialog>
-                                </DropdownMenuItem>
-                              </DropdownMenuContent>
-                            </DropdownMenu>
-                          </CardHeader>
-                          <Link href={`/edit/${doc.id}`}>
-                            <CardContent>
-                              <div className="text-xl font-bold">
-                                {doc.data.name}
-                              </div>
-                              {/* <p className="text-xs text-muted-foreground">
-                                +20.1% from last month
-                              </p> */}
-                            </CardContent>
-                          </Link>
-                        </Card>
-                      </div>
-                    ))
-                  : null}
+                {docs.length !== 0 ? <ChartDisplay docs={docs} /> : null}
               </div>
             </>
           )}
