@@ -9,6 +9,7 @@ import { CookiesProvider } from "next-client-cookies/server";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
 import GoogleAnalytics from "@/lib/analytics/GoogleAnalytics";
+import LemonAffiliate from "@/lib/affiliates/lemonSqueezysetup";
 
 const inter = Inter({ subsets: ["latin"] });
 {
@@ -32,6 +33,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <GoogleAnalytics />
+      <LemonAffiliate />
       <body className={inter.className}>
         <CookiesProvider>
           <AuthContextProvider>
