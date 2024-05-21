@@ -1,7 +1,10 @@
 import React from "react";
 import Script from "next/script";
+import { LemonSqueezy } from "@lemonsqueezy/lemonsqueezy.js";
+import { LemonsqueezyClient } from "lemonsqueezy.ts";
 
 const LemonAffiliate = () => {
+  
   return (
     <>
       <Script id="lemonSqueezyAffiliateConfig" strategy="beforeInteractive">

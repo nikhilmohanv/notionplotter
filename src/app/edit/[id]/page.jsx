@@ -1,4 +1,5 @@
 "use client";
+
 import { Input } from "@/components/ui/input";
 import {
   SelectValue,
@@ -30,9 +31,7 @@ import {
   LeftArrow,
 } from "@/components/icons/edit/icons";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-// import { Toggle } from "@/components/ui/toggle";
 import { useCookies } from "next-client-cookies";
-
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
@@ -44,9 +43,8 @@ import DoughnutChart from "@/components/charts/doughnut/doughnut";
 import PieChart from "@/components/charts/pie/pie";
 import { Skeleton } from "@/components/ui/skeleton";
 import Filter from "@/components/edit/filters/filter";
-import { Copy } from "lucide-react";
+import { Copy, Delete } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
-
 import {
   Dialog,
   DialogClose,
@@ -58,9 +56,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Loader2 } from "lucide-react";
-
 import { Label } from "@/components/ui/label";
-
 import { ColorPicker } from "antd";
 
 export default function Edit() {
@@ -85,7 +81,6 @@ export default function Edit() {
   const [yAxis, setYAxis] = useState();
   //store row data
   const [rows, setRows] = useState([]);
-
   // store background color from user
   const [backgroundColor, setBackgroundColor] = useState("#FFFFFF");
 
@@ -132,12 +127,13 @@ export default function Edit() {
 
   const [legend, setLegend] = useState(true);
 
+  const [dataType, setDataType] = useState("number");
+  const [currencyType, setCurrencyType] = useState("");
+
   // for storing legend position
   const [legendPosition, setLegendPosition] = useState("top");
   //this adds a new color input to the multicolor input array
-  const handleAddColor = () => {
-    setLineMultiColor([...lineMultiColor, "#000000"]);
-  };
+  
 
   const [andOr, setAndOr] = useState("and");
   // for storing filters
@@ -172,7 +168,6 @@ export default function Edit() {
     setFillMultiColor([...fillMultiColor, "rgba(0, 0, 0,0.1)"]);
   };
   //adding the value to the state
- 
 
   //adding new value to fill color variable
   const addNewFillColor = (color, index) => {
@@ -208,14 +203,21 @@ export default function Edit() {
         data.xAxisName && setXAxisName(data.xAxisName);
         data.yAxisName && setYAxisName(data.yAxisName);
         data.type && setChartType(data.type);
+        // data.dataType &&
+        if (data.dataType) {
+          if (data.dataType == "number" || data.dataType == "percentage") {
+            setDataType(data.dataType);
+          } else {
+            setDataType("currency");
+            setCurrencyType(data.dataType);
+          }
+        }
 
         data.xaxisId && setXAxis(data.xaxisId);
         data.label && setLabel(data.label);
         data.fillSingleColor && setFillSingleColor(data.fillSingleColor);
         data.fillMultiColor && setFillMultiColor(data.fillMultiColor);
         data.backgroundColor && setBackgroundColor(data.backgroundColor);
-        data.lineMultiColor && setLineMultiColor(data.lineMultiColor);
-        data.colorStatus && setColorStatus(data.colorStatus);
         data.fillColorStatus && setFillColorStatus(data.fillColorStatus);
         data.filters && setFilters(data.filters);
         data.andOr && setAndOr(data.andOr);
@@ -327,7 +329,12 @@ export default function Edit() {
         name = label;
       }
     }
-
+    let dataTypeToSave;
+    if (dataType == "number" || dataType == "percentage") {
+      dataTypeToSave = dataType;
+    } else {
+      dataTypeToSave = currencyType;
+    }
     //converting array values to comma seperated values
     const xAxisCommaVales = xAxisValues.join(", ");
     const yAxisCommaVales = yAxisValues.join(", ");
@@ -352,6 +359,7 @@ export default function Edit() {
       aggregation: aggregation,
       legend: legend,
       legendPosition: legendPosition,
+      dataType: dataTypeToSave,
     };
 
     //updating current fb firestore
@@ -369,7 +377,7 @@ export default function Edit() {
   //it stores extracted data from the api
   useEffect(() => {
     setExtractedProperties([]);
-   
+
     rows.forEach((page) => {
       // setCount(prevCount => prevCount + 1);
       // Extract properties from the 'properties' object
@@ -752,11 +760,8 @@ export default function Edit() {
     });
   }, [rows, xAxis, yAxis]);
 
-
   useEffect(() => {
-
     if (xAxis != null && xAxis != undefined) {
-
       let XAxisData;
       let extractedXValues;
       if (extractedProperties.length > 0) {
@@ -839,7 +844,6 @@ export default function Edit() {
           return obj.value;
         });
 
-       
         setXAxisValues(extractedXValues);
         colNameAndId.forEach((col) => {
           if (col.id === xAxis) {
@@ -921,322 +925,322 @@ export default function Edit() {
         <LoggedInNavBar />
 
         <div className="flex flex-col h-full md:flex-row">
-          <aside className="w-full lg:w-[400px] bg-gray-100 p-6 md:w-[300px] lg:overflow-auto md:overflow-auto">
-            <div className="grid grid-col-3">
+          <aside className="w-full lg:w-[400px] bg-gray-100 md:w-[300px] lg:overflow-auto md:overflow-auto">
+            <div className="flex sticky top-0 px-6 h-14 border-b bg-gray-100 justify-between items-center">
               <div>
                 <Link href={"/dashboard"}>
                   <LeftArrow />
                 </Link>
               </div>
+              <div className="flex-grow text-center">{name}</div>
+              <div>
+                <Delete />
+              </div>
             </div>
+
             <br />
-            <div className="mb-6">
-              <h3 className="text-sm font-medium mb-2">Chart type</h3>
+            <div className="p-6">
+              <div className="mb-6">
+                <h3 className="text-sm font-medium mb-2">Chart type</h3>
 
-              <div className="grid grid-cols-4 gap-4">
-                {/* bar chart */}
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <div className="flex items-center mr-2">
-                        <input
-                          className="mr-2"
-                          id="barChart"
-                          type="radio"
-                          name="chartType"
-                          value="Bar Chart"
-                          onChange={(e) => {
-                            setChartType(e.target.value);
-                          }}
-                          style={{
-                            opacity: 0,
-                            position: "absolute",
-                            height: 1,
-                            width: 1,
-                          }}
-                        />
-
-                        <label htmlFor="barChart">
-                          {chartType != "Bar Chart" ? (
-                            <Button
-                              variant="outline"
-                              onClick={() => setChartType("Bar Chart")}
-                            >
-                              <BarChartIconBlack className="text-indigo-600" />
-                            </Button>
-                          ) : (
-                            <Button>
-                              <BarChartIconWhite className="text-indigo-600" />
-                            </Button>
-                          )}
-                        </label>
-                      </div>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>Bar Chart</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
-
-                {/* Area Chart */}
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <div className="flex items-center mr-2">
-                        <input
-                          className="mr-2"
-                          id="areaChart"
-                          type="radio"
-                          name="chartType"
-                          value="Area Chart"
-                          onChange={(e) => {
-                            setChartType(e.target.value);
-                          }}
-                          style={{
-                            opacity: 0,
-                            position: "absolute",
-                            height: 1,
-                            width: 1,
-                          }}
-                        />
-
-                        <label htmlFor="areaChart">
-                          {chartType != "Area Chart" ? (
-                            <Button
-                              variant="outline"
-                              onClick={() => setChartType("Area Chart")}
-                            >
-                              <AreaChartIconBlack className="text-indigo-600" />
-                            </Button>
-                          ) : (
-                            <Button>
-                              <AreaChartIconWhite className="text-indigo-600" />
-                            </Button>
-                          )}
-                        </label>
-                      </div>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>Area Chart</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
-
-                {/* Pie Chart */}
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <div className="flex items-center mr-2">
-                        <input
-                          className="mr-2"
-                          id="pieChart"
-                          type="radio"
-                          name="chartType"
-                          value="Pie Chart"
-                          onChange={(e) => {
-                            setChartType(e.target.value);
-                          }}
-                          style={{
-                            opacity: 0,
-                            position: "absolute",
-                            height: 1,
-                            width: 1,
-                          }}
-                        />
-
-                        <label htmlFor="pieChart">
-                          {chartType != "Pie Chart" ? (
-                            <Button
-                              variant="outline"
-                              onClick={() => setChartType("Pie Chart")}
-                            >
-                              <PieChartIconBlack className="text-indigo-600" />
-                            </Button>
-                          ) : (
-                            <Button>
-                              <PieChartIconWhite className="text-indigo-600" />
-                            </Button>
-                          )}
-                        </label>
-                      </div>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>Pie Chart</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
-
-                {/* KPI Chart */}
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <div className="flex items-center mr-2">
-                        <input
-                          className="mr-2"
-                          id="doughnutChart"
-                          type="radio"
-                          name="chartType"
-                          value="Doughnut Chart"
-                          onChange={(e) => {
-                            setChartType(e.target.value);
-                          }}
-                          style={{
-                            opacity: 0,
-                            position: "absolute",
-                            height: 1,
-                            width: 1,
-                          }}
-                        />
-
-                        <label htmlFor="doughnutChart">
-                          {chartType != "Doughnut Chart" ? (
-                            <Button
-                              variant="outline"
-                              onClick={() => setChartType("Doughnut Chart")}
-                            >
-                              <DoughNutBlack className="text-indigo-600" />
-                            </Button>
-                          ) : (
-                            <Button>
-                              <DoughNutWhite className="text-indigo-600" />
-                            </Button>
-                          )}
-                        </label>
-                      </div>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>Doughnut Chart</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
-              </div>
-            </div>
-
-            <div className="mb-6">
-              <h3 className="text-sm font-medium mb-2">Label</h3>
-              <div className="flex items-center">
-                <div className="flex items-center mr-2">
-                  <input
-                    className="mr-2"
-                    id="labelVisibility"
-                    type="checkbox"
-                    style={{
-                      opacity: 0,
-                      position: "absolute",
-                      height: 1,
-                      width: 1,
-                    }}
-                  />
-
-                  <label htmlFor="labelVisibility">
-                    {labelStatus ? (
-                      <Button
-                        variant="outline"
-                        onClick={() => setLabelStatus(!labelStatus)}
-                      >
-                        <EyeClose />
-                      </Button>
-                    ) : (
-                      <Button
-                        variant="outline"
-                        onClick={() => setLabelStatus(!labelStatus)}
-                      >
-                        <EyeOpen className="text-gray-400" />
-                      </Button>
-                    )}
-                  </label>
-                </div>
-                {dbId ? (
-                  <Input
-                    placeholder="Enter label"
-                    value={label}
-                    onChange={(e) => setLabel(e.target.value)}
-                    // {labelStatus&& disabled}
-                    disabled={labelStatus ? true : false}
-                  />
-                ) : (
-                  <Skeleton className="bg-white h-9 w-full" />
-                )}
-              </div>
-              {/* </div> */}
-            </div>
-
-            
-
-            {/* area filling color selection */}
-
-            <div className="mb-6">
-              <h3 className="text-sm font-medium mb-2">Fill Color</h3>
-              {dbId ? (
-                <Tabs defaultValue={fillColorStatus} className="w-full">
-                  <TabsList className="grid w-full grid-cols-2">
-                    <TabsTrigger
-                      value="fillSingle"
-                      onClick={() => {
-                        setFillColorStatus("fillSingle");
-                      }}
-                    >
-                      Single Color
-                    </TabsTrigger>
-                    <TabsTrigger
-                      value="fillMulti"
-                      onClick={() => {
-                        setFillColorStatus("fillMulti");
-                      }}
-                    >
-                      Multi Color
-                    </TabsTrigger>
-                  </TabsList>
-                  <TabsContent value="fillSingle">
-                    <div className="w-full  ">
-                      <ColorPicker
-                        size="large"
-                        format="hex"
-                        defaultValue={fillSingleColor}
-                        value={fillSingleColor}
-                        onChange={(value, hex) => {
-                          setFillSingleColor(value.toRgbString());
-                        }}
-                      />
-                    </div>
-                  </TabsContent>
-                  <TabsContent value="fillMulti">
-                    <div className="w-full ">
-                      {fillMultiColor.map((item, index) => (
-                        <>
-                          <ColorPicker
-                            size="large"
-                            format="hex"
-                            defaultValue={item}
-                            value={item}
-                            onChange={(value, hex) =>
-                              addNewFillColor(value.toRgbString(), index)
-                            }
-                            className="ml-1"
+                <div className="grid grid-cols-4 gap-4">
+                  {/* bar chart */}
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <div className="flex items-center mr-2">
+                          <input
+                            className="mr-2"
+                            id="barChart"
+                            type="radio"
+                            name="chartType"
+                            value="Bar Chart"
+                            onChange={(e) => {
+                              setChartType(e.target.value);
+                            }}
+                            style={{
+                              opacity: 0,
+                              position: "absolute",
+                              height: 1,
+                              width: 1,
+                            }}
                           />
 
-                          {index === fillMultiColor.length - 1 && (
-                            <button onClick={() => handleAddFillColor()}>
-                              <PlusIcon className="w-8 h-8 p-0 " />
-                            </button>
-                          )}
-                        </>
-                      ))}
-                    </div>
-                  </TabsContent>
-                </Tabs>
-              ) : (
-                <Skeleton className="bg-white h-12 w-full" />
-              )}
-            </div>
+                          <label htmlFor="barChart">
+                            {chartType != "Bar Chart" ? (
+                              <Button
+                                variant="outline"
+                                onClick={() => setChartType("Bar Chart")}
+                              >
+                                <BarChartIconBlack className="text-indigo-600" />
+                              </Button>
+                            ) : (
+                              <Button>
+                                <BarChartIconWhite className="text-indigo-600" />
+                              </Button>
+                            )}
+                          </label>
+                        </div>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Bar Chart</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
 
-            {/* background color selector */}
-            <div className="mb-6">
-              <h3 className="text-sm font-medium mb-2">Background Color</h3>
-              {dbId ? (
-                <div className="w-full ">
-                  <label htmlFor="bgcolor">
-                    {/* <input
+                  {/* Area Chart */}
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <div className="flex items-center mr-2">
+                          <input
+                            className="mr-2"
+                            id="areaChart"
+                            type="radio"
+                            name="chartType"
+                            value="Area Chart"
+                            onChange={(e) => {
+                              setChartType(e.target.value);
+                            }}
+                            style={{
+                              opacity: 0,
+                              position: "absolute",
+                              height: 1,
+                              width: 1,
+                            }}
+                          />
+
+                          <label htmlFor="areaChart">
+                            {chartType != "Area Chart" ? (
+                              <Button
+                                variant="outline"
+                                onClick={() => setChartType("Area Chart")}
+                              >
+                                <AreaChartIconBlack className="text-indigo-600" />
+                              </Button>
+                            ) : (
+                              <Button>
+                                <AreaChartIconWhite className="text-indigo-600" />
+                              </Button>
+                            )}
+                          </label>
+                        </div>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Area Chart</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+
+                  {/* Pie Chart */}
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <div className="flex items-center mr-2">
+                          <input
+                            className="mr-2"
+                            id="pieChart"
+                            type="radio"
+                            name="chartType"
+                            value="Pie Chart"
+                            onChange={(e) => {
+                              setChartType(e.target.value);
+                            }}
+                            style={{
+                              opacity: 0,
+                              position: "absolute",
+                              height: 1,
+                              width: 1,
+                            }}
+                          />
+
+                          <label htmlFor="pieChart">
+                            {chartType != "Pie Chart" ? (
+                              <Button
+                                variant="outline"
+                                onClick={() => setChartType("Pie Chart")}
+                              >
+                                <PieChartIconBlack className="text-indigo-600" />
+                              </Button>
+                            ) : (
+                              <Button>
+                                <PieChartIconWhite className="text-indigo-600" />
+                              </Button>
+                            )}
+                          </label>
+                        </div>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Pie Chart</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+
+                  {/* KPI Chart */}
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <div className="flex items-center mr-2">
+                          <input
+                            className="mr-2"
+                            id="doughnutChart"
+                            type="radio"
+                            name="chartType"
+                            value="Doughnut Chart"
+                            onChange={(e) => {
+                              setChartType(e.target.value);
+                            }}
+                            style={{
+                              opacity: 0,
+                              position: "absolute",
+                              height: 1,
+                              width: 1,
+                            }}
+                          />
+
+                          <label htmlFor="doughnutChart">
+                            {chartType != "Doughnut Chart" ? (
+                              <Button
+                                variant="outline"
+                                onClick={() => setChartType("Doughnut Chart")}
+                              >
+                                <DoughNutBlack className="text-indigo-600" />
+                              </Button>
+                            ) : (
+                              <Button>
+                                <DoughNutWhite className="text-indigo-600" />
+                              </Button>
+                            )}
+                          </label>
+                        </div>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Doughnut Chart</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </div>
+              </div>
+              <div className="mb-6">
+                <h3 className="text-sm font-medium mb-2">Label</h3>
+                <div className="flex items-center">
+                  <div className="flex items-center mr-2">
+                    <input
+                      className="mr-2"
+                      id="labelVisibility"
+                      type="checkbox"
+                      style={{
+                        opacity: 0,
+                        position: "absolute",
+                        height: 1,
+                        width: 1,
+                      }}
+                    />
+
+                    <label htmlFor="labelVisibility">
+                      {labelStatus ? (
+                        <Button
+                          variant="outline"
+                          onClick={() => setLabelStatus(!labelStatus)}
+                        >
+                          <EyeClose />
+                        </Button>
+                      ) : (
+                        <Button
+                          variant="outline"
+                          onClick={() => setLabelStatus(!labelStatus)}
+                        >
+                          <EyeOpen className="text-gray-400" />
+                        </Button>
+                      )}
+                    </label>
+                  </div>
+                  {dbId ? (
+                    <Input
+                      placeholder="Enter label"
+                      value={label}
+                      onChange={(e) => setLabel(e.target.value)}
+                      // {labelStatus&& disabled}
+                      disabled={labelStatus ? true : false}
+                    />
+                  ) : (
+                    <Skeleton className="bg-white h-9 w-full" />
+                  )}
+                </div>
+                {/* </div> */}
+              </div>
+              {/* area filling color selection */}
+              <div className="mb-6">
+                <h3 className="text-sm font-medium mb-2">Fill Color</h3>
+                {dbId ? (
+                  <Tabs defaultValue={fillColorStatus} className="w-full">
+                    <TabsList className="grid w-full grid-cols-2">
+                      <TabsTrigger
+                        value="fillSingle"
+                        onClick={() => {
+                          setFillColorStatus("fillSingle");
+                        }}
+                      >
+                        Single Color
+                      </TabsTrigger>
+                      <TabsTrigger
+                        value="fillMulti"
+                        onClick={() => {
+                          setFillColorStatus("fillMulti");
+                        }}
+                      >
+                        Multi Color
+                      </TabsTrigger>
+                    </TabsList>
+                    <TabsContent value="fillSingle">
+                      <div className="w-full  ">
+                        <ColorPicker
+                          size="large"
+                          format="hex"
+                          defaultValue={fillSingleColor}
+                          value={fillSingleColor}
+                          onChange={(value, hex) => {
+                            setFillSingleColor(value.toRgbString());
+                          }}
+                        />
+                      </div>
+                    </TabsContent>
+                    <TabsContent value="fillMulti">
+                      <div className="w-full ">
+                        {fillMultiColor.map((item, index) => (
+                          <>
+                            <ColorPicker
+                              size="large"
+                              format="hex"
+                              defaultValue={item}
+                              value={item}
+                              onChange={(value, hex) =>
+                                addNewFillColor(value.toRgbString(), index)
+                              }
+                              className="ml-1"
+                            />
+
+                            {index === fillMultiColor.length - 1 && (
+                              <button onClick={() => handleAddFillColor()}>
+                                <PlusIcon className="w-8 h-8 p-0 " />
+                              </button>
+                            )}
+                          </>
+                        ))}
+                      </div>
+                    </TabsContent>
+                  </Tabs>
+                ) : (
+                  <Skeleton className="bg-white h-12 w-full" />
+                )}
+              </div>
+              {/* background color selector */}
+              <div className="mb-6">
+                <h3 className="text-sm font-medium mb-2">Background Color</h3>
+                {dbId ? (
+                  <div className="w-full ">
+                    <label htmlFor="bgcolor">
+                      {/* <input
                       type="color"
                       name="bgcolor"
                       value={backgroundColor}
@@ -1244,157 +1248,194 @@ export default function Edit() {
                       className="w-12 h-12 p-0 m-2"
                     /> */}
 
-                    <ColorPicker
-                      size="large"
-                      format="hex"
-                      defaultValue={backgroundColor}
-                      value={backgroundColor}
-                      onChange={(value, hex) => {
-                        setBackgroundColor(hex);
-                      }}
-                      className="ml-1"
-                    />
-                  </label>
-                </div>
-              ) : (
-                <Skeleton className="bg-white h-9 w-full" />
-              )}
-            </div>
-
-            {/* xaxis values */}
-            <div className="mb-6">
-              <h3 className="text-sm font-medium mb-2">X-Axis</h3>
-              {colNameAndId ? (
-                <Select onValueChange={handleXSelect} defaultValue={xAxisName}>
-                  <SelectTrigger id="xaxis">
-                    <SelectValue placeholder={xAxisName} />
-                  </SelectTrigger>
-                  <SelectContent position="popper">
-                    <SelectGroup>
-                      {colNameAndId.map((col) => (
-                        <SelectItem key={col.id} value={col.id}>
-                          {col.name}
-                        </SelectItem>
-                      ))}
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-              ) : (
-                <Skeleton className="bg-white h-9 w-full" />
-              )}
-            </div>
-
-            {/* yaxis values */}
-            <div className="mb-6">
-              <h3 className="text-sm font-medium mb-2">Y-Axis</h3>
-              {colNameAndId ? (
-                <Select onValueChange={handleYSelect} defaultValue={yAxisName}>
-                  <SelectTrigger id="xaxis">
-                    <SelectValue placeholder={yAxisName} />
-                  </SelectTrigger>
-                  <SelectContent position="popper">
-                    <SelectGroup>
-                      {colNameAndId.map((col) => (
-                        <SelectItem key={col.id} value={col.id}>
-                          {col.name}
-                        </SelectItem>
-                      ))}
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-              ) : (
-                <Skeleton className="bg-white h-9 w-full" />
-              )}
-            </div>
-
-            {/* legend */}
-            <div>
-              <div className="mb-6">
-                <div className="flex bg-white flex-row h-12 items-center justify-between rounded-lg border p-4">
-                  <div className="space-y-0.5">
-                    <Label className="text-sm font-medium mb-2">Legend</Label>
+                      <ColorPicker
+                        size="large"
+                        format="hex"
+                        defaultValue={backgroundColor}
+                        value={backgroundColor}
+                        onChange={(value, hex) => {
+                          setBackgroundColor(hex);
+                        }}
+                        className="ml-1"
+                      />
+                    </label>
                   </div>
+                ) : (
+                  <Skeleton className="bg-white h-9 w-full" />
+                )}
+              </div>
+              {/* legend */}
+              <div>
+                <div className="mb-6">
+                  <div className="flex bg-white flex-row h-12 items-center justify-between rounded-lg border p-4">
+                    <div className="space-y-0.5">
+                      <Label className="text-sm font-medium mb-2">Legend</Label>
+                    </div>
 
-                  <Switch checked={legend} onCheckedChange={setLegend} />
+                    <Switch checked={legend} onCheckedChange={setLegend} />
+                  </div>
                 </div>
               </div>
-            </div>
-
-            {legend && (
+              {legend && (
+                <div className="mb-6">
+                  <h3 className="text-sm font-medium mb-2">Legend Position</h3>
+                  {dbId && (
+                    <Select
+                      onValueChange={setLegendPosition}
+                      defaultValue={
+                        legendPosition != undefined ? legendPosition : "top"
+                      }
+                    >
+                      <SelectTrigger id="legendPosition">
+                        <SelectValue placeholder={legendPosition} />
+                      </SelectTrigger>
+                      <SelectContent position="popper">
+                        <SelectGroup>
+                          <SelectItem value="top">Top</SelectItem>
+                          <SelectItem value="bottom">Bottom</SelectItem>
+                          <SelectItem value="left">Left</SelectItem>
+                          <SelectItem value="right">Right</SelectItem>
+                          <SelectItem value="center">Center</SelectItem>
+                          <SelectItem value="chartArea">Chart Area</SelectItem>
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                  )}
+                </div>
+              )}
+              {/* xaxis values */}
               <div className="mb-6">
-                <h3 className="text-sm font-medium mb-2">Legend Position</h3>
-                {dbId && (
+                <h3 className="text-sm font-medium mb-2">X-Axis</h3>
+                {colNameAndId ? (
                   <Select
-                    onValueChange={setLegendPosition}
-                    defaultValue={
-                      legendPosition != undefined ? legendPosition : "top"
-                    }
+                    onValueChange={handleXSelect}
+                    defaultValue={xAxisName}
                   >
-                    <SelectTrigger id="legendPosition">
-                      <SelectValue placeholder={legendPosition} />
+                    <SelectTrigger id="xaxis">
+                      <SelectValue placeholder={xAxisName} />
                     </SelectTrigger>
                     <SelectContent position="popper">
                       <SelectGroup>
-                        <SelectItem value="top">Top</SelectItem>
-                        <SelectItem value="bottom">Bottom</SelectItem>
-                        <SelectItem value="left">Left</SelectItem>
-                        <SelectItem value="right">Right</SelectItem>
-                        <SelectItem value="center">Center</SelectItem>
-                        <SelectItem value="chartArea">Chart Area</SelectItem>
+                        {colNameAndId.map((col) => (
+                          <SelectItem key={col.id} value={col.id}>
+                            {col.name}
+                          </SelectItem>
+                        ))}
                       </SelectGroup>
                     </SelectContent>
                   </Select>
+                ) : (
+                  <Skeleton className="bg-white h-9 w-full" />
                 )}
               </div>
-            )}
-
-            {/* aggregation function */}
-            <div className="mb-6">
-              <h3 className="text-sm font-medium mb-2">Aggregation</h3>
-              {dbId ? (
-                <Select
-                  onValueChange={handleAggregationChange}
-                  defaultValue={aggregation}
-                >
-                  <SelectTrigger id="aggregation">
-                    <SelectValue placeholder={aggregation} />
-                  </SelectTrigger>
-                  <SelectContent position="popper">
-                    <SelectGroup>
-                      <SelectItem value="count">Count</SelectItem>
-                      <SelectItem value="sum">Sum</SelectItem>
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-              ) : (
-                <Skeleton className="bg-white h-9 w-full" />
+              {/* yaxis values */}
+              <div className="mb-6">
+                <h3 className="text-sm font-medium mb-2">Y-Axis</h3>
+                {colNameAndId ? (
+                  <Select
+                    onValueChange={handleYSelect}
+                    defaultValue={yAxisName}
+                  >
+                    <SelectTrigger id="xaxis">
+                      <SelectValue placeholder={yAxisName} />
+                    </SelectTrigger>
+                    <SelectContent position="popper">
+                      <SelectGroup>
+                        {colNameAndId.map((col) => (
+                          <SelectItem key={col.id} value={col.id}>
+                            {col.name}
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                ) : (
+                  <Skeleton className="bg-white h-9 w-full" />
+                )}
+              </div>
+              {/* data type */}
+              <div className="mb-6">
+                <h3 className="text-sm font-medium mb-2">Data Type</h3>
+                {dbId ? (
+                  <Select onValueChange={setDataType} defaultValue={dataType}>
+                    <SelectTrigger id="aggregation">
+                      <SelectValue placeholder={aggregation} />
+                    </SelectTrigger>
+                    <SelectContent position="popper">
+                      <SelectGroup>
+                        <SelectItem value="number">Number</SelectItem>
+                        <SelectItem value="percentage">Percentage</SelectItem>
+                        <SelectItem value="currency">Currency</SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                ) : (
+                  <Skeleton className="bg-white h-9 w-full" />
+                )}
+              </div>
+              {dataType == "currency" && (
+                <div className="mb-6">
+                  <h3 className="text-sm font-medium mb-2">
+                    Add your Currency Symbol
+                  </h3>
+                  {dbId ? (
+                    <Input
+                      className="w-full"
+                      // defaultValue={currencyType}
+                      value={currencyType}
+                      onChange={(e) => setCurrencyType(e.target.value)}
+                    ></Input>
+                  ) : (
+                    <Skeleton className="bg-white h-9 w-full" />
+                  )}
+                </div>
               )}
-            </div>
-
-            {/* filter */}
-            <div className="sm:mb-14">
-              <Filter
-                getFilters={getFilters}
-                dbId={dbId}
-                filterLoadingState={filterLoadingState}
-                filters={filters}
-                colNameAndId={colNameAndId}
-                orAnd={andOr}
-              />
-            </div>
-
-            {/* save button */}
-            <div className="md:sticky md:bottom-9 md:left-0  w-full bg-gray-100 pt-4 md:px-1 pb-2 border-t">
-              {savingStatus ? (
-                <Button disabled className="w-full">
-                  <Loader2 className="mr-2 h-4 w-4  animate-spin" />
-                  Please wait
-                </Button>
-              ) : (
-                <Button onClick={saveToDb} className="w-full">
-                  Save
-                </Button>
-              )}
+              {/* aggregation function */}
+              <div className="mb-6">
+                <h3 className="text-sm font-medium mb-2">Aggregation</h3>
+                {dbId ? (
+                  <Select
+                    onValueChange={handleAggregationChange}
+                    defaultValue={aggregation}
+                  >
+                    <SelectTrigger id="aggregation">
+                      <SelectValue placeholder={aggregation} />
+                    </SelectTrigger>
+                    <SelectContent position="popper">
+                      <SelectGroup>
+                        <SelectItem value="count">Count</SelectItem>
+                        <SelectItem value="sum">Sum</SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                ) : (
+                  <Skeleton className="bg-white h-9 w-full" />
+                )}
+              </div>
+              {/* filter */}
+              <div className="sm:mb-14">
+                <Filter
+                  getFilters={getFilters}
+                  dbId={dbId}
+                  filterLoadingState={filterLoadingState}
+                  filters={filters}
+                  colNameAndId={colNameAndId}
+                  orAnd={andOr}
+                />
+              </div>
+              {/* save button */}
+              <div className="md:sticky md:bottom-16 md:left-0  w-full bg-gray-100 pt-4 md:px-1 pb-2 border-t">
+                {savingStatus ? (
+                  <Button disabled className="w-full">
+                    <Loader2 className="mr-2 h-4 w-4  animate-spin" />
+                    Please wait
+                  </Button>
+                ) : (
+                  <Button onClick={saveToDb} className="w-full">
+                    Save
+                  </Button>
+                )}
+              </div>{" "}
             </div>
           </aside>
 
@@ -1468,6 +1509,8 @@ export default function Edit() {
                   legendPosition={legendPosition}
                   yAxisName={yAxisName}
                   xAxisName={xAxisName}
+                  dataType={dataType}
+                  currencyType={currencyType}
                 />
               </div>
             ) : chartType == "Area Chart" ? (
@@ -1494,6 +1537,8 @@ export default function Edit() {
                   xAxisName={xAxisName}
                   legend={legend}
                   legendPosition={legendPosition}
+                  dataType={dataType}
+                  currencyType={currencyType}
                 />
               </div>
             ) : chartType == "Doughnut Chart" ? (
@@ -1520,6 +1565,8 @@ export default function Edit() {
                   legendPosition={legendPosition}
                   yAxisName={yAxisName}
                   xAxisName={xAxisName}
+                  dataType={dataType}
+                  currencyType={currencyType}
                 />
               </div>
             ) : chartType == "Pie Chart" ? (
@@ -1546,6 +1593,8 @@ export default function Edit() {
                   legendPosition={legendPosition}
                   yAxisName={yAxisName}
                   xAxisName={xAxisName}
+                  dataType={dataType}
+                  currencyType={currencyType}
                 />
               </div>
             ) : (

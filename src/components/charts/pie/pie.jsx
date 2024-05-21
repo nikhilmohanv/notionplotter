@@ -9,7 +9,8 @@ export default function PieChart({
   yValues,
   label,
   labelStatus,
-
+  dataType,
+  currencyType,
   backgroundColor,
   fillSingleColor,
   fillMultiColor,
@@ -24,20 +25,6 @@ export default function PieChart({
   const [lineColor, setLineColor] = useState([]);
   const [fillColor, setFillColor] = useState([]);
 
-  // useEffect(() => {
-  //   if (colorStatus == "lineSingle") {
-  //     setLineColor(lineSingleColor);
-  //   } else {
-  //     setLineColor(lineMultiColor);
-  //   }
-  // }, [colorStatus, lineSingleColor, lineMultiColor]);
-  // useEffect(() => {
-  //   if (backgroundColor.substring(0, 7).toLowerCase() == "#ffffff") {
-  //     setDarkMode(false);
-  //   } else {
-  //     setDarkMode(true);
-  //   }
-  // }, [backgroundColor]);
   const hex2rgb = (hex) => {
     const r = parseInt(hex.slice(1, 3), 16);
     const g = parseInt(hex.slice(3, 5), 16);
@@ -96,6 +83,17 @@ export default function PieChart({
     }
     // setFillColor(newFillColor);
   }, [fillColorStatus, fillSingleColor, fillMultiColor]);
+
+  const [displayDataType, setDisplayDataType] = useState();
+  useEffect(() => {
+    if (dataType == "number") {
+      setDisplayDataType("");
+    } else if (dataType == "percentage") {
+      setDisplayDataType("%");
+    } else {
+      setDisplayDataType(currencyType);
+    }
+  }, [dataType, currencyType]);
   return (
     <>
       <Pie
@@ -127,7 +125,27 @@ export default function PieChart({
                 },
               },
             },
-
+            tooltip: {
+              callbacks: {
+                label: function (context) {
+                  let label = context.dataset.label || ""; // Dataset label
+                  if (label) {
+                    label += ": ";
+                  }
+                 
+                  if (context.parsed !== null) {
+                    if (displayDataType == "%") {
+                      label += context.parsed.toFixed(1) + displayDataType;
+                    } else {
+                      // Format the y-axis value with a dollar sign
+                      label +=
+                        displayDataType + context.parsed.toLocaleString(); // Format to 2 decimal places
+                    }
+                  }
+                  return label;
+                },
+              },
+            },
             title: {
               display: labelStatus ? false : true,
               text: !labelStatus && label,

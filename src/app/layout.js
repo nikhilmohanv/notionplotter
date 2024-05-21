@@ -19,7 +19,16 @@ export const metadata = {
   title: "NotionPlotter - create charts from Notion",
   description:
     "Create aesthetic, custom and embeddable charts from Notion easily with Notion plotter. You can create bar, pie, area, donut charts and more from Notion.",
-  keywords: [],
+  keywords: [
+    "notion",
+    "notion charts",
+    "notion graphs",
+    "how to create charts from notion",
+    "how to create charts with notion",
+    "notion graph generator",
+    "notion charts from database",
+    "notion charts from table",
+  ],
   alternates: {
     canonical: "https://notionplotter.com",
   },
@@ -33,7 +42,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <GoogleAnalytics />
-      <LemonAffiliate />
+      {/* <LemonAffiliate /> this line causing hydration error so manage it accordingly */}
       <body className={inter.className}>
         <CookiesProvider>
           <AuthContextProvider>

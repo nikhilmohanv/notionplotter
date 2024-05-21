@@ -30,14 +30,13 @@ const AreaChart = ({
   yValues,
   label,
   labelStatus,
-
   backgroundColor,
   fillSingleColor,
   fillMultiColor,
   fillColorStatus,
-
+  dataType,
+  currencyType,
   yAxisName,
-  xAxisName,
   legend,
   legendPosition,
 }) => {
@@ -45,7 +44,6 @@ const AreaChart = ({
   const [lineColor, setLineColor] = useState([]);
   const [fillColor, setFillColor] = useState([]);
 
-  
   const hex2rgb = (hex) => {
     const r = parseInt(hex.slice(1, 3), 16);
     const g = parseInt(hex.slice(3, 5), 16);
@@ -79,6 +77,7 @@ const AreaChart = ({
       setDarkMode(true);
     }
   }, [backgroundColor]);
+
   useEffect(() => {
     const newFillColor = [];
     if (fillColorStatus === "fillSingle") {
@@ -113,6 +112,19 @@ const AreaChart = ({
   // function createDatasets(xValues,yValues){
 
   // }
+
+  // finding the data type
+
+  const [displayDataType, setDisplayDataType] = useState();
+  useEffect(() => {
+    if (dataType == "number") {
+      setDisplayDataType("");
+    } else if (dataType == "percentage") {
+      setDisplayDataType("%");
+    } else {
+      setDisplayDataType(currencyType);
+    }
+  }, [dataType, currencyType]);
 
   return (
     <Line
@@ -162,8 +174,29 @@ const AreaChart = ({
             color: darkMode ? "white" : "black",
 
             font: {
-              size: 20,
-              weight: 8,
+              size: 18,
+              weight: "bolder",
+            },
+          },
+          tooltip: {
+            callbacks: {
+              label: function (context) {
+                let label = context.dataset.label || ""; // Dataset label
+                if (label) {
+                  label += ": ";
+                }
+
+                if (context.parsed.y !== null) {
+                  if (displayDataType == "%") {
+                    label += context.parsed.y.toFixed(1) + displayDataType;
+                  } else {
+                    // Format the y-axis value with a dollar sign
+                    label +=
+                      displayDataType + context.parsed.y.toLocaleString(); // Format to 2 decimal places
+                  }
+                }
+                return label;
+              },
             },
           },
         },
@@ -197,7 +230,10 @@ const AreaChart = ({
             ticks: {
               color: darkMode ? "rgba(255, 255, 255, 0.9)" : "#43424D",
               callback: function (value, index, values) {
-                return "$" + value.toLocaleString(); // Add your desired symbol here
+                if (displayDataType == "%") {
+                  return value.toLocaleString() + displayDataType;
+                }
+                return displayDataType + value.toLocaleString(); // Add your desired symbol here
               },
             },
             grid: {

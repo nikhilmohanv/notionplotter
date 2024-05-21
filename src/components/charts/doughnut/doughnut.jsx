@@ -13,7 +13,8 @@ const DoughnutChart = ({
   yValues,
   label,
   labelStatus,
-
+  dataType,
+  currencyType,
   fillSingleColor,
   fillMultiColor,
   backgroundColor,
@@ -21,7 +22,6 @@ const DoughnutChart = ({
   legend,
   legendPosition,
   yAxisName,
-  xAxisName,
 }) => {
   const [darkMode, setDarkMode] = useState(false);
   const [lineColor, setLineColor] = useState([]);
@@ -35,7 +35,6 @@ const DoughnutChart = ({
   //   }
   // }, [colorStatus, lineSingleColor, lineMultiColor]);
 
- 
   const hex2rgb = (hex) => {
     const r = parseInt(hex.slice(1, 3), 16);
     const g = parseInt(hex.slice(3, 5), 16);
@@ -74,7 +73,6 @@ const DoughnutChart = ({
       //   .substring(5)
       //   .split(",")
       //   .map((v) => parseFloat(v));
-
       // Set the alpha value to 1
       // if (rgbaValues.length == 3) {
       //if 3 values in the array then not 100% alpha so
@@ -95,6 +93,17 @@ const DoughnutChart = ({
     }
     // setFillColor(newFillColor);
   }, [fillColorStatus, fillSingleColor, fillMultiColor]);
+
+  const [displayDataType, setDisplayDataType] = useState();
+  useEffect(() => {
+    if (dataType == "number") {
+      setDisplayDataType("");
+    } else if (dataType == "percentage") {
+      setDisplayDataType("%");
+    } else {
+      setDisplayDataType(currencyType);
+    }
+  }, [dataType, currencyType]);
   return (
     // <div
     // style={{
@@ -130,7 +139,26 @@ const DoughnutChart = ({
               color: darkMode ? "white" : "black",
             },
           },
-
+          tooltip: {
+            callbacks: {
+              label: function (context) {
+                let label = context.dataset.label || ""; // Dataset label
+                if (label) {
+                  label += ": ";
+                }
+                console.log(context.parsed);
+                if (context.parsed !== null) {
+                  if (displayDataType == "%") {
+                    label += context.parsed.toFixed(1) + displayDataType;
+                  } else {
+                    // Format the y-axis value with a dollar sign
+                    label += displayDataType + context.parsed.toLocaleString(); // Format to 2 decimal places
+                  }
+                }
+                return label;
+              },
+            },
+          },
           title: {
             display: labelStatus ? false : true,
             text: !labelStatus && label,
@@ -138,8 +166,8 @@ const DoughnutChart = ({
             color: darkMode ? "white" : "black",
 
             font: {
-              size: 20,
-              weight: 8,
+              size: 18,
+              weight: "bolder",
             },
           },
         },
@@ -157,6 +185,7 @@ const DoughnutChart = ({
             hoverBorderWidth: 2,
           },
         },
+
         interaction: {
           intersect: false,
           mode: "index",

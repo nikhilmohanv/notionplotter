@@ -29,7 +29,8 @@ const BarChart = ({
   yValues,
   label,
   labelStatus,
-
+  dataType,
+  currencyType,
   fillSingleColor,
   fillMultiColor,
   backgroundColor,
@@ -105,12 +106,12 @@ const BarChart = ({
       setFillColor(fillSingleColor);
     } else if (fillColorStatus === "fillMulti") {
       // setLineColor(convertForLineColor(fillMultiColor[0]));
-      let newFillColor=[]
+      let newFillColor = [];
       setFillColor(fillMultiColor);
       fillMultiColor.forEach((color) => {
         newFillColor.push(convertForLineColor(color));
       });
-      setLineColor(newFillColor)
+      setLineColor(newFillColor);
     }
     // setFillColor(newFillColor);
   }, [fillColorStatus, fillSingleColor, fillMultiColor]);
@@ -123,7 +124,16 @@ const BarChart = ({
     purple: "rgb(153, 102, 255,0.5)",
     grey: "rgb(231,233,237,0.5)",
   };
-
+  const [displayDataType, setDisplayDataType] = useState();
+  useEffect(() => {
+    if (dataType == "number") {
+      setDisplayDataType("");
+    } else if (dataType == "percentage") {
+      setDisplayDataType("%");
+    } else {
+      setDisplayDataType(currencyType);
+    }
+  }, [dataType, currencyType]);
   return (
     <Bar
       data={{
@@ -159,6 +169,101 @@ const BarChart = ({
           legend: {
             display: false,
           },
+          tooltip: {
+            callbacks: {
+              label: function (context) {
+                let label = context.dataset.label || ""; // Dataset label
+                if (label) {
+                  label += ": ";
+                }
+
+                if (context.parsed.y !== null) {
+                  if (displayDataType == "%") {
+                    label += context.parsed.y.toFixed(1) + displayDataType;
+                  } else {
+                    // Format the y-axis value with a dollar sign
+                    label +=
+                      displayDataType + context.parsed.y.toLocaleString(); // Format to 2 decimal places
+                  }
+                }
+                return label;
+              },
+            },
+          },
+          title: {
+            display: labelStatus ? false : true,
+            text: !labelStatus && label,
+            align: "center",
+            color: darkMode ? "white" : "black",
+
+            font: {
+              size: 18,
+              weight: "bolder",
+            },
+          },
+        },
+        scales: {
+          x: {
+            grid: {
+              drawTicks: false,
+              drawBorder: true,
+              borderDash: [4, 4],
+              color: darkMode
+                ? "rgba(255, 255, 255, 0.2)"
+                : "rgba(0, 0, 0, 0.1)",
+            },
+            ticks: {
+              align: "inner",
+
+              autoSkipPadding: 3,
+
+              color: darkMode ? "rgba(255, 255, 255, 0.9)" : "#43424D", //"#9494A4" : "#D3D3D6"
+              padding: 16,
+              font: {
+                size: 13,
+              },
+            },
+          },
+          y: {
+            // if want to remove the y axis values then make display false
+            display: true,
+
+            beginAtZero: !0,
+            ticks: {
+              color: darkMode ? "rgba(255, 255, 255, 0.9)" : "#43424D",
+              callback: function (value, index, values) {
+                if (displayDataType == "%") {
+                  return value.toLocaleString() + displayDataType;
+                }
+                return displayDataType + value.toLocaleString(); // Add your desired symbol here
+              },
+            },
+            grid: {
+              color: darkMode
+                ? "rgba(255, 255, 255, 0.2)"
+                : "rgba(0, 0, 0, 0.1)",
+            },
+          },
+        },
+        elements: {
+          line: {
+            borderWidth: 2,
+          },
+          point: {
+            radius: 1,
+            backgroundColor: "transparent", // #29D
+            borderWidth: 0,
+            hoverBackgroundColor: "#212027",
+            hoverRadius: 4,
+            hoverBorderWidth: 2,
+          },
+        },
+        interaction: {
+          intersect: false,
+          mode: "index",
+        },
+        animation: {
+          duration: 1500,
         },
       }}
     />
