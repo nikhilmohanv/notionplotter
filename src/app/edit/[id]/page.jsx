@@ -58,7 +58,16 @@ import {
 import { Loader2 } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import { ColorPicker } from "antd";
-
+import {
+  collection,
+  where,
+  query,
+  getFirestore,
+  orderBy,
+  onSnapshot,
+  deleteDoc,
+  doc,
+} from "firebase/firestore";
 export default function Edit() {
   const cookies = useCookies();
   const cookieUid = cookies.get("uid");
@@ -918,6 +927,21 @@ export default function Edit() {
   const handleAggregationChange = (value) => {
     setAggregation(value);
   };
+  
+  const handleDelete = (id) => {
+    try {
+      const ref = doc(db, "graphs", id);
+      deleteDoc(ref)
+        .then(() => {
+          router.push("/");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <>
@@ -934,7 +958,9 @@ export default function Edit() {
               </div>
               <div className="flex-grow text-center">{name}</div>
               <div>
+                <button onClick={handleDelete(id)}>
                 <Trash />
+                  </button>
               </div>
             </div>
 
