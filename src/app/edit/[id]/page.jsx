@@ -961,7 +961,7 @@ const db = getFirestore(app);
               </div>
               <div className="flex-grow text-center">{name}</div>
               <div>
-                <button onClick={handleDelete(id)}>
+                <button onClick={()=>{handleDelete(id)}}>
                 <Trash />
                   </button>
               </div>
