@@ -32,7 +32,7 @@ export default function ChartDisplay({ docs }) {
       const ref = doc(db, "graphs", id);
       deleteDoc(ref)
         .then(() => {
-          router.push("/");
+          router.push("/dashboard");
         })
         .catch((error) => {
           console.log(error);
