@@ -55,6 +55,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import {useRouter} from "next/navigation";
+import app from "@/lib/firebase/config";
 import { Loader2 } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import { ColorPicker } from "antd";
@@ -149,7 +151,7 @@ export default function Edit() {
   const [filters, setFilters] = useState([]);
 
   const [filterLoadingState, setFilterLoadingState] = useState(false);
-
+const db = getFirestore(app);
   useEffect(() => {
     // create a program to track if there is any unsaved changes in the input fields if there is any then show a warning
     const unsavedChanges = () => {
@@ -927,6 +929,7 @@ export default function Edit() {
   const handleAggregationChange = (value) => {
     setAggregation(value);
   };
+  const router = useRouter();
   
   const handleDelete = (id) => {
     try {
