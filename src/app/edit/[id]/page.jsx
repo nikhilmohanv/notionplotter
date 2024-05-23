@@ -43,7 +43,7 @@ import DoughnutChart from "@/components/charts/doughnut/doughnut";
 import PieChart from "@/components/charts/pie/pie";
 import { Skeleton } from "@/components/ui/skeleton";
 import Filter from "@/components/edit/filters/filter";
-import { Copy, Delete } from "lucide-react";
+import { Copy, Trash } from lucide-react";
 import { Switch } from "@/components/ui/switch";
 import {
   Dialog,
@@ -934,7 +934,7 @@ export default function Edit() {
               </div>
               <div className="flex-grow text-center">{name}</div>
               <div>
-                <Delete />
+                <Trash />
               </div>
             </div>
 
