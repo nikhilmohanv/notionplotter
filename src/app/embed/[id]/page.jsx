@@ -726,7 +726,7 @@ export default function Embed() {
         </button>
         <button
           className="mode-button"
-          onClick={() => setBackgroundColor("#2F3438")}
+          onClick={() => setBackgroundColor("#191919")}
         >
           <MoonIcon />
         </button>
