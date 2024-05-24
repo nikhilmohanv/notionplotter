@@ -59,7 +59,7 @@ export async function POST(req) {
           renews_at: body.data.attributes.renews_at,
           card_brand: body.data.attributes.card_brand,
           card_last_four: body.data.attributes.card_last_four,
-          status_formatted: body.data.attributes.status_formatted,
+          statusFormatted: body.data.attributes.status_formatted,
           onTrial: false,
           updatePaymentMethod: body.data.attributes.urls.update_payment_method,
         };
@@ -78,6 +78,7 @@ export async function POST(req) {
           variantId: body.data.attributes.variant_id,
           renews_at: body.data.attributes.renews_at,
           updatePaymentMethod: body.data.attributes.urls.update_payment_method,
+          statusFormatted: body.data.attributes.status_formatted,
         };
 
         const { result, error } = await addDataWithId(

@@ -13,37 +13,7 @@ import {
 import Link from "next/link";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-  DropdownMenuTrigger,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuItem,
-  DropdownMenuContent,
-  DropdownMenu,
-} from "@/components/ui/dropdown-menu";
-import {
-  CardTitle,
-  CardDescription,
-  CardFooter,
-  CardContent,
-  Card,
-  CardHeader,
-} from "@/components/ui/card";
-import CheckIcon from "@/components/icons/checkicon";
-import DotIcon from "@/components/icons/doticon";
-import { redirect, useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 // import ChartCard from "@/components/basic/chartcards/chartcard";
 import { UserAuth } from "@/app/context/firebaseauth/authcontext";
@@ -56,8 +26,7 @@ import {
   getFirestore,
   orderBy,
   onSnapshot,
-  deleteDoc,
-  doc,
+  
 } from "firebase/firestore";
 import app from "@/lib/firebase/config";
 import CreateGraph from "@/components/basic/creategraph";
@@ -132,7 +101,6 @@ export default function Dashboard() {
   //if true then show the add to notion button
   const [addToNotion, setAddToNotion] = useState(true);
 
-  const router = useRouter();
 
   //getting the notion status that is, is it new account or not if n is t then new account else already notion secret token associated with it
 

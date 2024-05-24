@@ -26,7 +26,13 @@ import {
   AlertDialogHeader,
   AlertDialogCancel,
 } from "../ui/alert-dialog";
+import { useRouter } from "next/navigation";
+import { deleteDoc, doc,getFirestore } from "firebase/firestore";
+import app from "@/lib/firebase/config";
 export default function ChartDisplay({ docs }) {
+  const db = getFirestore(app);
+  const router = useRouter();
+
   const handleDelete = (id) => {
     try {
       const ref = doc(db, "graphs", id);

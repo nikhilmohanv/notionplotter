@@ -55,7 +55,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import {useRouter} from "next/navigation";
+import { useRouter } from "next/navigation";
 import app from "@/lib/firebase/config";
 import { Loader2 } from "lucide-react";
 import { Label } from "@/components/ui/label";
@@ -144,14 +144,13 @@ export default function Edit() {
   // for storing legend position
   const [legendPosition, setLegendPosition] = useState("top");
   //this adds a new color input to the multicolor input array
-  
 
   const [andOr, setAndOr] = useState("and");
   // for storing filters
   const [filters, setFilters] = useState([]);
 
   const [filterLoadingState, setFilterLoadingState] = useState(false);
-const db = getFirestore(app);
+  const db = getFirestore(app);
   useEffect(() => {
     // create a program to track if there is any unsaved changes in the input fields if there is any then show a warning
     const unsavedChanges = () => {
@@ -930,7 +929,7 @@ const db = getFirestore(app);
     setAggregation(value);
   };
   const router = useRouter();
-  
+
   const handleDelete = (id) => {
     try {
       const ref = doc(db, "graphs", id);
@@ -961,9 +960,13 @@ const db = getFirestore(app);
               </div>
               <div className="flex-grow text-center">{name}</div>
               <div>
-                <button onClick={()=>{handleDelete(id)}}>
-                <Trash />
-                  </button>
+                <button
+                  onClick={() => {
+                    handleDelete(id);
+                  }}
+                >
+                  <Trash />
+                </button>
               </div>
             </div>
 
