@@ -48,7 +48,8 @@ export async function POST(req) {
     switch (body.meta.event_name) {
       case "subscription_created": {
         const data = {
-          subscriptionId: body.data.attributes.first_subscription_item.subscription_id,
+          subscriptionId:
+            body.data.attributes.first_subscription_item.subscription_id,
           customerId: body.data.attributes.customer_id,
           variantId: body.data.attributes.variant_id,
           userId: userId,
@@ -62,20 +63,20 @@ export async function POST(req) {
           onTrial: false,
           updatePaymentMethod: body.data.attributes.urls.update_payment_method,
         };
-    
-        const { result, error } = await addDataWithId("subscription", userId, data);
+
+        const { result, error } = await addDataWithId(
+          "subscription",
+          userId,
+          data
+        );
         if (error) {
           console.error(error);
-        } else {
-          console.log(result);
         }
-    
+
         // Storing subscription history
         const resp = await addData("subscription_history", data);
         if (resp.error) {
           console.error(resp.error);
-        } else {
-          console.log(resp.result);
         }
         break;
       }
@@ -86,12 +87,14 @@ export async function POST(req) {
           updatePaymentMethod: body.data.attributes.urls.update_payment_method,
           statusFormatted: body.data.attributes.status_formatted,
         };
-    
-        const { result, error } = await addDataWithId("subscription", userId, data);
+
+        const { result, error } = await addDataWithId(
+          "subscription",
+          userId,
+          data
+        );
         if (error) {
           console.error(error);
-        } else {
-          console.log(result);
         }
         break;
       }
@@ -101,11 +104,13 @@ export async function POST(req) {
           statusFormatted: body.data.attributes.status_formatted,
           renews_at: body.data.attributes.renews_at,
         };
-        const { result, error } = await addDataWithId("subscription", userId, data);
+        const { result, error } = await addDataWithId(
+          "subscription",
+          userId,
+          data
+        );
         if (error) {
           console.error(error);
-        } else {
-          console.log(result);
         }
         break;
       }
@@ -116,11 +121,13 @@ export async function POST(req) {
           renews_at: body.data.attributes.ends_at,
           isPaused: body.data.attributes.pause !== null,
         };
-        const { result, error } = await addDataWithId("subscription", userId, data);
+        const { result, error } = await addDataWithId(
+          "subscription",
+          userId,
+          data
+        );
         if (error) {
           console.error(error);
-        } else {
-          console.log(result);
         }
         break;
       }
@@ -129,11 +136,13 @@ export async function POST(req) {
           status: body.data.attributes.status,
           statusFormatted: body.data.attributes.status_formatted,
         };
-        const { result, error } = await addDataWithId("subscription", userId, data);
+        const { result, error } = await addDataWithId(
+          "subscription",
+          userId,
+          data
+        );
         if (error) {
           console.error(error);
-        } else {
-          console.log(result);
         }
         break;
       }
@@ -142,11 +151,13 @@ export async function POST(req) {
           status: body.data.attributes.status,
           statusFormatted: body.data.attributes.status_formatted,
         };
-        const { result, error } = await addDataWithId("subscription", userId, data);
+        const { result, error } = await addDataWithId(
+          "subscription",
+          userId,
+          data
+        );
         if (error) {
           console.error(error);
-        } else {
-          console.log(result);
         }
         break;
       }
@@ -156,17 +167,18 @@ export async function POST(req) {
           statusFormatted: body.data.attributes.status_formatted,
           renews_at: body.data.attributes.renews_at,
         };
-        const { result, error } = await addDataWithId("subscription", userId, data);
+        const { result, error } = await addDataWithId(
+          "subscription",
+          userId,
+          data
+        );
         if (error) {
           console.error(error);
-        } else {
-          console.log(result);
         }
         break;
       }
     }
-    
-    console.log(body.data.attributes.renews_at);
+
     // Logic according to event
     return Response.json({ message: "Webhook received" }, { status: 200 });
   } catch (err) {

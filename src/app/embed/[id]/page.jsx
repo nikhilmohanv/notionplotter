@@ -8,23 +8,28 @@ import { usePathname } from "next/navigation";
 import { Skeleton } from "@/components/ui/skeleton";
 import "./embed.css";
 import RefreshButton from "@/components/icons/refresh";
+import { useSearchParams } from "next/navigation";
 
 import { MoonIcon } from "lucide-react";
+import addDataWithId from "@/lib/firebase/firestore/adddatawithid";
 
 export default function Embed() {
   const [chartType, setChartType] = useState();
   const [chartComponent, setChartComponent] = useState(null);
-
+  const searchParams = useSearchParams();
   const pathname = usePathname();
   const id = pathname.slice(7);
   //store data from firebase database
-  const [data, setData] = useState([]);
+  const [data, setData] = useState();
   //store label of the graph
   const [label, setLabel] = useState();
   //to store all columns of the database
   const [cols, setCols] = useState([]);
   //store notion database id
   const [dbId, setDbId] = useState();
+
+  // store access token from path, we cannot access access_token from cookies in notion so passing the data through url the url doesnot contain the work key
+  const [accessToken, setAccessToken] = useState();
   //stroing the columns and id alone, cols state contains the whole json response
   // const colNameAndId = [];
   const [colNameAndId, setColNameAndId] = useState([]);
@@ -38,7 +43,7 @@ export default function Embed() {
   const [backgroundColor, setBackgroundColor] = useState("#FFFFFF");
 
   //stroe the userid in provided in the database
-  const [dbUid, setDbUid] = useState();
+  const [uId, setUId] = useState();
 
   //store line color
 
@@ -66,9 +71,6 @@ export default function Embed() {
   //storing which type for color is used for filling
   const [fillColorStatus, setFillColorStatus] = useState("fillSingle");
 
-  // to store count of multi color input boxes
-  const [lineMultiColor, setLineMultiColor] = useState([""]);
-
   //to store all multi color values
   const [fillMultiColor, setFillMultiColor] = useState(["rgba(0, 0, 0,0.1)"]);
 
@@ -90,7 +92,6 @@ export default function Embed() {
   // for storing filters
   const [filters, setFilters] = useState([]);
 
-  const [filterLoadingState, setFilterLoadingState] = useState(false);
 
   const [extractedProperties, setExtractedProperties] = useState([]);
 
@@ -132,7 +133,7 @@ export default function Embed() {
         data.aggregation && setAggregation(data.aggregation);
         data.legend != undefined && setLegend(data.legend);
         data.legendPosition && setLegendPosition(data.legendPosition);
-        setDbUid(data.userid);
+        setUId(data.userid);
 
         if (data.xaxis && data.yaxis) {
           const xaxis = data.xaxis.split(", ");
@@ -150,11 +151,27 @@ export default function Embed() {
       });
   }, [id]);
 
+  // fetching access token from db
+  useEffect(() => {
+    if (uId) {
+      fetch("/api/firebase/getdocument?collection=access_tokens&docId=" + uId, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          setAccessToken(data.access_token);
+        });
+    }
+  }, [uId, data]);
+
   //fetch data from api/notion/retrievecolumns?id=${id}
   useEffect(() => {
     console.log(dbId);
-    if (dbId !== null && dbId !== undefined) {
-      fetch("/api/notion/retrievecolumns?id=" + dbId, {
+    if (accessToken !== null && accessToken !== undefined) {
+      fetch("/api/notion/retrievecolumns?id=" + dbId + "&at=" + accessToken, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -181,14 +198,13 @@ export default function Embed() {
           setColNameAndId(extractedNameId);
         });
     }
-  }, [dbId]);
+  }, [accessToken]);
 
   //fetch data from api api/notion/querydb?id={id} this have all the row information
   useEffect(() => {
-    if (dbId !== null && dbId !== undefined) {
-      setFilterLoadingState(true);
+    if (accessToken !== null && accessToken !== undefined) {
       console.log("calling query");
-      fetch("/api/notion/querydb?id=" + dbId, {
+      fetch("/api/notion/querydb?id=" + dbId + "&at=" + accessToken, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -198,7 +214,6 @@ export default function Embed() {
         .then((response) => response.json())
         .then((data) => {
           setRows(data);
-          setFilterLoadingState(false);
         })
         .catch((error) => {
           console.log(error);
@@ -593,7 +608,158 @@ export default function Embed() {
     });
   }, [rows]);
 
-// now we should store the updated data to firestore to do that check if any values updated using data state, check like this data.filter == filter
+  // now we should store the updated data to firestore to do that check if any values updated using data state, check like this data.filter == filter
+  useEffect(() => {
+    if (xAxis != null && xAxis != undefined) {
+      let XAxisData;
+      let extractedXValues;
+      console.log(extractedProperties);
+      if (extractedProperties.length > 0) {
+        XAxisData = extractedProperties.filter((obj) => obj.id == xAxis);
+      } else {
+        setXAxisValues([]);
+      }
+      if (XAxisData) {
+        console.log(" x filtering");
+
+        extractedXValues = XAxisData.map((obj) => {
+          if (
+            obj.type == "people" ||
+            obj.type == "created_by" ||
+            obj.type == "last_edited_by" ||
+            obj.rollupType == "people" ||
+            obj.rollupType == "created_by" ||
+            obj.rollupType == "last_edited_by"
+          ) {
+            if (obj.value != "No name") {
+              return obj.value[0].name;
+            } else {
+              return obj.value;
+            }
+          } else if (
+            obj.type == "date" ||
+            obj.formulaType == "date" ||
+            obj.rollupType == "date"
+          ) {
+            let date = "";
+            obj.value.map((d) => {
+              var startDate = new Date(d.start);
+              var formattedStartDate = startDate.toLocaleDateString("en-US", {
+                month: "short",
+                day: "2-digit",
+                year: "2-digit",
+              });
+              date = formattedStartDate;
+            });
+            return date;
+          } else if (
+            obj.rollupType == "created_time" ||
+            obj.rollupType == "last_edited_time" ||
+            obj.type == "created_time" ||
+            obj.type == "last_edited_time"
+          ) {
+            let date = obj.value[0];
+
+            return date;
+          } else if (
+            obj.type === "rich_text" ||
+            obj.formulaType === "string" ||
+            obj.type === "url" ||
+            obj.type === "email" ||
+            obj.rollupType === "rich_text" ||
+            obj.rollupType === "string" ||
+            obj.rollupType === "url" ||
+            obj.rollupType === "email"
+          ) {
+            if (Array.isArray(obj.value)) {
+              return obj.value[0];
+            }
+          } else if (
+            obj.type === "number" ||
+            obj.formulaType === "number" ||
+            obj.rollupType === "number" ||
+            obj.type === "phone_number" ||
+            obj.rollupType === "phone_number"
+          ) {
+            if (Array.isArray(obj.value)) {
+              return obj.value[0];
+            }
+          } else if (
+            obj.type === "checkbox" ||
+            obj.formulaType === "checkbox" ||
+            obj.rollupType === "checkbox"
+          ) {
+            if (Array.isArray(obj.value)) {
+              return obj.value[0];
+            }
+          }
+          return obj.value;
+        });
+
+        setXAxisValues(extractedXValues);
+        colNameAndId.forEach((col) => {
+          if (col.id === xAxis) {
+            setXAxisName(col.name);
+            return; // Exit the loop early
+          }
+          if (col.id === yAxis) {
+            setYAxisName(col.name);
+            return;
+          }
+        });
+      }
+      // setXAxisValues()
+    }
+    console.log(xAxisValues);
+  }, [extractedProperties]);
+
+  useEffect(() => {
+    if (yAxis != null && yAxis != undefined) {
+      let YAxisData;
+      if (extractedProperties.length > 0) {
+        YAxisData = extractedProperties.filter((obj) => obj.id == yAxis);
+      } else {
+        setYAxisValues([]);
+      }
+      if (YAxisData) {
+        console.log(" y filtering");
+        const extractedYValues = YAxisData.map((obj) => {
+          if (aggregation == "count") {
+            if (Array.isArray(obj.value)) {
+              return obj.value.length;
+            } else {
+              return 1;
+            }
+          } else if (aggregation == "sum") {
+            if (Array.isArray(obj.value)) {
+              let sum = 0;
+              obj.value.forEach((element) => {
+                sum += parseInt(element);
+              });
+              return sum;
+            } else {
+              return obj.value;
+            }
+          }
+          return obj.value;
+        });
+        // Store the result in the state variable
+        setYAxisValues(extractedYValues);
+        colNameAndId.forEach((col) => {
+          if (col.id === xAxis) {
+            setXAxisName(col.name);
+            return; // Exit the loop early
+          }
+          if (col.id === yAxis) {
+            setYAxisName(col.name);
+            return;
+          }
+        });
+      }
+      // setXAxisValues()
+    }
+    console.log(yAxisValues);
+  }, [extractedProperties]);
 
   useEffect(() => {
     switch (chartType) {
@@ -712,9 +878,93 @@ export default function Embed() {
       default:
         setChartComponent(<Skeleton className="w-full h-full rounded" />);
     }
-  }, [chartType]);
+  }, [chartType, xAxisValues, yAxisValues, backgroundColor]);
+
   function refreshData() {
     setCount(count + 1);
+  }
+
+  useEffect(() => {
+    const saveToDb = async () => {
+      if (data && xAxisValues && yAxisValues) {
+        console.log(data.yAxis);
+        const yaxis = data.yaxis.split(", ").map(Number);
+        const xaxis = data.xaxis.split(", ");
+
+        console.log(xaxis);
+        console.log(xAxisValues);
+
+        console.log(yaxis);
+        console.log(yAxisValues);
+
+        function arraysAreEqual(arr1, arr2) {
+          if (arr1.length !== arr2.length) return false;
+          for (let i = 0; i < arr1.length; i++) {
+            if (arr1[i] !== arr2[i]) return false;
+          }
+          return true;
+        }
+
+        const isYEqual = arraysAreEqual(yAxis, yAxisValues);
+        const isXEqual = arraysAreEqual(xaxis, xAxisValues);
+
+        if (isXEqual || isYEqual) {
+          console.log("returning");
+          return;
+        } else {
+          console.log("updating");
+          let name;
+          if (labelStatus) {
+            name = "";
+          } else {
+            if (label == undefined) {
+              name = "";
+            } else {
+              name = label;
+            }
+          }
+          let dataTypeToSave;
+          if (dataType == "number" || dataType == "percentage") {
+            dataTypeToSave = dataType;
+          } else {
+            dataTypeToSave = currencyType;
+          }
+          //converting array values to comma seperated values
+          const xAxisCommaVales = xAxisValues.join(", ");
+          const yAxisCommaVales = yAxisValues.join(", ");
+          const data = {
+            xaxis: xAxisCommaVales,
+            yaxis: yAxisCommaVales,
+            xaxisId: xAxis,
+            yaxisId: yAxis,
+            xAxisName: xAxisName,
+            yAxisName: yAxisName,
+            backgroundColor: backgroundColor,
+          };
+
+          //updating current fb firestore
+          const { result, error } = await addDataWithId("graphs", id, data);
+          if (result) {
+            console.log(result);
+          }
+          console.log(result);
+          console.log(error);
+          if (error) {
+            return console.log(error);
+          }
+        }
+      }
+    };
+
+    saveToDb();
+  }, [xAxisValues, yAxisValues]);
+
+  function changeBgColor() {
+    if (backgroundColor == "#191919") {
+      setBackgroundColor("#ffffff");
+    } else {
+      setBackgroundColor("#191919");
+    }
   }
   return (
     <>
@@ -724,10 +974,7 @@ export default function Embed() {
         <button className="refresh-button">
           <RefreshButton className="h-8 w-8" onClick={refreshData} />
         </button>
-        <button
-          className="mode-button"
-          onClick={() => setBackgroundColor("#191919")}
-        >
+        <button className="mode-button" onClick={changeBgColor}>
           <MoonIcon />
         </button>
         <main style={{ height: "100vh", width: "100vhw" }}>

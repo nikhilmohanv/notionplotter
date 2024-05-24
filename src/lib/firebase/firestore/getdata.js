@@ -15,6 +15,6 @@ export default async function getDoument(collection, id) {
   } catch (e) {
     error = e;
   }
-
+console.log(result.data())
   return { result, error };
 }

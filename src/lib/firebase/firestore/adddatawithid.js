@@ -7,7 +7,6 @@ const db = getFirestore(app);
 export default async function addDataWithId(colllection, id, data) {
   let result = null;
   let error = null;
-console.log(data)
   try {
     result = await setDoc(doc(db, colllection, id), data, {
       merge: true,

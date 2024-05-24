@@ -2,12 +2,14 @@
 const { Client } = require("@notionhq/client");
 import { cookies } from "next/headers";
 
-export default async function querydb(id, filter, andOr) {
-  const cookieStore = cookies();
-  const tokenCookie = cookieStore.get("access_token")?.value;
+export default async function querydb(id, filter, andOr, access_token) {
+  if (!access_token) {
+    const cookieStore = cookies();
+    access_token = cookieStore.get("access_token")?.value;
+    if (!access_token) throw new Error("No Token Cookie Found");
+  }
 
-  if (!tokenCookie) throw new Error("No Token Cookie Found");
-  const notion = new Client({ auth: tokenCookie });
+  const notion = new Client({ auth: access_token });
   const filtered = filter.map((fil) => {
     const property = fil.property.label;
 

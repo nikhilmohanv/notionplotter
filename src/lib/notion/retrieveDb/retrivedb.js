@@ -2,13 +2,15 @@
 const { Client } = require("@notionhq/client");
 import { cookies } from "next/headers";
 
-export default async function retrieveDb(databaseId) {
-  const cookieStore = cookies();
-  const tokenCookie = cookieStore.get("access_token")?.value;
-  if (!tokenCookie) throw new Error("No Token Cookie Found");
+export default async function retrieveDb(databaseId, access_token) {
+  if (!access_token) {
+    const cookieStore = cookies();
+    access_token = cookieStore.get("access_token")?.value;
+    if (!access_token) throw new Error("No Token Cookie Found");
+  }
 
   const notion = new Client({
-    auth: tokenCookie,
+    auth: access_token,
   });
 
   try {
