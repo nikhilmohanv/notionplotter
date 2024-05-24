@@ -908,7 +908,7 @@ export default function Embed() {
         const isYEqual = arraysAreEqual(yAxis, yAxisValues);
         const isXEqual = arraysAreEqual(xaxis, xAxisValues);
 
-        if (isXEqual || isYEqual) {
+        if (isXEqual || isYEqual || backgroundColor != data.backgroundColor) {
           console.log("returning");
           return;
         } else {
@@ -957,7 +957,7 @@ export default function Embed() {
     };
 
     saveToDb();
-  }, [xAxisValues, yAxisValues]);
+  }, [xAxisValues, yAxisValues, backgroundColor]);
 
   function changeBgColor() {
     if (backgroundColor == "#191919") {
