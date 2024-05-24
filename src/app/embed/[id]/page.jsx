@@ -1,4 +1,6 @@
 "use client";
+import { Loader2 } from "lucide-react";
+
 import { useState, useEffect, useRef } from "react";
 import AreaChart from "@/components/charts/area/area";
 import BarChart from "@/components/charts/bar/bar";
@@ -12,6 +14,12 @@ import { useSearchParams } from "next/navigation";
 
 import { MoonIcon } from "lucide-react";
 import addDataWithId from "@/lib/firebase/firestore/adddatawithid";
+import DarkMode from "@/components/icons/embed/darkmode";
+import LightMode from "@/components/icons/embed/lightmode";
+import DarkRefresh from "@/components/icons/embed/darkmoderefresh";
+import RefreshLight from "@/components/icons/embed/refreshlightmode";
+import LoaderLight from "@/components/icons/embed/refreshloaderlight";
+import LoadingDark from "@/components/icons/embed/loadingrefreshdark";
 
 export default function Embed() {
   const [chartType, setChartType] = useState();
@@ -92,9 +100,8 @@ export default function Embed() {
   // for storing filters
   const [filters, setFilters] = useState([]);
 
-
   const [extractedProperties, setExtractedProperties] = useState([]);
-
+  const [fetchingData, setFetchingData] = useState(false);
   useEffect(() => {
     fetch("/api/firebase/getdocument?collection=graphs&docId=" + id, {
       method: "POST",
@@ -878,9 +885,11 @@ export default function Embed() {
       default:
         setChartComponent(<Skeleton className="w-full h-full rounded" />);
     }
+    setFetchingData(false);
   }, [chartType, xAxisValues, yAxisValues, backgroundColor]);
 
   function refreshData() {
+    setFetchingData(true);
     setCount(count + 1);
   }
 
@@ -907,8 +916,10 @@ export default function Embed() {
 
         const isYEqual = arraysAreEqual(yAxis, yAxisValues);
         const isXEqual = arraysAreEqual(xaxis, xAxisValues);
-
-        if (isXEqual || isYEqual || backgroundColor != data.backgroundColor) {
+        console.log(backgroundColor);
+        console.log(data.backgroundColor);
+        console.log(backgroundColor == data.backgroundColor);
+        if (isXEqual && isYEqual && backgroundColor == data.backgroundColor) {
           console.log("returning");
           return;
         } else {
@@ -971,11 +982,29 @@ export default function Embed() {
       <div className="embed-container" style={{ background: backgroundColor }}>
         {/* Refresh button */}
 
-        <button className="refresh-button">
-          <RefreshButton className="h-8 w-8" onClick={refreshData} />
-        </button>
+        <div className="refresh-button">
+          {backgroundColor.trim().toLowerCase() == "#ffffff" ? (
+            fetchingData ? (
+              <LoaderLight />
+            ) : (
+              <button onClick={refreshData}>
+                <RefreshLight className="h-8 w-8" />
+              </button>
+            )
+          ) : fetchingData ? (
+            <LoadingDark />
+          ) : (
+            <button onClick={refreshData}>
+              <DarkRefresh className="h-8 w-8" />
+            </button>
+          )}
+        </div>
         <button className="mode-button" onClick={changeBgColor}>
-          <MoonIcon />
+          {backgroundColor.trim().toLowerCase() == "#ffffff" ? (
+            <DarkMode className="w-8 h-8" />
+          ) : (
+            <LightMode className="w-8 h-8" />
+          )}
         </button>
         <main style={{ height: "100vh", width: "100vhw" }}>
           {chartComponent}
