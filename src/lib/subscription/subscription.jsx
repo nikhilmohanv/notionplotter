@@ -26,7 +26,7 @@ export default async function getUserSubscriptionPlan() {
   const onTrial = subscriptionData.onTrial;
   const subscriptionId = subscriptionData.subscriptionId;
   const renewsAt = new Date(subscriptionData.renews_at);
-  const trialEndDate = new Date(subscriptionData.trialEndDate);
+  //const trialEndDate = new Date(subscriptionData.trialEndDate);
   // const cardEnding = subscriptionData.card_last_four
   let isPro;
   let isCanceled;
@@ -35,7 +35,7 @@ export default async function getUserSubscriptionPlan() {
     const currentDate = new Date();
 
     if (
-      (trialEndDate.getTime() - currentDate.getTime()) /
+      (renewsAt.getTime() - currentDate.getTime()) /
         (1000 * 60 * 60 * 24) <=
       0
     ) {
@@ -46,7 +46,7 @@ export default async function getUserSubscriptionPlan() {
       return {
         onTrial: false,
         isPro: false,
-        renews_at:renewsAt,
+        renews_at:renewsAt.getTime(),
       };
     } else {
       isPro = true;
@@ -55,7 +55,7 @@ export default async function getUserSubscriptionPlan() {
     return {
       onTrial,
       isPro,
-      renews_at:renewsAt,
+      renews_at:renewsAt.getTime(),
     };
   }
 
