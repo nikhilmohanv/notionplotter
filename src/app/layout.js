@@ -30,7 +30,7 @@ export const metadata = {
     "notion charts from table",
   ],
   alternates: {
-    canonical: "https://notionplotter.com",
+    canonical: "https://www.notionplotter.com",
   },
   other: {
     "google-site-verification": "VHfRBRG9El_CMvJo5ZfcDGxfC8T_22hsEAS99iSDMyQ",
