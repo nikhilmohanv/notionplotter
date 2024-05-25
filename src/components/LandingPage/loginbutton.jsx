@@ -47,7 +47,7 @@ export default function LoginButton({ text, variant }) {
             uid: updatedUser.uid,
             onTrial: true,
             trialStartDate: new Date(),
-            trialEndDate: `${trialEndDate}`,
+            renews_at: `${trialEndDate}`,
           };
           await addDataWithId("subscription", updatedUser.uid, data);
         }
