@@ -146,7 +146,7 @@ export default function Dashboard() {
     const getCheckoutUrl = async () => {
       try {
         const response = await axios.post("/api/productPurchase", {
-          productId: "357049",
+          productId: "256750",
         });
 
         setCheckoutUrl(response.data.checkoutUrl);
