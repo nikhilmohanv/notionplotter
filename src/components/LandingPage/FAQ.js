@@ -94,7 +94,7 @@ export const FAQ = () => {
         Still have questions?{" "}
         <a
           rel="noreferrer noopener"
-          href="mailto:nicksnotion@gmail.com"
+          href="mailto:nick@notionplotter.com"
           className="text-primary transition-all border-primary hover:border-b-2"
         >
           Contact us
