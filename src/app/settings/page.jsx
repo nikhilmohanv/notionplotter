@@ -130,6 +130,7 @@ export default function Dashboard() {
                                     </span>
                                     <span className="font-medium">
                                       {new Date(renewsAt).toDateString()}
+                                      {renewsAt}
                                     </span>
                                   </div>
                                 </div>
