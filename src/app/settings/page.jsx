@@ -133,6 +133,15 @@ export default function Dashboard() {
                                       {renewsAt}
                                     </span>
                                   </div>
+                                  <div className="flex items-center justify-between">
+                                    <span className="text-gray-500 dark:text-gray-400">
+                                      Trial End Date2
+                                    </span>
+                                    <span className="font-medium">
+                                      
+                                      {renewsAt}
+                                    </span>
+                                  </div>
                                 </div>
                               </div>
                               {/* <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-950">
