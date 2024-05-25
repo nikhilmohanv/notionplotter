@@ -88,56 +88,56 @@ export default function ManageSubscription({
 
   return (
     <>
-      <Card>
+      {/* <Card>
         <CardHeader>
           <CardTitle>Subscription</CardTitle>
         </CardHeader>
-        <CardContent className="space-y-2">
-          <div className=" md:px-6">
-            <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-              <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-950">
-                <h2 className="text-2xl font-bold">Billing Details</h2>
-                <div className="mt-6 space-y-4">
-                  <div className="flex items-center justify-between">
-                    <span className="text-gray-500 dark:text-gray-400">
-                      Next Due Date
-                    </span>
-                    <span className="font-medium">
-                      {new Date(currentPeriodEnd).toDateString()}
-                    </span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-gray-500 dark:text-gray-400">
-                      Subscription
-                    </span>
-                    <span className="font-medium">$3.99/month</span>
-                  </div>
-                </div>
+        <CardContent className="space-y-2"> */}
+      <div className=" md:px-">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+          <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-950">
+            <h2 className="text-2xl font-bold">Billing Details</h2>
+            <div className="mt-6 space-y-4">
+              <div className="flex items-center justify-between">
+                <span className="text-gray-500 dark:text-gray-400">
+                  Next Due Date
+                </span>
+                <span className="font-medium">
+                  {new Date(currentPeriodEnd).toDateString()}
+                </span>
               </div>
-              <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-950">
-                <h2 className="text-2xl font-bold">Manage Subscription</h2>
-                <div className="mt-6 space-y-4">
-                  <Button
-                    onClick={handleCancelSubscription}
-                    className="w-full"
-                    variant="outline"
-                  >
-                    Cancel Subscription
-                  </Button>
-                  {/* <Button className="w-full" variant="outline">
-                    Pause Subscription
-                  </Button> */}
-                  <Button className="w-full">
-                    <Link href={updatePaymentMethod}>
-                      Update Payment Information
-                    </Link>
-                  </Button>
-                </div>
+              <div className="flex items-center justify-between">
+                <span className="text-gray-500 dark:text-gray-400">
+                  Subscription
+                </span>
+                <span className="font-medium">$3.99/month</span>
               </div>
             </div>
           </div>
-        </CardContent>
-      </Card>
+          <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-950">
+            <h2 className="text-2xl font-bold">Manage Subscription</h2>
+            <div className="mt-6 space-y-4">
+              <Button
+                onClick={handleCancelSubscription}
+                className="w-full"
+                variant="outline"
+              >
+                Cancel Subscription
+              </Button>
+              {/* <Button className="w-full" variant="outline">
+                    Pause Subscription
+                  </Button> */}
+              <Button className="w-full">
+                <Link href={updatePaymentMethod}>
+                  Update Payment Information
+                </Link>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* </CardContent>
+      </Card> */}
       {/* <div className="flex flex-col justify-between items-center gap-4">
         <p>You are subscribed to our product. Congratulations</p>
         <Button

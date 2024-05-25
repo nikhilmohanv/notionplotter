@@ -39,7 +39,7 @@ export default function Dashboard() {
   const cookies = useCookies();
   const [userId, setUserId] = useState(cookies.get("uid"));
   const [updatePaymentMethod, setUpdatePaymentMethod] = useState();
-  
+
   useEffect(() => {
     fetch("/api/payment/getusersubscriptionplan")
       .then((data) => data.json())
@@ -106,37 +106,33 @@ export default function Dashboard() {
                     <>
                       <Card>
                         <CardHeader>
-                          <CardTitle>Subscription</CardTitle>
+                          <CardTitle>Billing Details</CardTitle>
                         </CardHeader>
                         <CardContent className="space-y-2 b-0">
-                          <div className=" md:px-6">
-                            <div className="grid grid-cols-1 gap-8 md:grid-cols-1">
-                              <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-950">
-                                <h2 className="text-2xl font-bold">
-                                  Billing Details
-                                </h2>
-                                <div className="mt-6 space-y-4">
-                                  <div className="flex items-center justify-between">
-                                    <span className="text-gray-500 dark:text-gray-400">
-                                      Subscription Mode
-                                    </span>
-                                    <span className="font-medium">
-                                      Free trial
-                                    </span>
-                                  </div>
-                                  <div className="flex items-center justify-between">
-                                    <span className="text-gray-500 dark:text-gray-400">
-                                      Trial End Date
-                                    </span>
-                                    <span className="font-medium">
-                                      {new Date(renewsAt).toDateString()}
-                                      
-                                    </span>
-                                  </div>
-                                  
-                                </div>
-                              </div>
-                              {/* <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-950">
+                          {/* <div className=" md:px-6"> */}
+                          {/* <div className="grid grid-cols-1 gap-8 md:grid-cols-1"> */}
+                          {/* <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-950">
+                                <h2 className="text-2xl font-bold"> */}
+
+                          {/* </h2> */}
+                          <div className="mt-4 space-y-4">
+                            <div className="flex items-center justify-between">
+                              <span className="text-gray-500 dark:text-gray-400">
+                                Subscription Mode
+                              </span>
+                              <span className="font-medium">Free trial</span>
+                            </div>
+                            <div className="flex items-center justify-between">
+                              <span className="text-gray-500 dark:text-gray-400">
+                                Trial End Date
+                              </span>
+                              <span className="font-medium">
+                                {new Date(renewsAt).toDateString()}
+                              </span>
+                            </div>
+                          </div>
+                          {/* </div> */}
+                          {/* <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-950">
                               <h2 className="text-2xl font-bold">
                                 Manage Subscription
                               </h2>
@@ -156,8 +152,8 @@ export default function Dashboard() {
                                 </Button>
                               </div>
                             </div> */}
-                            </div>
-                          </div>
+                          {/* </div> */}
+                          {/* </div> */}
                         </CardContent>
                       </Card>
                     </>
@@ -179,7 +175,7 @@ export default function Dashboard() {
                             <div className="rounded-lg bg-white  shadow-sm dark:border-gray-800 dark:bg-gray-950">
                               Your subscription expired <br />
                               <br />
-                              <Button className="w-full">Subscrible</Button>
+                              <Button className="w-full">Subscribe</Button>
                               {/* <div className="mt-6 space-y-4"> */}
                               {/* <div className="flex items-center justify-between">
                                 <span className="text-gray-500 dark:text-gray-400">

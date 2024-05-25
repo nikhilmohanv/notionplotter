@@ -79,11 +79,12 @@ export default function LoginButton({ text, variant }) {
     } catch (error) {
       console.log(error);
     }
+    setIsAuthNeeded(false);
   }
 
   return (
     <>
-      {user ? (
+      {user && !isAuthNeeded ? (
         <Link href="dashboard" className={buttonVariants({ variant: variant })}>
           Go to dashboard
         </Link>

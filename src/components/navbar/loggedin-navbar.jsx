@@ -61,7 +61,7 @@ export default function LoggedInNavBar() {
           </Link>
           <Link
             href="/dashboard"
-            className="text-foreground transition-colors hover:text-foreground"
+            className="text-muted-foreground transition-colors hover:text-foreground"
           >
             Dashboard
           </Link>
