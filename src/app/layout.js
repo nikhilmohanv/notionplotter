@@ -29,6 +29,9 @@ export const metadata = {
     "notion charts from database",
     "notion charts from table",
   ],
+  alternates: {
+    canonical: "https://www.notionplotter.com",
+  },
   other: {
     "google-site-verification": "VHfRBRG9El_CMvJo5ZfcDGxfC8T_22hsEAS99iSDMyQ",
     "yandex-verification": "62bc7c81fad65fbd",
