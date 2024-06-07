@@ -99,7 +99,7 @@ const AreaChart = ({
       newFillColor.push(fillSingleColor);
     } else if (fillColorStatus === "fillMulti") {
       setLineColor(convertForLineColor(fillMultiColor[0]));
-      newFillColor.push(fillMultiColor);
+      newFillColor.push(fillMultiColor[0]);
       // fillMultiColor.forEach((color) => {
       //   newFillColor.push(convertForLineColor(color));
       // });
