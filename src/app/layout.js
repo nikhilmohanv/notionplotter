@@ -20,14 +20,17 @@ export const metadata = {
   description:
     "Create aesthetic, custom and embeddable charts from Notion easily with Notion plotter. You can create bar, pie, area, donut charts and more from Notion.",
   keywords: [
-    "notion",
     "notion charts",
     "notion graphs",
+    "charts in notion",
+    "notion line chart",
+    "graph in notion",
     "how to create charts from notion",
     "how to create charts with notion",
     "notion graph generator",
     "notion charts from database",
     "notion charts from table",
+    "notion data plotter",
   ],
   alternates: {
     canonical: "https://www.notionplotter.com",
