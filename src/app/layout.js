@@ -26,7 +26,6 @@ export const metadata = {
     "notion line chart",
     "graph in notion",
     "how to create charts from notion",
-    "how to create charts with notion",
     "notion graph generator",
     "notion charts from database",
     "notion charts from table",
