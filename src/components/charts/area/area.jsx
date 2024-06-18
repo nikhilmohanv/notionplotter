@@ -71,7 +71,7 @@ const AreaChart = ({
     }
   };
   useEffect(() => {
-    if (backgroundColor.trim().toLowerCase() == "#ffffff" || backgroundColor.trim().toLowerCase() == "#191919") {
+    if (backgroundColor.trim().toLowerCase() == "#ffffff") {
       setDarkMode(false);
     } else {
       setDarkMode(true);

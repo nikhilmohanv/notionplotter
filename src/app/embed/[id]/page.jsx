@@ -1,7 +1,6 @@
 "use client";
-import { Loader2 } from "lucide-react";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import AreaChart from "@/components/charts/area/area";
 import BarChart from "@/components/charts/bar/bar";
 import DoughnutChart from "@/components/charts/doughnut/doughnut";
@@ -9,10 +8,8 @@ import PieChart from "@/components/charts/pie/pie";
 import { usePathname } from "next/navigation";
 import { Skeleton } from "@/components/ui/skeleton";
 import "./embed.css";
-import RefreshButton from "@/components/icons/refresh";
 import { useSearchParams } from "next/navigation";
 
-import { MoonIcon } from "lucide-react";
 import addDataWithId from "@/lib/firebase/firestore/adddatawithid";
 import DarkMode from "@/components/icons/embed/darkmode";
 import LightMode from "@/components/icons/embed/lightmode";
@@ -24,7 +21,6 @@ import LoadingDark from "@/components/icons/embed/loadingrefreshdark";
 export default function Embed() {
   const [chartType, setChartType] = useState();
   const [chartComponent, setChartComponent] = useState(null);
-  const searchParams = useSearchParams();
   const pathname = usePathname();
   const id = pathname.slice(7);
   //store data from firebase database
@@ -68,13 +64,10 @@ export default function Embed() {
   const [labelStatus, setLabelStatus] = useState(true);
 
   //for storing chart name
-  const [name, setName] = useState();
   const [xAxisName, setXAxisName] = useState();
   const [yAxisName, setYAxisName] = useState();
-  const [savingStatus, setSavingStatus] = useState(false);
 
   //selecting which coloring is used for line, single or multiple color
-  const [colorStatus, setColorStatus] = useState("lineSingle");
 
   //storing which type for color is used for filling
   const [fillColorStatus, setFillColorStatus] = useState("fillSingle");

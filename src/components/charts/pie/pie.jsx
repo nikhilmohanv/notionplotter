@@ -56,6 +56,7 @@ export default function PieChart({
       setDarkMode(true);
     }
   }, [backgroundColor]);
+
   useEffect(() => {
     const newFillColor = [];
     if (fillColorStatus === "fillSingle") {
@@ -132,7 +133,7 @@ export default function PieChart({
                   if (label) {
                     label += ": ";
                   }
-                 
+
                   if (context.parsed !== null) {
                     if (displayDataType == "%") {
                       label += context.parsed.toFixed(1) + displayDataType;

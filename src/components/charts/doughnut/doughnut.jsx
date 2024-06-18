@@ -66,6 +66,7 @@ const DoughnutChart = ({
       setDarkMode(true);
     }
   }, [backgroundColor]);
+  
   useEffect(() => {
     const newFillColor = [];
     if (fillColorStatus === "fillSingle") {
