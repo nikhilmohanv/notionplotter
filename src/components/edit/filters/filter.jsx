@@ -545,7 +545,7 @@ export default function Filter({
 
   function deleteFullFilters() {
     let data = [...filter];
-    data.splice(1);
+    data.splice(0);
     setFilter(data);
   }
   return (
@@ -944,7 +944,7 @@ export default function Filter({
                           value={filter[index].value}
                           onChange={(e) => handleFilterInsertion(e, index)}
                           name="value"
-                          className="px-4 py-2 w-36 sm:w-42 border border-gray-600 rounded flex items-center justify-between"
+                          className="px-4 py-2  xl:w-72 border border-gray-600 rounded flex items-center justify-between"
                         ></input>
                       )
                     : filter[index].property.type === "files" ||
