@@ -70,6 +70,17 @@ import {
   deleteDoc,
   doc,
 } from "firebase/firestore";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 export default function Edit() {
   const cookies = useCookies();
   const cookieUid = cookies.get("uid");
@@ -131,10 +142,7 @@ export default function Edit() {
   const [fillMultiColor, setFillMultiColor] = useState(["rgba(0, 0, 0,0.1)"]);
 
   // aggregation for sum and count
-  const [aggregation, setAggregation] = useState("count");
-
-  // couting the rows in the data extractedProperties
-  const [count, setCount] = useState(0);
+  const [aggregation, setAggregation] = useState("sum");
 
   const [legend, setLegend] = useState(true);
 
@@ -960,13 +968,36 @@ export default function Edit() {
               </div>
               <div className="flex-grow text-center">{name}</div>
               <div>
-                <button
-                  onClick={() => {
-                    handleDelete(id);
-                  }}
-                >
-                  <Trash />
-                </button>
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button variant="ghost" className="h-1">
+                      <Trash />
+                    </Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>
+                        Are you absolutely sure?
+                      </AlertDialogTitle>
+                      <AlertDialogDescription>
+                        This action cannot be undone. This will permanently
+                        delete this chart and associated data from our servers.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <AlertDialogAction>
+                        <Button
+                          onClick={() => {
+                            handleDelete(id);
+                          }}
+                        >
+                          Continue
+                        </Button>
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
               </div>
             </div>
 
@@ -1390,8 +1421,8 @@ export default function Edit() {
                 <h3 className="text-sm font-medium mb-2">Data Type</h3>
                 {dbId ? (
                   <Select onValueChange={setDataType} defaultValue={dataType}>
-                    <SelectTrigger id="aggregation">
-                      <SelectValue placeholder={aggregation} />
+                    <SelectTrigger id="datatype">
+                      <SelectValue placeholder={dataType} />
                     </SelectTrigger>
                     <SelectContent position="popper">
                       <SelectGroup>

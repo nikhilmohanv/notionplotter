@@ -11,14 +11,20 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { UserAuth } from "@/app/context/firebaseauth/authcontext";
 import { deleteCookie, setCookie } from "cookies-next";
-import { redirect } from "next/navigation";
+import { redirect, usePathname } from "next/navigation";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
 import LineChartIcon from "@/components/icons/logo";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useCookies } from "next-client-cookies";
 
 export default function LoggedInNavBar() {
+  const pathname = usePathname();
+  const [bold, setBold] = useState(
+    pathname.includes("dashboard")
+      ? "dashboard"
+      : pathname.includes("settings") && "settings"
+  );
   const { user, logout } = UserAuth();
   const cookies = useCookies();
   const handleSignOut = async () => {
@@ -61,13 +67,17 @@ export default function LoggedInNavBar() {
           </Link>
           <Link
             href="/dashboard"
-            className="text-muted-foreground transition-colors hover:text-foreground"
+            className={`${
+              bold == "dashboard" ? "text-foreground" : "text-muted-foreground"
+            } transition-colors hover:text-foreground`}
           >
             Dashboard
           </Link>
           <Link
             href="/settings"
-            className="text-muted-foreground transition-colors hover:text-foreground"
+            className={`${
+              bold == "settings" ? "text-foreground" : "text-muted-foreground"
+            } transition-colors hover:text-foreground`}
           >
             Settings
           </Link>
@@ -127,8 +137,8 @@ export default function LoggedInNavBar() {
             </nav>
           </SheetContent>
         </Sheet>
-        
-        <Link  href="/dashboard">
+
+        <Link href="/dashboard">
           <LineChartIcon className="h-10 w-10 flex  items-center md:hidden gap-4 md:ml-auto md:gap-2 lg:gap-4" />
         </Link>
         <div className="flex w-full items-center gap-4 md:ml-auto md:gap-2 lg:gap-4">

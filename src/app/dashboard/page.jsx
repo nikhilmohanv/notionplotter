@@ -26,7 +26,6 @@ import {
   getFirestore,
   orderBy,
   onSnapshot,
-  
 } from "firebase/firestore";
 import app from "@/lib/firebase/config";
 import CreateGraph from "@/components/basic/creategraph";
@@ -100,7 +99,6 @@ export default function Dashboard() {
 
   //if true then show the add to notion button
   const [addToNotion, setAddToNotion] = useState(true);
-
 
   //getting the notion status that is, is it new account or not if n is t then new account else already notion secret token associated with it
 
@@ -204,7 +202,7 @@ export default function Dashboard() {
                 </div>
               </div>
 
-              <div className="grid gap-4 sm:grid-col-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 flex mt-3">
+              <div className="grid gap-4 sm:grid-col-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 mt-3">
                 <div className="grid place-items-center border-dashed border-2 min-h-20 rounded-lg">
                   {cookies.get("access_token") == null ? (
                     "something went wrong login again"
