@@ -11,7 +11,6 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-
 export default function Filter({
   getFilters,
   dbId,
@@ -34,10 +33,7 @@ export default function Filter({
   useEffect(() => {
     setFilter(filters);
   }, [filters]);
-
-  // for getting data of all, that is without any filters
-  const [sampleFilter, setSampleFilter] = useState([]);
-
+  console.log("filter values ", filters.length);
   useEffect(() => {
     if (dbId !== null && dbId !== undefined) {
       fetch("/api/notion/completequerydb?id=" + dbId, {
@@ -85,7 +81,7 @@ export default function Filter({
           propertyType = property.type;
         } else if (property.type == "multi_select") {
           propertyType = property.type;
-          // in multi_select value is stored as array so when displaying check condition if it is an multiselct value
+          // in multi_select value is stored as array so when displaying check condition if it is an multiSelect value
           let multi_select = [];
           property.multi_select.map((select) => {
             multi_select.push(select.name);
@@ -258,7 +254,7 @@ export default function Filter({
                 rollupType = "title";
                 rollupArrayValues.push(arr.title[0].plain_text);
               } else if (arr.type == "multi_select") {
-                // in multi_select value is stored as array so when displaying check condition if it is an multiselct value
+                // in multi_select value is stored as array so when displaying check condition if it is an multiSelect value
                 rollupType = "multi_select";
                 arr.multi_select.map((select) => {
                   rollupArrayValues.push(select.name);
@@ -547,7 +543,7 @@ export default function Filter({
     getFilters(filter, andOr);
   }
 
-  function deleteFullFilters(){
+  function deleteFullFilters() {
     let data = [...filter];
     data.splice(1);
     setFilter(data);
@@ -556,7 +552,9 @@ export default function Filter({
     <>
       <Dialog>
         <DialogTrigger asChild>
-          <Button variant="outline" className="w-full">Edit Filters</Button>
+          <Button variant="outline" className="w-full">
+            Edit Filters
+          </Button>
         </DialogTrigger>
         <DialogContent
           className={`sm:w-[${windowDimensions}px] md:max-w-[800px] bg-white`}
@@ -609,15 +607,15 @@ export default function Filter({
                 <select
                   onChange={(event) => handleFilterInsertion(event, index)}
                   name="property"
+                  defaultValue=""
                   value={
-                    filter[index].property.label.length > 0
-                      ? filter[index].property.label
-                      : "Select a property"
+                    filter[index].property.label.length > 0 &&
+                    filter[index].property.label
                   }
-                  className="px-4 py-2 flex w-[70px] sm:w-[200px] border border-gray-600 rounded flex items-center justify-between"
+                  className="px-4 py-2 flex w-[70px] sm:w-[200px] border border-gray-600 rounded items-center justify-between"
                 >
-                  <option selected disabled>
-                    Selct a property
+                  <option value="" hidden>
+                    Select a property
                   </option>
                   {colNameAndId.map((col, colIndex) => (
                     <option value={col.name} key={colIndex}>
@@ -632,16 +630,17 @@ export default function Filter({
                   filter[index].rollupType === "checkbox" ? (
                     <select
                       name="operation"
+                      defaultValue=""
                       value={
                         filter[index].operator.length > 0
                           ? filter[index].operator
-                          : "Select a operation"
+                          : ""
                       }
                       onChange={(event) => handleFilterInsertion(event, index)}
                       // value={input.operator ?input.operator:"select a value"}
                       className="px-4 py-2 border border-gray-600 rounded flex items-center w-[70px] sm:w-36 justify-between"
                     >
-                      <option disabled selected>
+                      <option value="" hidden>
                         Select a option
                       </option>
                       <option value="true">Is checked</option>
@@ -656,13 +655,14 @@ export default function Filter({
                     filter[index].rollupType === "last_edited_time" ? (
                     <select
                       name="operation"
+                      defaultValue=""
                       value={filter[index].operator}
                       onChange={(event) => handleFilterInsertion(event, index)}
                       className="px-4 py-2 border border-gray-600 rounded flex items-center w-[70px] sm:w-36 justify-between"
                     >
                       {" "}
-                      <option selected disabled>
-                        Selct a property
+                      <option value="" hidden>
+                        Select a option
                       </option>
                       <option value="after">After</option>
                       <option value="before">Before</option>
@@ -682,13 +682,14 @@ export default function Filter({
                     filter[index].rollupType === "files" ? (
                     <select
                       name="operation"
+                      defaultValue=""
                       value={filter[index].operator}
                       onChange={(event) => handleFilterInsertion(event, index)}
                       className="px-4 py-2 border border-gray-600 w-[70px] sm:w-36 rounded flex items-center sm:w-36 justify-between"
                     >
                       {" "}
-                      <option selected disabled>
-                        Selct a property
+                      <option value="" hidden>
+                        Select a property
                       </option>
                       <option value="is_empty">Is empty</option>
                       <option value="is_not_empty">Is not empty</option>
@@ -697,13 +698,14 @@ export default function Filter({
                     filter[index].rollupType === "multi_select" ? (
                     <select
                       name="operation"
+                      defaultValue=""
                       value={filter[index].operator}
                       onChange={(event) => handleFilterInsertion(event, index)}
                       className="px-4 py-2 border border-gray-600 rounded flex items-center w-[70px] sm:w-36 justify-between"
                     >
                       {" "}
-                      <option selected disabled>
-                        Selct a property
+                      <option value="" hidden>
+                        Select a property
                       </option>
                       <option value="is_empty">Is empty</option>
                       <option value="is_not_empty">Is not empty</option>
@@ -715,13 +717,14 @@ export default function Filter({
                     filter[index].formulaType === "number" ? (
                     <select
                       name="operation"
+                      defaultValue=""
                       value={filter[index].operator}
                       onChange={(event) => handleFilterInsertion(event, index)}
                       className="px-4 py-2 border border-gray-600 rounded flex items-center w-[70px] sm:w-36 justify-between"
                     >
                       {" "}
-                      <option selected disabled>
-                        Selct a property
+                      <option value="" hidden>
+                        Select a property
                       </option>
                       <option value="is_empty">Is empty</option>
                       <option value="is_not_empty">Is not empty</option>
@@ -740,13 +743,14 @@ export default function Filter({
                     filter[index].rollupType === "phone_number" ? (
                     <select
                       name="operation"
+                      defaultValue=""
                       value={filter[index].operator}
                       onChange={(event) => handleFilterInsertion(event, index)}
                       className="px-4 py-2 border border-gray-600 rounded flex items-center w-[70px] sm:w-36 justify-between"
                     >
                       {" "}
-                      <option selected disabled>
-                        Selct a property
+                      <option value="" hidden>
+                        Select a property
                       </option>
                       <option value="is_empty">Is empty</option>
                       <option value="is_not_empty">Is not empty</option>
@@ -769,13 +773,14 @@ export default function Filter({
                     filter[index].rollupType === "last_edited_by" ? (
                     <select
                       name="operation"
+                      defaultValue={""}
                       value={filter[index].operator}
                       onChange={(event) => handleFilterInsertion(event, index)}
                       className="px-4 py-2 border border-gray-600 rounded flex items-center w-[70px] sm:w-36 justify-between"
                     >
                       {" "}
-                      <option selected disabled>
-                        Selct a property
+                      <option value="" hidden>
+                        Select a property
                       </option>
                       <option value="is_empty">Is empty</option>
                       <option value="is_not_empty">Is not empty</option>
@@ -794,13 +799,14 @@ export default function Filter({
                     filter[index].rollupType === "email" ? (
                     <select
                       name="operation"
+                      defaultValue={""}
                       value={filter[index].operator}
                       onChange={(event) => handleFilterInsertion(event, index)}
                       className="px-4 py-2 border border-gray-600 rounded flex items-center w-[70px] sm:w-36 justify-between"
                     >
                       {" "}
-                      <option selected disabled>
-                        Selct a property
+                      <option value="" hidden>
+                        Select a property
                       </option>
                       <option value="is_empty">Is empty</option>
                       <option value="is_not_empty">Is not empty</option>
@@ -815,13 +821,14 @@ export default function Filter({
                     filter[index].rollupType === "select" ? (
                     <select
                       name="operation"
+                      defaultValue={""}
                       value={filter[index].operator}
                       onChange={(event) => handleFilterInsertion(event, index)}
                       className="px-4 py-2 border border-gray-600 rounded flex items-center w-[70px] sm:w-36 justify-between"
                     >
                       {" "}
-                      <option selected disabled>
-                        Selct a property
+                      <option value="" hidden>
+                        Select a property
                       </option>
                       <option value="is_empty">Is empty</option>
                       <option value="is_not_empty">Is not empty</option>
@@ -832,13 +839,14 @@ export default function Filter({
                     filter[index].rollupType == "status" ? (
                     <select
                       name="operation"
+                      defaultValue={""}
                       value={filter[index].operator}
                       onChange={(event) => handleFilterInsertion(event, index)}
                       className="px-4 py-2 border border-gray-600 rounded flex items-center w-[70px] sm:w-36 justify-between"
                     >
                       {" "}
-                      <option selected disabled>
-                        Selct a property
+                      <option value="" hidden>
+                        Select a property
                       </option>
                       <option value="is_empty">Is empty</option>
                       <option value="is_not_empty">Is not empty</option>
@@ -849,13 +857,14 @@ export default function Filter({
                     filter[index].rollupType === "unique_id" ? (
                     <select
                       name="operation"
+                      defaultValue={""}
                       onChange={(event) => handleFilterInsertion(event, index)}
                       value={filter[index].operator}
                       className="px-4 py-2 border border-gray-600 rounded flex items-center w-[70px] sm:w-36 justify-between"
                     >
                       {" "}
-                      <option selected disabled>
-                        Selct a property
+                      <option value="" hidden>
+                        Select a property
                       </option>
                       <option value="equals">Equals to</option>
                       <option value="does_not_equal">Does not equal to</option>
@@ -873,6 +882,7 @@ export default function Filter({
                       filter[index].rollupType === "relation") && (
                       <select
                         name="operation"
+                        defaultValue={""}
                         onChange={(event) =>
                           handleFilterInsertion(event, index)
                         }
@@ -880,8 +890,8 @@ export default function Filter({
                         className="px-4 py-2 border border-gray-600 rounded flex items-center w-[70px] sm:w-36 justify-between"
                       >
                         {" "}
-                        <option selected disabled>
-                          Selct a property
+                        <option value="" hidden>
+                          Select a property
                         </option>
                         <option value="is_empty">Is empty</option>
                         <option value="is_not_empty">Is not empty</option>
@@ -896,10 +906,10 @@ export default function Filter({
                 {filter[index].operator.length > 0 &&
                   filter[index].property.type === "rollup" && (
                     <select
-                      defaultValue={
+                      defaultValue={""}
+                      value={
+                        filter[index].rollupOperation &&
                         filter[index].rollupOperation
-                          ? filter[index].rollupOperation
-                          : "select a operation"
                       }
                       className="px-4 py-2 border border-gray-600 rounded flex items-center w-[70px] sm:w-28 justify-between"
                       name="rollupOperation"
@@ -907,7 +917,9 @@ export default function Filter({
                       required
                     >
                       {" "}
-                      <option disabled>Selct a property</option>
+                      <option value="" hidden>
+                        Select a property
+                      </option>
                       <option value={"any"}>Any</option>
                       <option value={"every"}>Every</option>
                       <option value={"none"}>None</option>
@@ -932,7 +944,7 @@ export default function Filter({
                           value={filter[index].value}
                           onChange={(e) => handleFilterInsertion(e, index)}
                           name="value"
-                          className="px-4 py-2 border border-gray-600 rounded flex items-center w-[140px] sm:w-44 justify-between"
+                          className="px-4 py-2 w-36 sm:w-42 border border-gray-600 rounded flex items-center justify-between"
                         ></input>
                       )
                     : filter[index].property.type === "files" ||
@@ -1004,13 +1016,14 @@ export default function Filter({
                         filter[index]?.operator === "does_not_contain") && (
                         <select
                           name="value"
+                          defaultValue={""}
                           value={filter[index].value}
                           onChange={(e) => handleFilterInsertion(e, index)}
                           className="px-4 py-2 w-[70px] sm:w-42 border border-gray-600 rounded flex items-center justify-between"
                         >
                           {" "}
-                          <option selected disabled>
-                            Selct a property
+                          <option value="" hidden>
+                            Select a property
                           </option>
                           {extractedProperties.map((rows) =>
                             filter[index].property.value === rows.id
@@ -1113,13 +1126,14 @@ export default function Filter({
                         filter[index].operator === "does_not_contain") && (
                         <select
                           name="value"
+                          defaultValue={""}
                           value={filter[index].value}
                           onChange={(e) => handleFilterInsertion(e, index)}
                           className="px-4 py-2 w-36 sm:w-42 border border-gray-600 rounded flex items-center justify-between"
                         >
                           {" "}
-                          <option selected disabled>
-                            Selct a property
+                          <option value="" hidden>
+                            Select a property
                           </option>
                           {extractedProperties.map((rows) =>
                             filter[index].property.value === rows.id
@@ -1158,10 +1172,13 @@ export default function Filter({
               + Add filter rule
             </Button>
             <div className="flex justify-between items-center mt-4">
-              <Button className="text-red-500" variant="ghost" onClick={deleteFullFilters}>
+              <Button
+                className="text-red-500"
+                variant="ghost"
+                onClick={deleteFullFilters}
+              >
                 Delete filter
               </Button>
-             
             </div>
           </div>
           <DialogFooter>

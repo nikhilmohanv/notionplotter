@@ -107,7 +107,6 @@ export default function Embed() {
         setData(data);
 
         setDbId(data.databaseID);
-        setName(data.name);
         data.yaxisId && setYAxis(data.yaxisId);
         data.xAxisName && setXAxisName(data.xAxisName);
         data.yAxisName && setYAxisName(data.yAxisName);
