@@ -65,34 +65,34 @@ export const Footer = () => {
         </div> */}
 
         <div className="flex flex-col gap-2">
-          <h3 className="font-bold text-lg">About</h3>
+          <h3 className="font-bold text-lg">Policy</h3>
+          <div>
+            <Link
+              rel="noreferrer noopener"
+              href="/terms-service"
+              className="opacity-60 hover:opacity-100"
+            >
+              Terms of Service
+            </Link>
+          </div>
+
           <div>
             <a
               rel="noreferrer noopener"
-              href="#features"
+              href="/privacy-policy"
               className="opacity-60 hover:opacity-100"
             >
-              Features
+              Privacy Policy
             </a>
           </div>
 
           <div>
             <a
               rel="noreferrer noopener"
-              href="#pricing"
+              href="/refund"
               className="opacity-60 hover:opacity-100"
             >
-              Pricing
-            </a>
-          </div>
-
-          <div>
-            <a
-              rel="noreferrer noopener"
-              href="#faq"
-              className="opacity-60 hover:opacity-100"
-            >
-              FAQ
+              Refund
             </a>
           </div>
         </div>

@@ -1,113 +1,113 @@
 export default function TOS() {
   return (
     <main className="flex flex-col items-center justify-center p-6 space-y-6">
-      <h1 className="text-3xl font-bold">Terms of Service</h1>
+      <h1 className="text-3xl font-bold">Privacy Policy</h1>
       <div className="w-full max-w-2xl space-y-8">
         <section>
-          <h2 className="text-2xl font-semibold">Introduction</h2>
           <p className="text-gray-600 dark:text-gray-400">
-            Our Terms and Conditions (hereinafter, T&C) constitute a legally
-            binding agreement between Notion Plotter
-            [https://www.notionplotter.com] (hereinafter, Us, We or Our) and you
-            (hereinafter, User, Users, your, or yours). Your use of our App
-            shall be governed by the following T&C. IF YOU ARE A CHILD UNDER 13
-            years old (or such greater age required in your country or territory
-            for you to be authorized to register for and use our App without
-            parental approval), you are allowed to use our App only after your
-            parent or guardian has red and accepted these T&C for you.
+            This Privacy Policy describes Our policies and procedures on the
+            collection, use and disclosure of Your information when You use the
+            Service and tells You about Your privacy rights and how the law
+            protects You. We use Your Personal data to provide and improve the
+            Service. By using the Service, You agree to the collection and use
+            of information in accordance with this Privacy Policy. This Privacy
+            Policy has been created with the help of the Free Privacy Policy
+            Generator.
           </p>
         </section>
         <section>
-          <h2 className="text-2xl font-semibold">REGISTRATION</h2>
+          <h2 className="text-2xl font-semibold">Interpretation</h2>
           <p className="text-gray-600 dark:text-gray-400">
-            You agree to provide accurate information regarding your phone
-            number, email address and any other additional information, whilst
-            registering for our App. Should any of your details change, you
-            shall immediately adjourn your data and notify us via email at
-            NICK@NOTIONPLOTTER.COM. You agree to receive for security reasons
-            text messages and phone calls (from us or our third-party providers)
-            with codes to register for our App.
+            Interpretation The words of which the initial letter is capitalized
+            have meanings defined under the following conditions. The following
+            definitions shall have the same meaning regardless of whether they
+            appear in singular or in plural.
           </p>
         </section>
         <section>
-          <h2 className="text-2xl font-semibold">AGE</h2>
+          <h2 className="text-2xl font-semibold">Definitions</h2>
           <p className="text-gray-600 dark:text-gray-400">
-            You must be at least 13 years old to register for and use our App
-            (or such greater age required in your country or territory for you
-            to be authorized to register for and use our App without parental
-            approval) and having red these T&C with your parent or guardian. In
-            addition to being of the minimum required age to use our App under
-            applicable law, if you are not old enough to have authority to agree
-            to our T&C in your country or territory, your parent or guardian
-            must agree to our T&C on your behalf. Please ask your parent or
-            guardian to read these T&C with you. In any case we reserve
-            ourselves the right to suspend and cancel your account unilaterally
-            and without notice if we have a reasonable doubt that you do not
-            have the legal minimum age to use our App.
+            {`For the purposes of this Privacy Policy: Account means a unique account created for You to access our Service or parts of our Service. Affiliate means an entity that controls, is controlled by or is under common control with a party, where "control" means ownership of 50% or more of the shares, equity interest or other securities entitled to vote for election of directors or other managing authority. Company (referred to as either "the Company", "We", "Us" or "Our" in this Agreement) refers to Notion Plotter. Cookies are small files that are placed on Your computer, mobile device or any other device by a website, containing the details of Your browsing history on that website among its many uses. Country refers to: Kerala, India Device means any device that can access the Service such as a computer, a cellphone or a digital tablet. Personal Data is any information that relates to an identified or identifiable individual. Service refers to the Website. Service Provider means any natural or legal person who processes the data on behalf of the Company. It refers to third-party companies or individuals employed by the Company to facilitate the Service, to provide the Service on behalf of the Company, to perform services related to the Service or to assist the Company in analyzing how the Service is used. Usage Data refers to data collected automatically, either generated by the use of the Service or from the Service infrastructure itself (for example, the duration of a page visit). Website refers to Notion Plotter, accessible from https://www.notionplotter.com You means the individual accessing or using the Service, or the company, or other legal entity on behalf of which such individual is accessing or using the Service, as applicable`}
           </p>
         </section>
         <section>
-          <h2 className="text-2xl font-semibold">DEVICES AND SOFTWARE</h2>
+          <h2 className="text-2xl font-semibold">Types of Data Collected</h2>
+          <h3 className="text-xl font-medium">Personal Data</h3>
           <p className="text-gray-600 dark:text-gray-400">
-            You may need to provide certain devices, software, and data
-            connections to use our App, which we otherwise do not supply. In
-            order to use our App, you consent to manually or automatically
-            download and install updates to our App You also consent to our
-            sending you notifications via our App from time to time, as
-            necessary to keep our App functional for you. You may purchase
-            products from our App and/or subscribe to a subscription plan. Our
-            App may offers subscription plans, in-App purchases and promotions.
-            The subscription plan types, names and prices may change
-            occasionally. For all subscription plans, payment occurs on a
-            pre-pay basis. The amount you are to pay and the length of your
-            subscription will depend on the subscription plan you choose. We
-            reserve the sole right to change pricing without notice or cause and
-            you are required to keep checking the link above.
+            While using Our Service, We may ask You to provide Us with certain
+            personally identifiable information that can be used to contact or
+            identify You. Personally identifiable information may include, but
+            is not limited to: Email address First name and last name Usage Data
           </p>
         </section>
         <section>
-          <h2 className="text-2xl font-semibold">USE</h2>
+          <h3 className="text-xl font-medium">Usage Data</h3>
           <p className="text-gray-600 dark:text-gray-400">
-            You agree to only use our App under the following conditions: * you
-            may only use our App for your own personal, non-commercial purposes
-            – if you are a company or another business entity whatsoever you are
-            in any case requested to state so, even if you plan to use our App
-            for non-commercial purposes; * you may upload data, text,
-            information, screen names, graphics, photos, profiles, audio and
-            video clips, links (hereinafter, the Content) on our App; * you may
-            only use our App in good faith, and in compliance with Applicable
-            laws. You agree not to, and you shall not permit others to: *
-            license, sell, rent, lease, transfer, assign, distribute, transmit,
-            host, outsource, disclose or otherwise commercially exploit our App
-            or make our App available to any third parties; * copy or use our
-            App for any purpose other than your own personal, non-commercial
-            purposes; * copy or use our App to facilitate any criminal activity,
-            including but not limited to hacking; * modify, make derivative
-            works of, disassemble, decrypt, translate, reverse compile or
-            reverse engineer any part of our App; * abuse, harass, threaten,
-            impersonate or intimidate other Users of our App; * post nude,
-            partially nude, sexually suggestive photos, or otherwise any other
-            illegal and/or discriminatory Content on our App; * use our App for
-            any illegal or unauthorized purpose. International Users agree to
-            comply with all local laws regarding online conduct and acceptable
-            content; * violate any laws in your and our jurisdiction (including
-            but not limited to copyright laws) in the use of our App; * transmit
-            any worms or viruses or otherwise any code of a destructive nature
-            on our App. You are the solely responsible for any activity that
-            occurs under your account and for keeping your password secure.
+            Usage Data is collected automatically when using the Service. Usage
+            Data may include information such as Your Device Internet Protocol
+            address (e.g. IP address), browser type, browser version, the pages
+            of our Service that You visit, the time and date of Your visit, the
+            time spent on those pages, unique device identifiers and other
+            diagnostic data. When You access the Service by or through a mobile
+            device, We may collect certain information automatically, including,
+            but not limited to, the type of mobile device You use, Your mobile
+            device unique ID, the IP address of Your mobile device, Your mobile
+            operating system, the type of mobile Internet browser You use,
+            unique device identifiers and other diagnostic data. We may also
+            collect information that Your browser sends whenever You visit our
+            Service or when You access the Service by or through a mobile
+            device.
           </p>
         </section>
         <section>
-          <h2 className="text-2xl font-semibold">Termination</h2>
+          <h2 className="text-2xl font-semibold">
+            Tracking Technologies and Cookies
+          </h2>
           <p className="text-gray-600 dark:text-gray-400">
-            We may terminate or suspend your account and bar access to the
-            platform immediately, without prior notice or liability, under our
-            sole discretion, for any reason whatsoever and without limitation,
-            including but not limited to a breach of the Terms.
+            We use Cookies and similar tracking technologies to track the
+            activity on Our Service and store certain information. Tracking
+            technologies used are beacons, tags, and scripts to collect and
+            track information and to improve and analyze Our Service. The
+            technologies We use may include: Cookies or Browser Cookies. A
+            cookie is a small file placed on Your Device. You can instruct Your
+            browser to refuse all Cookies or to indicate when a Cookie is being
+            sent. However, if You do not accept Cookies, You may not be able to
+            use some parts of our Service. Unless you have adjusted Your browser
+            setting so that it will refuse Cookies, our Service may use Cookies.
+            Web Beacons. Certain sections of our Service and our emails may
+            contain small electronic files known as web beacons (also referred
+            to as clear gifs, pixel tags, and single-pixel gifs) that permit the
+            Company, for example, to count users who have visited those pages or
+            opened an email and for other related website statistics (for
+            example, recording the popularity of a certain section and verifying
+            system and server integrity). Cookies can be &quot;Persistent&quot;
+            or &quot;Session&quot; Cookies. Persistent Cookies remain on Your
+            personal computer or mobile device when You go offline, while
+            Session Cookies are deleted as soon as You close Your web browser.
+            Learn more about cookies on the Free Privacy Policy website article.
+            We use both Session and Persistent Cookies for the purposes set out
+            below: Necessary / Essential Cookies Type: Session Cookies
+            Administered by: Us Purpose: These Cookies are essential to provide
+            You with services available through the Website and to enable You to
+            use some of its features. They help to authenticate users and
+            prevent fraudulent use of user accounts. Without these Cookies, the
+            services that You have asked for cannot be provided, and We only use
+            these Cookies to provide You with those services. Cookies Policy /
+            Notice Acceptance Cookies Type: Persistent Cookies Administered by:
+            Us Purpose: These Cookies identify if users have accepted the use of
+            cookies on the Website. Functionality Cookies Type: Persistent
+            Cookies Administered by: Us Purpose: These Cookies allow us to
+            remember choices You make when You use the Website, such as
+            remembering your login details or language preference. The purpose
+            of these Cookies is to provide You with a more personal experience
+            and to avoid You having to re-enter your preferences every time You
+            use the Website. For more information about the cookies we use and
+            your choices regarding cookies, please visit our Cookies Policy or
+            the Cookies section of our Privacy Policy.
           </p>
         </section>
         <section>
-          <h2 className="text-2xl font-semibold">PRIVACY</h2>
+          <h2 className="text-2xl font-semibold">Use of Your Personal Data</h2>
           <p className="text-gray-600 dark:text-gray-400">
             All material and services available and/or provided by our App, its
             affiliates, employees, licensors or other commercial partners
