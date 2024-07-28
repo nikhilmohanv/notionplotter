@@ -51,6 +51,7 @@ export default async function NotoionCallback({ searchParams }) {
   if (error) {
     throw new Error(error);
   }
+  
   redirect(`/callback/${accessToken}`);
 
   // Redirect to the dashboard with the cookie set
